@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -10,6 +9,11 @@ const routes = [
     name: 'Home',
     component: ()=> import('../views/Home.vue'),
   },
+  {
+    path: '/arma-cotizacion',
+    name: 'Cotizacion',
+    component: ()=> import('../views/Cotizacion.vue'),
+  }
 ]
 
 const router = new VueRouter({
