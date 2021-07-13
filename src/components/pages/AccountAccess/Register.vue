@@ -4,7 +4,7 @@
             <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
             <h4 class="mt-5">Selecciona una forma de registro </h4>
             <div class="my-4 text-center d-flex flex-column">
-                <b-button variant="primary" class="my-2">
+                <b-button variant="primary" class="my-2" @click="signUpWithFacebook()">
                     <b-icon icon="facebook" class="mx-2"></b-icon>
                     Continuar con Facebook
                 </b-button>
@@ -70,11 +70,14 @@ export default {
                 .then((result) => { console.log(result) })
                 .catch((err) => { console.log(err) });
         },
+        signUpWithFacebook(){
+            const provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(result => { console.log(result) })
+                .catch(error => { console.log(error) });
+        },
         toEmailPasswordRegister(){
             this.mood = 'password';
-            // firebase.auth().createUserWithEmailAndPassword('maquinola@gmail.com', 'abc123')
-            //     .then((response)=> { console.log(response) })
-            //     .catch((err)=> { console.log(err) })
         },
         changeMood(){
             this.mood = '';
