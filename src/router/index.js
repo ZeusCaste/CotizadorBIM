@@ -6,13 +6,28 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: ()=> import('../views/Home.vue'),
+    name: 'Inicio',
+    component: ()=> import('../views/Inicio.vue'),
   },
   {
-    path: '/arma-cotizacion',
+    path: '/arma-tu-cotizacion',
     name: 'Cotizacion',
     component: ()=> import('../views/Cotizacion.vue'),
+  },
+  {
+    path: '/colabora-con-nosotros',
+    name: "Colabora",
+    component: ()=> import('../views/ColaboraNosotros.vue'),
+  },
+  {
+    path: '/iniciar-sesion',
+    name: 'Sesion',
+    component: ()=> import('../views/IniciarSesion.vue'),
+  },
+  {
+    path: '/sobre-nosotros',
+    name: "Nosotros",
+    component: ()=> import('../views/SobreNosotros.vue'),
   }
 ]
 

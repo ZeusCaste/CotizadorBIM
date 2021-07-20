@@ -1,5 +1,7 @@
 <template>
-  <h1>Estamos en cotizacion</h1>
+  <div class="container">
+      <h1>Sobre Nosotros</h1>
+  </div>
 </template>
 
 <script>
