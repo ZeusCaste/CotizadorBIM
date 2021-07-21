@@ -6,6 +6,27 @@
     hide-header
   >
     <div>
+        <div class="header">
+            <b class="mt-1">
+                <b-icon
+                    icon="clipboard-plus"
+                    scale="2.5"
+                ></b-icon>
+            </b>
+            <b class="title">Edificacion Nueva</b>
+            <b-button
+                class="hide-modal"
+                size="sm"
+                variant="outline-info"
+                @click="hideModal()"
+            >
+                <b-icon
+                    icon="x-circle-fill"
+                    variant="dark"
+                    scale="2"
+                ></b-icon>
+            </b-button>
+        </div>
         <div>
             <div class="seccion bg-info">
                 <b-icon
@@ -69,8 +90,16 @@ export default {
     },
     methods: {
         onCreateCotizacion(){
+            this.showModal();
+        },
+        showModal(){
             if(typeof this.$refs["edificacion-nueva"] !== "undefined"){
                 this.$refs["edificacion-nueva"].show();
+            }
+        },
+        hideModal(){
+            if(typeof this.$refs["edificacion-nueva"] !== "undefined"){
+                this.$refs["edificacion-nueva"].hide();
             }
         }
     },
@@ -78,6 +107,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .header{
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
     .seccion {
         height: 70px;
         display: flex;
@@ -100,6 +136,15 @@ export default {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+    }
+
+    .hide-modal{
+        margin-bottom: 15px;
+        border-width: 0px;
+    }
+
+    .title{
+        font-size: 25px;
     }
 
 </style>
