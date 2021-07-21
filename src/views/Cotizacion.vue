@@ -11,6 +11,11 @@
                     @click="openModal()"
                 >
                     EDIFICACION NUEVA
+
+                    <b-icon
+                        icon="clipboard-plus"
+                        animation="throb"
+                    ></b-icon>
                 </b-button>
             </div>
            <div class="w-50">
@@ -19,6 +24,11 @@
                     variant="outline-info"
                 >
                     EDIFICACION EXISTENTE
+
+                    <b-icon
+                        icon="house"
+                        animation="throb"
+                    ></b-icon>
                 </b-button>
            </div>
         </div>

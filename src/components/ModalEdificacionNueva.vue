@@ -13,7 +13,23 @@
                     variant="white"
                     font-scale="2.5"
                 ></b-icon>
-                <p class="font-weight-bold text-white">Tipo de edificacion: </p>
+                <p class="font-weight-bold text-white ml-3 mt-2">Tipo de Edificacion: </p>
+            </div>
+            <div class="subSeccion">
+                <div class="build w-50">
+                    <b-icon
+                        icon="check-circle"
+                        scale="1.5"
+                    ></b-icon>
+                    <p class="ml-3 mt-3">Edificacion</p>
+                </div>
+                <div class="build w-50">
+                    <b-icon
+                        icon="ui-checks"
+                        scale="1.5"
+                    ></b-icon>
+                    <p class="ml-3 mt-3">Proyectos y/o Estudios</p>
+                </div>
             </div>
         </div>
         <div>
@@ -23,7 +39,7 @@
                     variant="white"
                     font-scale="2.5"
                 ></b-icon>
-                <p class="font-weight-bold text-white">Datos del proyecto: </p>
+                <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
         </div>
         <div>
@@ -33,7 +49,7 @@
                     variant="white"
                     font-scale="2.5"
                 ></b-icon>
-                <p class="font-weight-bold text-white">Datos del contacto: </p>
+                <p class="font-weight-bold text-white ml-3 mt-2">Datos del Contacto: </p>
             </div>
         </div>
     </div>
@@ -71,6 +87,19 @@ export default {
         padding-left: 15px;
         margin-left: -16px;
         margin-right: -16px;
+    }
+
+    .subSeccion {
+        display: flex;
+        flex-direction: row;
+        margin: 15px 10px;
+    }
+
+    .build {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
 </style>
