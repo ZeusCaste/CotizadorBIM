@@ -73,6 +73,16 @@
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Contacto: </p>
             </div>
         </div>
+        <div class="footer">
+            <b-button
+                size="lg"
+                variant="dark"
+                block
+                style="height: 80px;"
+            >
+                <b class="h1">ACEPTAR</b>
+            </b-button>
+        </div>
     </div>
   </b-modal>
 </template>
@@ -145,6 +155,12 @@ export default {
 
     .title{
         font-size: 25px;
+    }
+
+    .footer{
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
     }
 
 </style>
