@@ -94,6 +94,32 @@
                 ></b-icon>
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
+            <div class="container build m-3">
+                <div class="w-50">
+                    <b-row>
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Ubicación del proyecto</label>
+                            <b-form-input></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="w-50">
+                    <b-row class="mx-2">
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Estado</label>
+                            <b-form-input></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+            </div>
         </div>
         <div>
             <div class="seccion bg-info">
