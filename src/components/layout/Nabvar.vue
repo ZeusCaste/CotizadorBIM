@@ -1,5 +1,13 @@
 <template>
-    <div class="navbar navbar-dark bg-dark">
+    <div class="navbar navbar-dark" style="background-color: #000">
+        <div>
+            <b-img 
+                :src="require('../../media/images/BIM-logo-1.jpg')" 
+                fluid 
+                alt="Responsive image"
+                width="150"
+            ></b-img>
+        </div>
         <h3 class="text-white">BIM Soluciones Tecnologicas</h3>
         <div>
             <router-link to="/" class="btn btn-outline-primary mx-2">Inicio</router-link>
