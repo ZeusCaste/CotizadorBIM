@@ -45,7 +45,6 @@
                         ></b-icon>
                         <p class="ml-3 mt-3 font-weight-bold">Edificacion</p>
                     </div>
-                    {{form.edificacion}}
                     <div class="radio-Container py-4 d-flex justify-content-center">
                         <b-form-radio-group
                             v-model="form.edificacion"
@@ -63,7 +62,6 @@
                         ></b-icon>
                         <p class="ml-3 mt-3 font-weight-bold">Proyectos y/o Estudios</p>
                     </div>
-                    {{form.proyectos_estudios}}
                     <div class="radio-Container py-4 d-flex justify-content-center">
                         <b-form-checkbox-group
                             v-model="form.proyectos_estudios"
@@ -102,8 +100,8 @@
                                 icon="geo-alt-fill"
                                 scale="1"
                             ></b-icon>
-                            <label for="">Ubicación del proyecto</label>
-                            <b-form-input></b-form-input>
+                            <label>Ubicación del proyecto</label>
+                            <b-form-input placeholder="Calle 6 No. 517, Colonia Pascal"></b-form-input>
                         </b-col>
                     </b-row>
                 </div>
@@ -114,8 +112,104 @@
                                 icon="geo-alt-fill"
                                 scale="1"
                             ></b-icon>
-                            <label for="">Estado</label>
-                            <b-form-input></b-form-input>
+                            <label for="estado">Estado</label>
+                            <b-form-select
+                                id="estado"
+                                v-model="form.estado"
+                                :options="estados"
+                                @change="loadMunicipios()"
+                            ></b-form-select>
+                        </b-col>
+                    </b-row>
+                </div>
+            </div>
+            <div class="container build m-3">
+                <div class="w-50">
+                    <b-row>
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="municipio">Ciudad o Municipio</label>
+                            <b-form-select
+                                id="minucipio"
+                                v-model="form.municipio"
+                                :options="municipiosSelected"
+                            ></b-form-select>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="w-50">
+                    <b-row class="mx-2">
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Codigo Postal</label>
+                            <b-form-input
+                                v-model="form.codigoPostal"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+            </div>
+            <div 
+                class="subseccion bg-dark row justify-content-center align-items-center m-auto pb-1 w-50" 
+                style="height: 40px; border-radius: 15px"
+            >
+                <b-icon
+                    icon="columns-gap"
+                    variant="white"
+                    scale="1.35"
+                    style="margin-top: -8px"
+                ></b-icon>
+                <p class="text-white ml-2 mt-2">Areas del Proyecto</p>
+            </div>
+            <div class="container build m-3">
+                <div class="input-area-proyecto">
+                    <b-row class="mx-2">
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Área de planta baja (m2)</label>
+                            <b-form-input
+                                v-model="form.areaPlantaBaja"
+                                placeholder="Introduce are en m2"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="w-25">
+                    <b-row class="mx-2">
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Número de niveles tipo</label>
+                            <b-form-input
+                                v-model="form.numeroNiveles"
+                                placeholder="2"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="w-25">
+                    <b-row class="mx-2">
+                        <b-col>
+                            <b-icon
+                                icon="geo-alt-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Área del nivel tipo (m2)</label>
+                            <b-form-input
+                                v-model="form.areaNivelTipo"
+                                placeholder="Introduce el area en m2"
+                            ></b-form-input>
                         </b-col>
                     </b-row>
                 </div>
@@ -146,6 +240,9 @@
 </template>
 
 <script>
+import {estados} from '../db/estados';
+import {municipios} from '../db/municipios';
+
 export default {
     name: 'EdificacionNueva',
     created(){
@@ -156,6 +253,13 @@ export default {
             form: {
                 edificacion: null,
                 proyectos_estudios: [],
+                ubicacion: '',
+                estado: '',
+                municipio: '',
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
             },
             edificacionOptions: [
                 {id: 1, text: "Vivienda Familiar", value: "vivienda_familiar"},
@@ -179,7 +283,10 @@ export default {
                 {id: 1, text: "Aire acondicionado con balance térmico", value: "arire_acondicionado_con_balance_termico"},
                 {id: 1, text: "Ventilación y Extracción", value: "ventilacion_y_extraccion"},
                 {id: 1, text: "Voz y Datos", value: "voz_y_datos"},
-            ]
+            ],
+            estados: estados,
+            municipiosSelected: [],
+            municipios: municipios,
         }
     },
     methods: {
@@ -195,6 +302,23 @@ export default {
             if(typeof this.$refs["edificacion-nueva"] !== "undefined"){
                 this.$refs["edificacion-nueva"].hide();
             }
+        },
+        loadMunicipios(){
+            this.form.municipio= null;
+            this.municipiosSelected= [];
+
+            this.municipios.map((estado)=> {
+                for(let name in estado){
+                    if(name == this.form.estado){
+                        estado[name].map((municipio)=> {
+                            this.municipiosSelected.push({"text": municipio, "value": municipio});
+                        })
+                    }
+                }
+            })
+
+            console.log(this.municipiosSelected);
+
         },
         cleanFields(){
             this.form= {
@@ -265,5 +389,9 @@ export default {
         display: flex;
         justify-content: space-around;
         margin-bottom: 15px;
+    }
+
+    .input-area-proyecto{
+        width: 30%;
     }
 </style>
