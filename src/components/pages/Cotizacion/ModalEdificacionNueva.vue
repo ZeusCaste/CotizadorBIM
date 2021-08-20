@@ -111,7 +111,10 @@
                                 class="mr-1"
                             ></b-icon>
                             <label>Ubicación del proyecto</label>
-                            <b-form-input placeholder="Calle 6 No. 517, Colonia Pascal"></b-form-input>
+                            <b-form-input 
+                                placeholder="Calle 6 No. 517, Colonia Pascal"
+                                v-model="form.calle"
+                            ></b-form-input>
                         </b-col>
                     </b-row>
                 </div>
@@ -406,8 +409,8 @@
 </template>
 
 <script>
-import {estados} from '../db/estados';
-import {municipios} from '../db/municipios';
+import {estados} from '../../../db/estados';
+import {municipios} from '../../../db/municipios';
 
 export default {
     name: 'EdificacionNueva',
@@ -420,9 +423,7 @@ export default {
             form: {
                 edificacion: null,
                 proyectos_estudios: [],
-                ubicacion: null,
-                accesibilidad: null,
-                topografia: null,
+                calle: '',
                 estado: '',
                 municipio: '',
                 codigoPostal: '',
@@ -431,7 +432,10 @@ export default {
                 areaNivelTipo: '',
                 numeroSotanos: '',
                 areaSotano: '',
-                unicacion: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+                edificaciones: [],
                 datos_contacto: {
                     nombreCompleto: '',
                     numeroTelefono: '',
@@ -518,10 +522,11 @@ export default {
 
         },
         cleanFields(){
+            this.edificacionesIndependientes= "false";
             this.form= {
                 edificacion: null,
                 proyectos_estudios: [],
-                ubicacion: '',
+                calle: '',
                 estado: '',
                 municipio: '',
                 codigoPostal: '',
@@ -530,9 +535,10 @@ export default {
                 areaNivelTipo: '',
                 numeroSotanos: '',
                 areaSotano: '',
-                accesibilidad: '',
-                topografia: '',
-                unicacion: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+                edificaciones: [],
                 datos_contacto: {
                     nombreCompleto: '',
                     numeroTelefono: '',
