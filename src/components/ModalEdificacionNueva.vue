@@ -82,10 +82,12 @@
             <div class="button-container">
                 <b-button 
                     variant="success"
+                    :disabled="form.proyectos_estudios.length == 0 || form.edificacion == null"
                     @click="addTipoEdificacion()"
                 >Agregar</b-button>
                 <b-button 
                     variant="danger"
+                    :disabled="form.proyectos_estudios.length == 0 && form.edificacion == null"
                     @click="cleanFields()"
                 >Limpiar Campos</b-button>
             </div>
@@ -278,12 +280,16 @@
                         <p class="font-weight-bold">Accesibilidad</p>
                     </div>
                     <div class="radio-Container py-1 d-flex justify-content-center">
-                        <b-form-radio-group
-                            v-model="form.accesibilidad"
-                            :options="accesibilidadOptions"
-                            name="text"
-                            stacked
-                        ></b-form-radio-group>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-accesibilidad"
+                                v-model="form.accesibilidad"
+                                :options="accesibilidadOptions"
+                                name="accesibilidad"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
                     </div>
                 </div>
                 <div class="accesibilidad">
@@ -292,12 +298,16 @@
                         <p class="font-weight-bold">Topografia</p>
                     </div>
                     <div class="radio-Container py-1 d-flex justify-content-center">
-                        <b-form-radio-group
-                            v-model="form.topografia"
-                            :options="topografiaOptions"
-                            name="text"
-                            stacked
-                        ></b-form-radio-group>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-topografia"
+                                v-model="form.topografia"
+                                :options="topografiaOptions"
+                                name="topografia"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
                     </div>
                 </div>
                 <div class="accesibilidad">
@@ -306,12 +316,16 @@
                         <p class="font-weight-bold">Ubicación</p>
                     </div>
                     <div class="radio-Container py-1 d-flex justify-content-center">
-                        <b-form-radio-group
-                            v-model="form.ubicacion"
-                            :options="ubicacionOptions"
-                            name="text"
-                            stacked
-                        ></b-form-radio-group>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-ubicacion"
+                                v-model="form.ubicacion"
+                                :options="ubicacionOptions"
+                                name="ubicacion"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
                     </div>
                 </div>
             </div>
@@ -406,7 +420,9 @@ export default {
             form: {
                 edificacion: null,
                 proyectos_estudios: [],
-                ubicacion: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
                 estado: '',
                 municipio: '',
                 codigoPostal: '',
@@ -415,8 +431,6 @@ export default {
                 areaNivelTipo: '',
                 numeroSotanos: '',
                 areaSotano: '',
-                accesibilidad: '',
-                topografia: '',
                 unicacion: '',
                 datos_contacto: {
                     nombreCompleto: '',
@@ -507,6 +521,23 @@ export default {
             this.form= {
                 edificacion: null,
                 proyectos_estudios: [],
+                ubicacion: '',
+                estado: '',
+                municipio: '',
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
+                numeroSotanos: '',
+                areaSotano: '',
+                accesibilidad: '',
+                topografia: '',
+                unicacion: '',
+                datos_contacto: {
+                    nombreCompleto: '',
+                    numeroTelefono: '',
+                    correoElectronico: '',
+                },
             }
         },
         addTipoEdificacion(){
