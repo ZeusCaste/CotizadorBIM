@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ModalEdificacionNueva from '../components/ModalEdificacionNueva.vue';
+import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
 
 export default {
     components: {
