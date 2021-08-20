@@ -27,6 +27,13 @@
                 ></b-icon>
             </b-button>
         </div>
+        <div class="m-4 pt-4">
+            <b-form-checkbox
+                v-model="edificacionesIndependientes"
+                value="true"
+                unchecked-value="false"
+            >Utilizar valores independientes para cada edificacion (Área de nivel y direcciones)</b-form-checkbox>
+        </div>
         <div>
             <div class="seccion bg-info">
                 <b-icon
@@ -395,6 +402,7 @@ export default {
     },
     data(){
         return{
+            edificacionesIndependientes: "false",
             form: {
                 edificacion: null,
                 proyectos_estudios: [],
