@@ -8,13 +8,13 @@
                 width="150"
             ></b-img>
         </div>
-        <h3 class="text-white">BIM Soluciones Tecnologicas</h3>
+        <h3 class="text-white">BIM Soluciones Tecnológicas</h3>
         <div>
             <router-link to="/" class="btn btn-outline-primary mx-2">Inicio</router-link>
-            <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-primary mx-2">Arma tu cotizacion</router-link>
+            <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-primary mx-2">Arma tu cotización</router-link>
             <router-link to="/colabora-con-nosotros" class="btn btn-outline-primary mx-2">Colabora con nosotros</router-link>
             <router-link to="/sobre-nosotros" class="btn btn-outline-primary mx-2">Sobre nosotros</router-link>
-            <router-link to="/iniciar-sesion" class="btn btn-outline-primary mx-2">Inicia Sesion</router-link>
+            <router-link to="/iniciar-sesion" class="btn btn-outline-primary mx-2">Inicia Sesión</router-link>
         </div>
     </div>
 </template>
