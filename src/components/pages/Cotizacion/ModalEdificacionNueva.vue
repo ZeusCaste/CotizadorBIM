@@ -6,6 +6,8 @@
     hide-header
   >
     <div>
+
+        <!-- Edificacion Nueva -->
         <div class="header">
             <b class="mt-1">
                 <b-icon
@@ -32,7 +34,7 @@
                 v-model="edificacionesIndependientes"
                 value="true"
                 unchecked-value="false"
-            >Utilizar valores independientes para cada edificacion (Área de nivel y direcciones)</b-form-checkbox>
+            >Utilizar valores independientes para cada edificación (Área de nivel y direcciones)</b-form-checkbox>
         </div>
         <div>
             <div class="seccion bg-info">
@@ -41,7 +43,7 @@
                     variant="white"
                     font-scale="2.5"
                 ></b-icon>
-                <p class="font-weight-bold text-white ml-3 mt-2">Tipo de Edificacion: </p>
+                <p class="font-weight-bold text-white ml-3 mt-2">Tipo de Edificación: </p>
             </div>
             <div class="subSeccion">
                 <div class="w-50">
@@ -50,7 +52,7 @@
                             icon="check-circle"
                             scale="1.5"
                         ></b-icon>
-                        <p class="ml-3 mt-3 font-weight-bold">Edificacion</p>
+                        <p class="ml-3 mt-3 font-weight-bold">Edificación</p>
                     </div>
                     <div class="radio-Container py-4 d-flex justify-content-center">
                         <b-form-radio-group
@@ -92,6 +94,8 @@
                 >Limpiar Campos</b-button>
             </div>
         </div>
+
+        <!-- Datos del Proyecto -->
         <div>
             <div class="seccion bg-info">
                 <b-icon
@@ -105,7 +109,7 @@
                 <div class="d-flex row">
                     <div v-for="(edificacion, index) in form.edificaciones" :key="index" class="edificacion-container">
                         <div class="info-edificacion">
-                            <h6 class="text-center text-white">Edificacion # {{index + 1}}</h6>
+                            <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
                             <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                             <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                         </div>
@@ -175,7 +179,7 @@
                                     scale="1"
                                     class="mr-1"
                                 ></b-icon>
-                                <label for="">Codigo Postal</label>
+                                <label for="">Código Postal</label>
                                 <b-form-input
                                     v-model="form.codigoPostal"
                                 ></b-form-input>
@@ -309,7 +313,7 @@
                     <div class="accesibilidad">
                         <div class="row d-flex justify-content-center">
                             <b-icon icon="image-fill" class="mt-1 mr-2"></b-icon>
-                            <p class="font-weight-bold">Topografia</p>
+                            <p class="font-weight-bold">Topografía</p>
                         </div>
                         <div class="radio-Container py-1 d-flex justify-content-center">
                             <b-form-group v-slot="{ ariaDescribedby }">
@@ -345,6 +349,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Datos de Contacto -->
         <div>
             <div class="seccion bg-info">
                 <b-icon
@@ -355,14 +361,13 @@
                 ></b-icon>
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Contacto: </p>
             </div>
-            <div class="container build my-3">
-                <div class="datos-contacto">
-                    <b-row class="mx-2">
+            <div class="mt-3">
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
                         <b-col>
                             <b-icon
                                 icon="person-bounding-box"
                                 scale="1"
-                                class="mr-1"
                             ></b-icon>
                             <label for="">Nombre completo</label>
                             <b-form-input
@@ -372,13 +377,12 @@
                         </b-col>
                     </b-row>
                 </div>
-                <div class="datos-contacto">
-                    <b-row class="mx-2">
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
                         <b-col>
                             <b-icon
                                 icon="phone-fill"
                                 scale="1"
-                                class="mr-1"
                             ></b-icon>
                             <label for="">Número de telefono</label>
                             <b-form-input
@@ -388,13 +392,12 @@
                         </b-col>
                     </b-row>
                 </div>
-                <div class="datos-contacto">
-                    <b-row class="mx-2">
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
                         <b-col>
                             <b-icon
                                 icon="envelope-fill"
                                 scale="1"
-                                class="mr-1"
                             ></b-icon>
                             <label for="">Correo Electrónico</label>
                             <b-form-input
@@ -413,7 +416,7 @@
                 block
                 style="height: 80px;"
             >
-                <b class="h1">ACEPTAR</b>
+                <b class="h1">COTIZAR</b>
             </b-button>
         </div>
     </div>

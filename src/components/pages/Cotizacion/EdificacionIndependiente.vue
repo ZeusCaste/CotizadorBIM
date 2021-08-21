@@ -54,7 +54,7 @@
                         scale="1"
                         class="mr-1"
                     ></b-icon>
-                    <label for="">Codigo Postal</label>
+                    <label for="">Código Postal</label>
                     <b-form-input
                         v-model="form.codigoPostal"
                     ></b-form-input>

@@ -11,7 +11,7 @@
                     @click="openModal()"
                 >
                     <p class="texto">
-                        EDIFICACION NUEVA
+                        EDIFICACÓN NUEVA
                     </p>
 
                    <p class="icono">
@@ -28,7 +28,7 @@
                     class="button btn-block"
                     variant="outline-info"
                 >
-                    <p class="texto">EDIFICACION EXISTENTE</p>
+                    <p class="texto">EDIFICACIÓN EXISTENTE</p>
                     <p class="icono">
                         <b-icon
                             icon="house"
