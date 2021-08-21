@@ -1,5 +1,5 @@
 <template>
-  <div class="conatiner w-50 px-4">
+  <div class="container px-4 py-3">
         <div>
             <b-row>
                 <b-col>

@@ -13,7 +13,7 @@
                     scale="2.5"
                 ></b-icon>
             </b>
-            <b class="title">Edificacion Nueva</b>
+            <b class="title">Edificación Nueva</b>
             <b-button
                 class="hide-modal"
                 size="sm"
@@ -102,7 +102,17 @@
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
             <div>
-                <div class="container build m-3">
+                <div class="d-flex row">
+                    <div v-for="(edificacion, index) in form.edificaciones" :key="index" class="edificacion-container">
+                        <div class="info-edificacion">
+                            <h6 class="text-center text-white">Edificacion # {{index + 1}}</h6>
+                            <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
+                            <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
+                        </div>
+                        <EdificacionIndependiente v-if="edificacionesIndependientes == 'true'" />
+                    </div>
+                </div>
+                <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
                     <div class="w-50">
                         <b-row>
                             <b-col>
@@ -138,7 +148,7 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="container build m-3">
+                <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
                     <div class="w-50">
                         <b-row>
                             <b-col>
@@ -173,7 +183,7 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="button-toggle">
+                <div v-if="edificacionesIndependientes == 'false'" class="button-toggle">
                     <b-button 
                         variant="dark"
                         size="md"
@@ -183,7 +193,7 @@
                         Areas del Proyecto
                     </b-button>
                 </div>
-                <div class="container build my-3">
+                <div v-if="edificacionesIndependientes == 'false'" class="container build my-3">
                     <div class="input-area-proyecto">
                         <b-row class="mx-2">
                             <b-col>
@@ -233,19 +243,19 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="button-toggle">
+                <div class="button-toggle mt-5">
                     <b-button 
                         variant="dark"
                         size="md"
                         class="w-50 button"
                         @click="sotanosToggle()"
                     >
-                        <b-icon icon="grid-1x2"></b-icon>
+                        <!-- <b-icon icon="grid-1x2"></b-icon> -->
                         Sotanos
-                        <b-icon :icon="sotanos ? 'caret-up-square' : 'caret-down-square'"></b-icon>
+                        <b-icon :icon="sotanos ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
                     </b-button>
                 </div>
-                <div class="build" v-if="sotanos">
+                <div class="build mb-5" v-if="sotanos">
                     <div class="input-area-proyecto">
                         <b-row class="mx-1">
                             <b-col>
@@ -277,7 +287,7 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="w-100 row my-4 d-flex justify-content-around">
+                <div class="w-100 row my-5 d-flex justify-content-around">
                     <div class="accesibilidad">
                         <div class="row d-flex justify-content-center">
                             <b-icon icon="app-indicator" class="mt-1 mr-2"></b-icon>
@@ -333,10 +343,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex row">
-                <EdificacionIndependiente />
-                <EdificacionIndependiente />
             </div>
         </div>
         <div>
@@ -453,27 +459,27 @@ export default {
                 },
             },
             edificacionOptions: [
-                {id: 1, text: "Vivienda Familiar", value: "vivienda_familiar"},
-                {id: 2, text: "Vivienda Adosada", value: "vivienda_adosada"},
-                {id: 3, text: "Vivienda Multifamiliar", value: "vivienda_multifamiliar"},
-                {id: 4, text: "Vivienda Residencial", value: "vivienda_residencial"},
-                {id: 5, text: "Oficinas y Locales", value: "oficinas_locales"},
-                {id: 6, text: "Comercial", value: "comercial"},
-                {id: 7, text: "Administrativo", value: "administrativo"},
-                {id: 8, text: "Estacionamientos", value: "estacionamientos"},
-                {id: 9, text: "Pública concurrencia", value: "publica_concurrencia"},
-                {id: 10, text: "Docencia", value: "docencia"},
-                {id: 11, text: "Salud", value: "salud"},
-                {id: 12, text: "Industrial", value: "industrial"},
+                {id: 1, text: "Vivienda Familiar", value: "Vivienda Familiar"},
+                {id: 2, text: "Vivienda Adosada", value: "Vivienda Adosada"},
+                {id: 3, text: "Vivienda Multifamiliar", value: "Vivienda Multifamiliar"},
+                {id: 4, text: "Vivienda Residencial", value: "Vivienda Residencial"},
+                {id: 5, text: "Oficinas y Locales", value: "Oficinas y Locales"},
+                {id: 6, text: "Comercial", value: "Comercial"},
+                {id: 7, text: "Administrativo", value: "Administrativo"},
+                {id: 8, text: "Estacionamientos", value: "Estacionamientos"},
+                {id: 9, text: "Pública concurrencia", value: "Pública concurrencia"},
+                {id: 10, text: "Docencia", value: "Docencia"},
+                {id: 11, text: "Salud", value: "Salud"},
+                {id: 12, text: "Industrial", value: "Industrial"},
             ],
             proyectos_estudiosOptions: [
-                {id: 1, text: "Arquitectura", value: "arquitectura"},
-                {id: 2, text: "Instalación hodrosanitaria", value: "instalacion_hidrosanitaria"},
-                {id: 3, text: "Instalación Eléctrica", value: "instalacion_electrica"},
-                {id: 4, text: "Aire acondicionado sin balance térmico", value: "arire_acondicionado_sin_balance_termico"},
-                {id: 5, text: "Aire acondicionado con balance térmico", value: "arire_acondicionado_con_balance_termico"},
-                {id: 6, text: "Ventilación y Extracción", value: "ventilacion_y_extraccion"},
-                {id: 7, text: "Voz y Datos", value: "voz_y_datos"},
+                {id: 1, text: "Arquitectura", value: "Arquitectura"},
+                {id: 2, text: "Instalación hodrosanitaria", value: "Instalación hodrosanitaria"},
+                {id: 3, text: "Instalación Eléctrica", value: "Instalación Eléctrica"},
+                {id: 4, text: "Aire acondicionado sin balance térmico", value: "Aire acondicionado sin balance térmico"},
+                {id: 5, text: "Aire acondicionado con balance térmico", value: "Aire acondicionado con balance térmico"},
+                {id: 6, text: "Ventilación y Extracción", value: "Ventilación y Extracción"},
+                {id: 7, text: "Voz y Datos", value: "Voz y Datos"},
             ],
             accesibilidadOptions: [
                 {id: 1, text: "Muy buena", value: "muy_buena"},
@@ -554,7 +560,26 @@ export default {
             }
         },
         addTipoEdificacion(){
-            console.log(this.form);
+            this.form.edificaciones.push({
+                edificacion: this.form.edificacion,
+                proyectos_estudios: this.form.proyectos_estudios,
+                calle: '',
+                estado: '',
+                municipio: '',
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+            });
+
+            this.form.edificacion= null;
+            this.form.proyectos_estudios= [];
+            console.log(this.form.edificaciones);
         },
         sotanosToggle(){
             this.sotanos= !this.sotanos;
@@ -649,5 +674,20 @@ export default {
 
     .accesibilidad{
         width: 30%;
+    }
+
+    .info-edificacion{
+        margin: 15px;
+        padding: 15px;
+        background-color: #07b3d9  ;
+        border-radius: 15px;
+    }
+
+    .edificacion-container{
+        border-width: 5px;
+        border: solid #07b3d9    2px;
+        margin: 1.5% 2.5%;
+        width: 45%;
+        border-radius: 10px;
     }
 </style>
