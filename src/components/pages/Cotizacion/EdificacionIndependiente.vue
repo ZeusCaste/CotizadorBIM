@@ -11,7 +11,7 @@
                     <label>Ubicación del proyecto</label>
                     <b-form-input 
                         placeholder="Calle 6 No. 517, Colonia Pascal"
-                        v-model="form.calle"
+                        v-model="edificacion.calle"
                     ></b-form-input>
                 </b-col>
             </b-row>
@@ -25,7 +25,7 @@
                     <label for="estado">Estado</label>
                     <b-form-select
                         id="estado"
-                        v-model="form.estado"
+                        v-model="edificacion.estado"
                         :options="estados"
                         @change="loadMunicipios()"
                     ></b-form-select>
@@ -41,7 +41,7 @@
                     <label for="municipio">Ciudad o Municipio</label>
                     <b-form-select
                         id="municipio"
-                        v-model="form.municipio"
+                        v-model="edificacion.municipio"
                         :options="municipiosSelected"
                         :disabled="setDisabledMunicipiosSelect"
                     ></b-form-select>
@@ -56,7 +56,7 @@
                     ></b-icon>
                     <label for="">Código Postal</label>
                     <b-form-input
-                        v-model="form.codigoPostal"
+                        v-model="edificacion.codigoPostal"
                     ></b-form-input>
                 </b-col>
             </b-row>
@@ -69,7 +69,7 @@
                     ></b-icon>
                     <label for="">Área de planta baja (m2)</label>
                     <b-form-input
-                        v-model="form.areaPlantaBaja"
+                        v-model="edificacion.areaPlantaBaja"
                         placeholder="Introduce are en m2"
                     ></b-form-input>
                 </b-col>
@@ -83,7 +83,7 @@
                     ></b-icon>
                     <label for="">Número de niveles tipo</label>
                     <b-form-input
-                        v-model="form.numeroNiveles"
+                        v-model="edificacion.numeroNiveles"
                         placeholder="2"
                     ></b-form-input>
                 </b-col>
@@ -97,12 +97,13 @@
                     ></b-icon>
                     <label for="">Área del nivel tipo (m2)</label>
                     <b-form-input
-                        v-model="form.areaNivelTipo"
+                        v-model="edificacion.areaNivelTipo"
                         placeholder="Introduce el area en m2"
                     ></b-form-input>
                 </b-col>
             </b-row>
         </div>
+        {{form}}
   </div>
 </template>
 
@@ -111,41 +112,51 @@ import {estados} from '../../../db/estados';
 import {municipios} from '../../../db/municipios';
 
 export default {
+    props: {
+        edificacion: Object
+    },
+    created(){
+        this.form = Object.assign(this.form, this.edificacion);
+    },
     data(){
         return{
             estados: estados,
             municipiosSelected: [],
             municipios: municipios,
             form: {
+                edificacion: null,
+                proyectos_estudios: [],
                 calle: '',
                 estado: null,
                 municipio: null,
-                codigo_postal: '',
+                codigoPostal: '',
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
+                // numeroSotanos: '',
+                // areaSotano: '',
             }
         }
     },
     methods: {
         loadMunicipios(){
-            this.form.municipio= null;
+            this.edificacion.municipio= null;
             this.municipiosSelected= [{"text": "Selecciona tu municipio", "value": null}];
 
             this.municipios.map((estado)=> {
                 for(let name in estado){
-                    if(name == this.form.estado){
+                    if(name == this.edificacion.estado){
                         estado[name].map((municipio)=> {
                             this.municipiosSelected.push({"text": municipio, "value": municipio});
                         })
                     }
                 }
             })
-        },
+        },        
     },
     computed: {
         setDisabledMunicipiosSelect(){
-            return this.form.estado ? false : true;
+            return this.edificacion.estado ? false : true;
         }
     }
 }

@@ -29,13 +29,6 @@
                 ></b-icon>
             </b-button>
         </div>
-        <div class="m-4 pt-4">
-            <b-form-checkbox
-                v-model="edificacionesIndependientes"
-                value="true"
-                unchecked-value="false"
-            >Utilizar valores independientes para cada edificación (Área de nivel y direcciones)</b-form-checkbox>
-        </div>
         <div>
             <div class="seccion bg-info">
                 <b-icon
@@ -93,6 +86,13 @@
                     @click="cleanFields()"
                 >Limpiar Campos</b-button>
             </div>
+            <div class="text-center my-4">
+                <b-form-checkbox
+                    v-model="edificacionesIndependientes"
+                    value="true"
+                    unchecked-value="false"
+                >Utilizar valores independientes para cada edificación (Área de nivel y direcciones)</b-form-checkbox>
+            </div>
         </div>
 
         <!-- Datos del Proyecto -->
@@ -107,13 +107,16 @@
             </div>
             <div>
                 <div class="d-flex row">
-                    <div v-for="(edificacion, index) in form.edificaciones" :key="index" class="edificacion-container">
+                    <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-container">
                         <div class="info-edificacion">
                             <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
                             <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                             <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                         </div>
-                        <EdificacionIndependiente v-if="edificacionesIndependientes == 'true'" />
+                        <EdificacionIndependiente 
+                            v-if="edificacionesIndependientes == 'true'"
+                            :edificacion="edificacion"
+                        />
                     </div>
                 </div>
                 <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
@@ -269,7 +272,7 @@
                                 ></b-icon>
                                 <label for="">Número de sotanos</label>
                                 <b-form-input
-                                    v-model="form.numeroSotanos"
+                                    v-model="edificacionNueva.numeroSotanos"
                                     placeholder="2"
                                 ></b-form-input>
                             </b-col>
@@ -284,7 +287,7 @@
                                 ></b-icon>
                                 <label for="">Área de sotano (m2)</label>
                                 <b-form-input
-                                    v-model="form.areaSotano"
+                                    v-model="edificacionNueva.areaSotano"
                                     placeholder="Introduce el area en m2"
                                 ></b-form-input>
                             </b-col>
@@ -301,7 +304,7 @@
                             <b-form-group v-slot="{ ariaDescribedby }">
                                 <b-form-radio-group
                                     id="radio-group-accesibilidad"
-                                    v-model="form.accesibilidad"
+                                    v-model="edificacionNueva.accesibilidad"
                                     :options="accesibilidadOptions"
                                     name="accesibilidad"
                                     stacked
@@ -319,7 +322,7 @@
                             <b-form-group v-slot="{ ariaDescribedby }">
                                 <b-form-radio-group
                                     id="radio-group-topografia"
-                                    v-model="form.topografia"
+                                    v-model="edificacionNueva.topografia"
                                     :options="topografiaOptions"
                                     name="topografia"
                                     stacked
@@ -337,7 +340,7 @@
                             <b-form-group v-slot="{ ariaDescribedby }">
                                 <b-form-radio-group
                                     id="radio-group-ubicacion"
-                                    v-model="form.ubicacion"
+                                    v-model="edificacionNueva.ubicacion"
                                     :options="ubicacionOptions"
                                     name="ubicacion"
                                     stacked
@@ -371,7 +374,7 @@
                             ></b-icon>
                             <label for="">Nombre completo</label>
                             <b-form-input
-                                v-model="form.datos_contacto.nombreCompleto"
+                                v-model="edificacionNueva.datos_contacto.nombreCompleto"
                                 placeholder="Francisco Martinez Del Campo"
                             ></b-form-input>
                         </b-col>
@@ -386,7 +389,7 @@
                             ></b-icon>
                             <label for="">Número de telefono</label>
                             <b-form-input
-                                v-model="form.datos_contacto.numeroTelefono"
+                                v-model="edificacionNueva.datos_contacto.numeroTelefono"
                                 placeholder="+1 3004005000"
                             ></b-form-input>
                         </b-col>
@@ -401,7 +404,7 @@
                             ></b-icon>
                             <label for="">Correo Electrónico</label>
                             <b-form-input
-                                v-model="form.datos_contacto.correoElectronico"
+                                v-model="edificacionNueva.datos_contacto.correoElectronico"
                                 placeholder="ejemplo@ejemplo.com"
                             ></b-form-input>
                         </b-col>
@@ -415,6 +418,7 @@
                 variant="dark"
                 block
                 style="height: 80px;"
+                @click="iniciarCotizacion()"
             >
                 <b class="h1">COTIZAR</b>
             </b-button>
@@ -454,12 +458,20 @@ export default {
                 ubicacion: null,
                 accesibilidad: null,
                 topografia: null,
+            },
+            edificacionNueva: {
                 edificaciones: [],
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
                 datos_contacto: {
                     nombreCompleto: '',
                     numeroTelefono: '',
                     correoElectronico: '',
                 },
+
             },
             edificacionOptions: [
                 {id: 1, text: "Vivienda Familiar", value: "Vivienda Familiar"},
@@ -477,7 +489,7 @@ export default {
             ],
             proyectos_estudiosOptions: [
                 {id: 1, text: "Arquitectura", value: "Arquitectura"},
-                {id: 2, text: "Instalación hodrosanitaria", value: "Instalación hodrosanitaria"},
+                {id: 2, text: "Instalación hidrosanitaria", value: "Instalación hidrosanitaria"},
                 {id: 3, text: "Instalación Eléctrica", value: "Instalación Eléctrica"},
                 {id: 4, text: "Aire acondicionado sin balance térmico", value: "Aire acondicionado sin balance térmico"},
                 {id: 5, text: "Aire acondicionado con balance térmico", value: "Aire acondicionado con balance térmico"},
@@ -560,32 +572,43 @@ export default {
                     numeroTelefono: '',
                     correoElectronico: '',
                 },
-            }
+            };
         },
         addTipoEdificacion(){
-            this.form.edificaciones.push({
+            this.edificacionNueva.edificaciones.push({
                 edificacion: this.form.edificacion,
                 proyectos_estudios: this.form.proyectos_estudios,
                 calle: '',
-                estado: '',
-                municipio: '',
+                estado: null,
+                municipio: null,
                 codigoPostal: '',
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
-                numeroSotanos: '',
-                areaSotano: '',
-                ubicacion: null,
-                accesibilidad: null,
-                topografia: null,
+                // numeroSotanos: '',
+                // areaSotano: '',
             });
 
             this.form.edificacion= null;
             this.form.proyectos_estudios= [];
-            console.log(this.form.edificaciones);
+            console.log(this.edificacionNueva.edificaciones);
         },
         sotanosToggle(){
             this.sotanos= !this.sotanos;
+        },
+        iniciarCotizacion(){
+            if(this.edificacionesIndependientes == "false"){
+                this.edificacionNueva.edificaciones.forEach((edificacion)=> {
+                    edificacion.calle= this.form.calle;
+                    edificacion.estado= this.form.estado;
+                    edificacion.municipio= this.form.municipio;
+                    edificacion.codigoPostal= this.form.codigoPostal;
+                    edificacion.areaPlantaBaja= this.form.areaPlantaBaja;
+                    edificacion.numeroNiveles= this.form.numeroNiveles;
+                    edificacion.areaNivelTipo= this.form.areaNivelTipo;
+                });
+            }
+            console.log(this.edificacionNueva);
         }
     },
     computed: {
