@@ -109,7 +109,17 @@
                 <div class="d-flex row">
                     <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-container">
                         <div class="info-edificacion">
-                            <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+                            <div class="row">
+                                <b-button 
+                                    class="delete-button" 
+                                    variant="danger" 
+                                    size="sm"
+                                    @click="deleteEdificacion(index)"
+                                >
+                                    <b-icon icon="trash" variant="white"></b-icon>
+                                </b-button>
+                                <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+                            </div>
                             <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                             <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                         </div>
@@ -596,6 +606,11 @@ export default {
         sotanosToggle(){
             this.sotanos= !this.sotanos;
         },
+        deleteEdificacion(position){
+            this.edificacionNueva.edificaciones= this.edificacionNueva.edificaciones.filter((edificacion, index)=> (
+                index !== position
+            ))
+        },
         iniciarCotizacion(){
             if(this.edificacionesIndependientes == "false"){
                 this.edificacionNueva.edificaciones.forEach((edificacion)=> {
@@ -715,5 +730,11 @@ export default {
         margin: 1.5% 2.5%;
         width: 45%;
         border-radius: 10px;
+    }
+
+    .delete-button{
+        position: relative;
+        left: 280px;
+        bottom: 5px;
     }
 </style>
