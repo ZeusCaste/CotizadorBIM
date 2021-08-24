@@ -21,7 +21,7 @@
             <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-primary mx-2">Arma tu cotizacion</router-link>
             <router-link to="/colabora-con-nosotros" class="btn btn-outline-primary mx-2">Colabora con nosotros</router-link>
             <router-link to="/sobre-nosotros" class="btn btn-outline-primary mx-2">Sobre nosotros</router-link>
-            <router-link to="/iniciar-sesion" class="btn btn-outline-primary mx-2">Inicia Sesion</router-link>
+            <router-link to="/iniciar-sesion" class="btn btn-outline-primary mx-2">Inicia Sesión</router-link>
         </div>
     </div>
 </template>

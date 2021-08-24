@@ -1,0 +1,740 @@
+<template>
+  <b-modal
+    ref="edificacion-nueva"
+    size="lg"
+    hide-footer
+    hide-header
+  >
+    <div>
+
+        <!-- Edificacion Nueva -->
+        <div class="header">
+            <b class="mt-1">
+                <b-icon
+                    icon="clipboard-plus"
+                    scale="2.5"
+                ></b-icon>
+            </b>
+            <b class="title">Edificación Nueva</b>
+            <b-button
+                class="hide-modal"
+                size="sm"
+                variant="outline-info"
+                @click="hideModal()"
+            >
+                <b-icon
+                    icon="x-circle-fill"
+                    variant="dark"
+                    scale="2"
+                ></b-icon>
+            </b-button>
+        </div>
+        <div>
+            <div class="seccion bg-info">
+                <b-icon
+                    icon="building"
+                    variant="white"
+                    font-scale="2.5"
+                ></b-icon>
+                <p class="font-weight-bold text-white ml-3 mt-2">Tipo de Edificación: </p>
+            </div>
+            <div class="subSeccion">
+                <div class="w-50">
+                    <div class="build">
+                        <b-icon
+                            icon="check-circle"
+                            scale="1.5"
+                        ></b-icon>
+                        <p class="ml-3 mt-3 font-weight-bold">Edificación</p>
+                    </div>
+                    <div class="radio-Container py-4 d-flex justify-content-center">
+                        <b-form-radio-group
+                            v-model="form.edificacion"
+                            :options="edificacionOptions"
+                            name="text"
+                            stacked
+                        ></b-form-radio-group>
+                    </div>
+                </div>
+                <div class="w-50">
+                    <div class="build">
+                        <b-icon
+                            icon="ui-checks"
+                            scale="1.5"
+                        ></b-icon>
+                        <p class="ml-3 mt-3 font-weight-bold">Proyectos y/o Estudios</p>
+                    </div>
+                    <div class="radio-Container py-4 d-flex justify-content-center">
+                        <b-form-checkbox-group
+                            v-model="form.proyectos_estudios"
+                            :options="proyectos_estudiosOptions"
+                            name="text"
+                            stacked
+                        ></b-form-checkbox-group>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <b-button 
+                    variant="success"
+                    :disabled="form.proyectos_estudios.length == 0 || form.edificacion == null"
+                    @click="addTipoEdificacion()"
+                >Agregar</b-button>
+                <b-button 
+                    variant="danger"
+                    :disabled="form.proyectos_estudios.length == 0 && form.edificacion == null"
+                    @click="cleanFields()"
+                >Limpiar Campos</b-button>
+            </div>
+            <div class="text-center my-4">
+                <b-form-checkbox
+                    v-model="edificacionesIndependientes"
+                    value="true"
+                    unchecked-value="false"
+                >Utilizar valores independientes para cada edificación (Área de nivel y direcciones)</b-form-checkbox>
+            </div>
+        </div>
+
+        <!-- Datos del Proyecto -->
+        <div>
+            <div class="seccion bg-info">
+                <b-icon
+                    icon="clipboard-data"
+                    variant="white"
+                    font-scale="2.5"
+                ></b-icon>
+                <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
+            </div>
+            <div>
+                <div class="d-flex row">
+                    <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-container">
+                        <div class="info-edificacion">
+                            <div class="row">
+                                <b-button 
+                                    class="delete-button" 
+                                    variant="danger" 
+                                    size="sm"
+                                    @click="deleteEdificacion(index)"
+                                >
+                                    <b-icon icon="trash" variant="white"></b-icon>
+                                </b-button>
+                                <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+                            </div>
+                            <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
+                            <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
+                        </div>
+                        <EdificacionIndependiente 
+                            v-if="edificacionesIndependientes == 'true'"
+                            :edificacion="edificacion"
+                        />
+                    </div>
+                </div>
+                <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
+                    <div class="w-50">
+                        <b-row>
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label>Ubicación del proyecto</label>
+                                <b-form-input 
+                                    placeholder="Calle 6 No. 517, Colonia Pascal"
+                                    v-model="form.calle"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div class="w-50">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="estado">Estado</label>
+                                <b-form-select
+                                    id="estado"
+                                    v-model="form.estado"
+                                    :options="estados"
+                                    @change="loadMunicipios()"
+                                ></b-form-select>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
+                    <div class="w-50">
+                        <b-row>
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="municipio">Ciudad o Municipio</label>
+                                <b-form-select
+                                    id="municipio"
+                                    v-model="form.municipio"
+                                    :options="municipiosSelected"
+                                    :disabled="setDisabledMunicipiosSelect"
+                                ></b-form-select>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div class="w-50">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="">Código Postal</label>
+                                <b-form-input
+                                    v-model="form.codigoPostal"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div v-if="edificacionesIndependientes == 'false'" class="button-toggle">
+                    <b-button 
+                        variant="dark"
+                        size="md"
+                        class="w-50 button"
+                    >
+                        <b-icon icon="columns-gap"></b-icon>
+                        Areas del Proyecto
+                    </b-button>
+                </div>
+                <div v-if="edificacionesIndependientes == 'false'" class="container build my-3">
+                    <div class="input-area-proyecto">
+                        <b-row class="mx-2">
+                            <b-col>
+                                <b-icon
+                                    icon="bounding-box"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="">Área de planta baja (m2)</label>
+                                <b-form-input
+                                    v-model="form.areaPlantaBaja"
+                                    placeholder="Introduce are en m2"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div class="input-area-proyecto">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="bricks"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="">Número de niveles tipo</label>
+                                <b-form-input
+                                    v-model="form.numeroNiveles"
+                                    placeholder="2"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div class="input-area-proyecto">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="bounding-box-circles"
+                                    scale="1"
+                                    class="mr-1"
+                                ></b-icon>
+                                <label for="">Área del nivel tipo (m2)</label>
+                                <b-form-input
+                                    v-model="form.areaNivelTipo"
+                                    placeholder="Introduce el area en m2"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div class="button-toggle mt-5">
+                    <b-button 
+                        variant="dark"
+                        size="md"
+                        class="w-50 button"
+                        @click="sotanosToggle()"
+                    >
+                        <!-- <b-icon icon="grid-1x2"></b-icon> -->
+                        Sotanos
+                        <b-icon :icon="sotanos ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
+                    </b-button>
+                </div>
+                <div class="build mb-5" v-if="sotanos">
+                    <div class="input-area-proyecto">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                ></b-icon>
+                                <label for="">Número de sotanos</label>
+                                <b-form-input
+                                    v-model="edificacionNueva.numeroSotanos"
+                                    placeholder="2"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                    <div class="input-area-proyecto">
+                        <b-row class="mx-1">
+                            <b-col>
+                                <b-icon
+                                    icon="geo-alt-fill"
+                                    scale="1"
+                                ></b-icon>
+                                <label for="">Área de sotano (m2)</label>
+                                <b-form-input
+                                    v-model="edificacionNueva.areaSotano"
+                                    placeholder="Introduce el area en m2"
+                                ></b-form-input>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div class="w-100 row my-5 d-flex justify-content-around">
+                    <div class="accesibilidad">
+                        <div class="row d-flex justify-content-center">
+                            <b-icon icon="app-indicator" class="mt-1 mr-2"></b-icon>
+                            <p class="font-weight-bold">Accesibilidad</p>
+                        </div>
+                        <div class="radio-Container py-1 d-flex justify-content-center">
+                            <b-form-group v-slot="{ ariaDescribedby }">
+                                <b-form-radio-group
+                                    id="radio-group-accesibilidad"
+                                    v-model="edificacionNueva.accesibilidad"
+                                    :options="accesibilidadOptions"
+                                    name="accesibilidad"
+                                    stacked
+                                    :aria-describedby="ariaDescribedby"
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </div>
+                    </div>
+                    <div class="accesibilidad">
+                        <div class="row d-flex justify-content-center">
+                            <b-icon icon="image-fill" class="mt-1 mr-2"></b-icon>
+                            <p class="font-weight-bold">Topografía</p>
+                        </div>
+                        <div class="radio-Container py-1 d-flex justify-content-center">
+                            <b-form-group v-slot="{ ariaDescribedby }">
+                                <b-form-radio-group
+                                    id="radio-group-topografia"
+                                    v-model="edificacionNueva.topografia"
+                                    :options="topografiaOptions"
+                                    name="topografia"
+                                    stacked
+                                    :aria-describedby="ariaDescribedby"
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </div>
+                    </div>
+                    <div class="accesibilidad">
+                        <div class="row d-flex justify-content-center">
+                            <b-icon icon="geo-fill" class="mt-1 mr-2"></b-icon>
+                            <p class="font-weight-bold">Ubicación</p>
+                        </div>
+                        <div class="radio-Container py-1 d-flex justify-content-center">
+                            <b-form-group v-slot="{ ariaDescribedby }">
+                                <b-form-radio-group
+                                    id="radio-group-ubicacion"
+                                    v-model="edificacionNueva.ubicacion"
+                                    :options="ubicacionOptions"
+                                    name="ubicacion"
+                                    stacked
+                                    :aria-describedby="ariaDescribedby"
+                                ></b-form-radio-group>
+                            </b-form-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos de Contacto -->
+        <div>
+            <div class="seccion bg-info">
+                <b-icon
+                    icon="person-badge"
+                    variant="white"
+                    font-scale="2.5"
+                    class="mr-1"
+                ></b-icon>
+                <p class="font-weight-bold text-white ml-3 mt-2">Datos del Contacto: </p>
+            </div>
+            <div class="mt-3">
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
+                        <b-col>
+                            <b-icon
+                                icon="person-bounding-box"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Nombre completo</label>
+                            <b-form-input
+                                v-model="edificacionNueva.datos_contacto.nombreCompleto"
+                                placeholder="Francisco Martinez Del Campo"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
+                        <b-col>
+                            <b-icon
+                                icon="phone-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Número de telefono</label>
+                            <b-form-input
+                                v-model="edificacionNueva.datos_contacto.numeroTelefono"
+                                placeholder="+1 3004005000"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+                <div class="datos-contacto m-auto">
+                    <b-row class="mb-4">
+                        <b-col>
+                            <b-icon
+                                icon="envelope-fill"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Correo Electrónico</label>
+                            <b-form-input
+                                v-model="edificacionNueva.datos_contacto.correoElectronico"
+                                placeholder="ejemplo@ejemplo.com"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <b-button
+                size="lg"
+                variant="dark"
+                block
+                style="height: 80px;"
+                @click="iniciarCotizacion()"
+            >
+                <b class="h1">COTIZAR</b>
+            </b-button>
+        </div>
+    </div>
+  </b-modal>
+</template>
+
+<script>
+import {estados} from '../../../db/estados';
+import {municipios} from '../../../db/municipios';
+import EdificacionIndependiente from './EdificacionIndependiente.vue';
+
+export default {
+    name: 'EdificacionNueva',
+    components: {
+        EdificacionIndependiente
+    },
+    created(){
+        this.eventHub.$on('create', this.onCreateCotizacion);
+    },
+    data(){
+        return{
+            edificacionesIndependientes: "false",
+            form: {
+                edificacion: null,
+                proyectos_estudios: [],
+                calle: '',
+                estado: null,
+                municipio: null,
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+            },
+            edificacionNueva: {
+                edificaciones: [],
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+                datos_contacto: {
+                    nombreCompleto: '',
+                    numeroTelefono: '',
+                    correoElectronico: '',
+                },
+
+            },
+            edificacionOptions: [
+                {id: 1, text: "Vivienda Familiar", value: "Vivienda Familiar"},
+                {id: 2, text: "Vivienda Adosada", value: "Vivienda Adosada"},
+                {id: 3, text: "Vivienda Multifamiliar", value: "Vivienda Multifamiliar"},
+                {id: 4, text: "Vivienda Residencial", value: "Vivienda Residencial"},
+                {id: 5, text: "Oficinas y Locales", value: "Oficinas y Locales"},
+                {id: 6, text: "Comercial", value: "Comercial"},
+                {id: 7, text: "Administrativo", value: "Administrativo"},
+                {id: 8, text: "Estacionamientos", value: "Estacionamientos"},
+                {id: 9, text: "Pública concurrencia", value: "Pública concurrencia"},
+                {id: 10, text: "Docencia", value: "Docencia"},
+                {id: 11, text: "Salud", value: "Salud"},
+                {id: 12, text: "Industrial", value: "Industrial"},
+            ],
+            proyectos_estudiosOptions: [
+                {id: 1, text: "Arquitectura", value: "Arquitectura"},
+                {id: 2, text: "Instalación hidrosanitaria", value: "Instalación hidrosanitaria"},
+                {id: 3, text: "Instalación Eléctrica", value: "Instalación Eléctrica"},
+                {id: 4, text: "Aire acondicionado sin balance térmico", value: "Aire acondicionado sin balance térmico"},
+                {id: 5, text: "Aire acondicionado con balance térmico", value: "Aire acondicionado con balance térmico"},
+                {id: 6, text: "Ventilación y Extracción", value: "Ventilación y Extracción"},
+                {id: 7, text: "Voz y Datos", value: "Voz y Datos"},
+            ],
+            accesibilidadOptions: [
+                {id: 1, text: "Muy buena", value: "muy_buena"},
+                {id: 2, text: "Buena", value: "buena"},
+                {id: 3, text: "Normal", value: "normal"},
+                {id: 4, text: "Dificil", value: "dificil"},
+                {id: 5, text: "Muy dificil", value: "muy_dificil"},
+            ],
+            topografiaOptions: [
+                {id: 1, text: "Plana", value: 'plana'},
+                {id: 2, text: "Con desnivel minimo", value: 'desnivel_minimo'},
+                {id: 3, text: "Con desnivel pronunciado", value: 'desnivel_pronunciado'},
+                {id: 4, text: "Accidentada", value: 'accidentada'},
+                {id: 5, text: "Muy accidentada", value: 'muy_accidentada'},
+            ],
+            ubicacionOptions: [
+                {id: 1, text: "Entre colindancias", value: 'entre_colindancias'},
+                {id: 2, text: "En esquina", value: 'en_esquina'},
+                {id: 3, text: "Aislada", value: 'aislada'},
+            ],
+            estados: estados,
+            municipiosSelected: [],
+            municipios: municipios,
+            sotanos: false,
+        }
+    },
+    methods: {
+        onCreateCotizacion(){
+            this.showModal();
+        },
+        showModal(){
+            if(typeof this.$refs["edificacion-nueva"] !== "undefined"){
+                this.$refs["edificacion-nueva"].show();
+            }
+        },
+        hideModal(){
+            if(typeof this.$refs["edificacion-nueva"] !== "undefined"){
+                this.$refs["edificacion-nueva"].hide();
+            }
+        },
+        loadMunicipios(){
+            this.form.municipio= null;
+            this.municipiosSelected= [{"text": "Selecciona tu municipio", "value": null}];
+
+            this.municipios.map((estado)=> {
+                for(let name in estado){
+                    if(name == this.form.estado){
+                        estado[name].map((municipio)=> {
+                            this.municipiosSelected.push({"text": municipio, "value": municipio});
+                        })
+                    }
+                }
+            })
+        },
+        cleanFields(){
+            this.edificacionesIndependientes= "false";
+            this.form= {
+                edificacion: null,
+                proyectos_estudios: [],
+                calle: '',
+                estado: '',
+                municipio: '',
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
+                edificaciones: [],
+                datos_contacto: {
+                    nombreCompleto: '',
+                    numeroTelefono: '',
+                    correoElectronico: '',
+                },
+            };
+        },
+        addTipoEdificacion(){
+            this.edificacionNueva.edificaciones.push({
+                edificacion: this.form.edificacion,
+                proyectos_estudios: this.form.proyectos_estudios,
+                calle: '',
+                estado: null,
+                municipio: null,
+                codigoPostal: '',
+                areaPlantaBaja: '',
+                numeroNiveles: '',
+                areaNivelTipo: '',
+                // numeroSotanos: '',
+                // areaSotano: '',
+            });
+
+            this.form.edificacion= null;
+            this.form.proyectos_estudios= [];
+            console.log(this.edificacionNueva.edificaciones);
+        },
+        sotanosToggle(){
+            this.sotanos= !this.sotanos;
+        },
+        deleteEdificacion(position){
+            this.edificacionNueva.edificaciones= this.edificacionNueva.edificaciones.filter((edificacion, index)=> (
+                index !== position
+            ))
+        },
+        iniciarCotizacion(){
+            if(this.edificacionesIndependientes == "false"){
+                this.edificacionNueva.edificaciones.forEach((edificacion)=> {
+                    edificacion.calle= this.form.calle;
+                    edificacion.estado= this.form.estado;
+                    edificacion.municipio= this.form.municipio;
+                    edificacion.codigoPostal= this.form.codigoPostal;
+                    edificacion.areaPlantaBaja= this.form.areaPlantaBaja;
+                    edificacion.numeroNiveles= this.form.numeroNiveles;
+                    edificacion.areaNivelTipo= this.form.areaNivelTipo;
+                });
+            }
+            console.log(this.edificacionNueva);
+        }
+    },
+    computed: {
+        setDisabledMunicipiosSelect(){
+            return this.form.estado ? false : true;
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+    .header{
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .seccion {
+        height: 70px;
+        display: flex;
+        flex-direction: row;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 15px;
+        margin-left: -16px;
+        margin-right: -16px;
+    }
+
+    .subSeccion {
+        display: flex;
+        flex-direction: row;
+        margin: 15px 10px;
+    }
+
+    .build {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hide-modal{
+        margin-bottom: 15px;
+        border-width: 0px;
+    }
+
+    .title{
+        font-size: 25px;
+    }
+
+    .footer{
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .radio-Container{
+        display: flex;
+        justify-content: center;
+    }
+
+    .button-container{
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+    }
+
+    .input-area-proyecto, .datos-contacto{
+        width: 50%;
+        margin-top: 15px;
+    }
+
+    .button-toggle{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .button{
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .accesibilidad{
+        width: 30%;
+    }
+
+    .info-edificacion{
+        margin: 15px;
+        padding: 15px;
+        background-color: #07b3d9  ;
+        border-radius: 15px;
+    }
+
+    .edificacion-container{
+        border-width: 5px;
+        border: solid #07b3d9    2px;
+        margin: 1.5% 2.5%;
+        width: 45%;
+        border-radius: 10px;
+    }
+
+    .delete-button{
+        position: relative;
+        left: 280px;
+        bottom: 5px;
+    }
+</style>
