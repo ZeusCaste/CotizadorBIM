@@ -1,16 +1,23 @@
 <template>
     <div class="navbar navbar-dark" style="background-color: #000">
-        <div>
+        <div class="ml-3">
             <b-img 
-                :src="require('../../media/images/BIM-logo-1.jpg')" 
+                :src="require('../../media/images/BIM-logo-2.jpg')" 
                 fluid 
                 alt="Responsive image"
-                width="150"
+                width="125"
+            ></b-img>
+            <b-img 
+                :src="require('../../media/images/LetrasLOGO.jpg')" 
+                fluid 
+                alt="Responsive image"
+                width="250"
             ></b-img>
         </div>
-        <h3 class="text-white">BIM Soluciones Tecnologicas</h3>
         <div>
-            <router-link to="/" class="btn btn-outline-primary mx-2">Inicio</router-link>
+            
+        </div><!--h3 class="text-white">BIM Soluciones Tecnologicas</h3-->
+        <div>
             <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-primary mx-2">Arma tu cotizacion</router-link>
             <router-link to="/colabora-con-nosotros" class="btn btn-outline-primary mx-2">Colabora con nosotros</router-link>
             <router-link to="/sobre-nosotros" class="btn btn-outline-primary mx-2">Sobre nosotros</router-link>
