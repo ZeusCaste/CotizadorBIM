@@ -260,7 +260,7 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="button-toggle mt-5">
+                <div v-if="edificacionesIndependientes == 'false'" class="button-toggle mt-5">
                     <b-button 
                         variant="dark"
                         size="md"
@@ -272,12 +272,12 @@
                         <b-icon :icon="sotanos ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
                     </b-button>
                 </div>
-                <div class="build mb-5" v-if="sotanos">
+                <div class="build mb-5" v-if="sotanos && edificacionesIndependientes == 'false'">
                     <div class="input-area-proyecto">
                         <b-row class="mx-1">
                             <b-col>
                                 <b-icon
-                                    icon="geo-alt-fill"
+                                    icon="bricks"
                                     scale="1"
                                 ></b-icon>
                                 <label for="">Número de sotanos</label>
@@ -292,7 +292,7 @@
                         <b-row class="mx-1">
                             <b-col>
                                 <b-icon
-                                    icon="geo-alt-fill"
+                                    icon="bounding-box-circles"
                                     scale="1"
                                 ></b-icon>
                                 <label for="">Área de sotano (m2)</label>
@@ -304,7 +304,7 @@
                         </b-row>
                     </div>
                 </div>
-                <div class="w-100 row my-5 d-flex justify-content-around">
+                <div v-if="edificacionesIndependientes == 'false'" class="w-100 row my-5 d-flex justify-content-around">
                     <div class="accesibilidad">
                         <div class="row d-flex justify-content-center">
                             <b-icon icon="app-indicator" class="mt-1 mr-2"></b-icon>
@@ -471,11 +471,6 @@ export default {
             },
             edificacionNueva: {
                 edificaciones: [],
-                numeroSotanos: '',
-                areaSotano: '',
-                ubicacion: null,
-                accesibilidad: null,
-                topografia: null,
                 datos_contacto: {
                     nombreCompleto: '',
                     numeroTelefono: '',
@@ -595,12 +590,16 @@ export default {
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
-                // numeroSotanos: '',
-                // areaSotano: '',
+                numeroSotanos: '',
+                areaSotano: '',
+                ubicacion: null,
+                accesibilidad: null,
+                topografia: null,
             });
 
             this.form.edificacion= null;
             this.form.proyectos_estudios= [];
+
             console.log(this.edificacionNueva.edificaciones);
         },
         sotanosToggle(){
@@ -621,6 +620,11 @@ export default {
                     edificacion.areaPlantaBaja= this.form.areaPlantaBaja;
                     edificacion.numeroNiveles= this.form.numeroNiveles;
                     edificacion.areaNivelTipo= this.form.areaNivelTipo;
+                    edificacion.numeroSotanos= this.form.numeroSotanos;
+                    edificacion.areaSotano= this.form.areaSotano;
+                    edificacion.accesibilidad= this.form.accesibilidad;
+                    edificacion.ubicacion= this.form.ubicacion;
+                    edificacion.topografia= this.form.topografia;
                 });
             }
             console.log(this.edificacionNueva);

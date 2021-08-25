@@ -102,8 +102,104 @@
                     ></b-form-input>
                 </b-col>
             </b-row>
+            <div class="my-5">
+                <div class="text-center">
+                    <b-form-checkbox
+                        v-model="sotanos"
+                        value="true"
+                        unchecked-value="false"
+                    >Sotanos</b-form-checkbox>
+                </div>
+                <div v-if="sotanos === 'true'">
+                    <b-row>
+                        <b-col>
+                            <b-icon
+                                icon="bricks"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Número de sotanos</label>
+                            <b-form-input
+                                v-model="edificacion.numeroSotanos"
+                                placeholder="2"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <b-icon
+                                icon="bounding-box-circles"
+                                scale="1"
+                            ></b-icon>
+                            <label for="">Área de sotano (m2)</label>
+                            <b-form-input
+                                v-model="edificacion.areaSotano"
+                                placeholder="Introduce el area en m2"
+                            ></b-form-input>
+                        </b-col>
+                    </b-row>
+                </div>
+            </div>
+            <div>
+                <div class="row d-flex justify-content-center">
+                    <b-icon icon="app-indicator" class="mt-1 mr-2"></b-icon>
+                    <p class="font-weight-bold">Accesibilidad</p>
+                </div>
+                <b-row>
+                    <b-col>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-accesibilidad"
+                                v-model="edificacion.accesibilidad"
+                                :options="accesibilidadOptions"
+                                name="accesibilidad"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+            </div>
+            <div>
+                <div class="row d-flex justify-content-center">
+                    <b-icon icon="image-fill" class="mt-1 mr-2"></b-icon>
+                    <p class="font-weight-bold">Topografía</p>
+                </div>
+                <b-row>
+                    <b-col>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-topografia"
+                                v-model="edificacion.topografia"
+                                :options="topografiaOptions"
+                                name="topografia"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+            </div>
+            <div>
+                <div class="row d-flex justify-content-center">
+                    <b-icon icon="geo-fill" class="mt-1 mr-2"></b-icon>
+                    <p class="font-weight-bold">Ubicación</p>
+                </div>
+                <b-row>
+                    <b-col>
+                        <b-form-group v-slot="{ ariaDescribedby }">
+                            <b-form-radio-group
+                                id="radio-group-ubicacion"
+                                v-model="edificacion.ubicacion"
+                                :options="ubicacionOptions"
+                                name="ubicacion"
+                                stacked
+                                :aria-describedby="ariaDescribedby"
+                            ></b-form-radio-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+            </div>
         </div>
-        {{form}}
   </div>
 </template>
 
@@ -115,27 +211,31 @@ export default {
     props: {
         edificacion: Object
     },
-    created(){
-        this.form = Object.assign(this.form, this.edificacion);
-    },
     data(){
         return{
             estados: estados,
             municipiosSelected: [],
             municipios: municipios,
-            form: {
-                edificacion: null,
-                proyectos_estudios: [],
-                calle: '',
-                estado: null,
-                municipio: null,
-                codigoPostal: '',
-                areaPlantaBaja: '',
-                numeroNiveles: '',
-                areaNivelTipo: '',
-                // numeroSotanos: '',
-                // areaSotano: '',
-            }
+            sotanos: "false",
+            accesibilidadOptions: [
+                {id: 1, text: "Muy buena", value: "muy_buena"},
+                {id: 2, text: "Buena", value: "buena"},
+                {id: 3, text: "Normal", value: "normal"},
+                {id: 4, text: "Dificil", value: "dificil"},
+                {id: 5, text: "Muy dificil", value: "muy_dificil"},
+            ],
+            topografiaOptions: [
+                {id: 1, text: "Plana", value: 'plana'},
+                {id: 2, text: "Con desnivel minimo", value: 'desnivel_minimo'},
+                {id: 3, text: "Con desnivel pronunciado", value: 'desnivel_pronunciado'},
+                {id: 4, text: "Accidentada", value: 'accidentada'},
+                {id: 5, text: "Muy accidentada", value: 'muy_accidentada'},
+            ],
+            ubicacionOptions: [
+                {id: 1, text: "Entre colindancias", value: 'entre_colindancias'},
+                {id: 2, text: "En esquina", value: 'en_esquina'},
+                {id: 3, text: "Aislada", value: 'aislada'},
+            ],
         }
     },
     methods: {
