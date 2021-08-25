@@ -204,6 +204,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import {estados} from '../../../db/estados';
 import {municipios} from '../../../db/municipios';
 
@@ -217,25 +218,6 @@ export default {
             municipiosSelected: [],
             municipios: municipios,
             sotanos: "false",
-            accesibilidadOptions: [
-                {id: 1, text: "Muy buena", value: "muy_buena"},
-                {id: 2, text: "Buena", value: "buena"},
-                {id: 3, text: "Normal", value: "normal"},
-                {id: 4, text: "Dificil", value: "dificil"},
-                {id: 5, text: "Muy dificil", value: "muy_dificil"},
-            ],
-            topografiaOptions: [
-                {id: 1, text: "Plana", value: 'plana'},
-                {id: 2, text: "Con desnivel minimo", value: 'desnivel_minimo'},
-                {id: 3, text: "Con desnivel pronunciado", value: 'desnivel_pronunciado'},
-                {id: 4, text: "Accidentada", value: 'accidentada'},
-                {id: 5, text: "Muy accidentada", value: 'muy_accidentada'},
-            ],
-            ubicacionOptions: [
-                {id: 1, text: "Entre colindancias", value: 'entre_colindancias'},
-                {id: 2, text: "En esquina", value: 'en_esquina'},
-                {id: 3, text: "Aislada", value: 'aislada'},
-            ],
         }
     },
     methods: {
@@ -255,6 +237,7 @@ export default {
         },        
     },
     computed: {
+        ...mapState(['accesibilidadOptions', 'topografiaOptions', 'ubicacionOptions']),
         setDisabledMunicipiosSelect(){
             return this.edificacion.estado ? false : true;
         }
