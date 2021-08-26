@@ -106,6 +106,7 @@
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
             <div>
+                <div class="container testimonial-group">
                 <div class="d-flex row">
                     <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-container">
                         <div class="info-edificacion">
@@ -123,11 +124,13 @@
                             <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                             <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                         </div>
-                        <EdificacionIndependiente 
+                        <EdificacionIndependiente
+                            class="component"
                             v-if="edificacionesIndependientes == 'true'"
                             :edificacion="edificacion"
                         />
                     </div>
+                </div>
                 </div>
                 <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
                     <div class="w-50">
@@ -221,7 +224,7 @@
                                 ></b-icon>
                                 <label for="">Área de planta baja (m2)</label>
                                 <b-form-input
-                                    v-model="form.areaPlantaBaja"
+                                    v-model.number="form.areaPlantaBaja"
                                     placeholder="Introduce are en m2"
                                 ></b-form-input>
                             </b-col>
@@ -237,7 +240,7 @@
                                 ></b-icon>
                                 <label for="">Número de niveles tipo</label>
                                 <b-form-input
-                                    v-model="form.numeroNiveles"
+                                    v-model.number="form.numeroNiveles"
                                     placeholder="2"
                                 ></b-form-input>
                             </b-col>
@@ -253,7 +256,7 @@
                                 ></b-icon>
                                 <label for="">Área del nivel tipo (m2)</label>
                                 <b-form-input
-                                    v-model="form.areaNivelTipo"
+                                    v-model.number="form.areaNivelTipo"
                                     placeholder="Introduce el area en m2"
                                 ></b-form-input>
                             </b-col>
@@ -269,10 +272,10 @@
                     >
                         <!-- <b-icon icon="grid-1x2"></b-icon> -->
                         Sotanos
-                        <b-icon :icon="sotanos ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
+                        <b-icon :icon="form.sotanos.status ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
                     </b-button>
                 </div>
-                <div class="build mb-5" v-if="sotanos && edificacionesIndependientes == 'false'">
+                <div class="build mb-5" v-if="form.sotanos.status && edificacionesIndependientes == 'false'">
                     <div class="input-area-proyecto">
                         <b-row class="mx-1">
                             <b-col>
@@ -282,7 +285,7 @@
                                 ></b-icon>
                                 <label for="">Número de sotanos</label>
                                 <b-form-input
-                                    v-model="edificacionNueva.numeroSotanos"
+                                    v-model.number="form.sotanos.data.numeroSotanos"
                                     placeholder="2"
                                 ></b-form-input>
                             </b-col>
@@ -297,7 +300,7 @@
                                 ></b-icon>
                                 <label for="">Área de sotano (m2)</label>
                                 <b-form-input
-                                    v-model="edificacionNueva.areaSotano"
+                                    v-model.number="form.sotanos.data.areaSotano"
                                     placeholder="Introduce el area en m2"
                                 ></b-form-input>
                             </b-col>
@@ -381,6 +384,7 @@
                             <b-icon
                                 icon="person-bounding-box"
                                 scale="1"
+                                class="mr-1"
                             ></b-icon>
                             <label for="">Nombre completo</label>
                             <b-form-input
@@ -411,6 +415,7 @@
                             <b-icon
                                 icon="envelope-fill"
                                 scale="1"
+                                class="mr-1"
                             ></b-icon>
                             <label for="">Correo Electrónico</label>
                             <b-form-input
@@ -420,6 +425,11 @@
                         </b-col>
                     </b-row>
                 </div>
+            </div>
+        </div>
+        <div v-if="errores.length > 0">
+            <div v-for="(error, index) in errores" :key="index">
+                <b-alert show variant="danger"> Edificacion #{{error.number}}. {{error.description}}</b-alert>
             </div>
         </div>
         <div class="footer">
@@ -464,8 +474,13 @@ export default {
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
-                numeroSotanos: '',
-                areaSotano: '',
+                sotanos: {
+                    status: false,
+                    data: {
+                        numeroSotanos: '',
+                        areaSotano: '',
+                    }
+                },
                 ubicacion: null,
                 accesibilidad: null,
                 topografia: null,
@@ -482,7 +497,7 @@ export default {
             estados: estados,
             municipiosSelected: [],
             municipios: municipios,
-            sotanos: false,
+            errores: [],
         }
     },
     methods: {
@@ -525,8 +540,13 @@ export default {
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
-                numeroSotanos: '',
-                areaSotano: '',
+                sotanos: {
+                    status: false,
+                    data: {
+                        numeroSotanos: '',
+                        areaSotano: '',
+                    }
+                },
                 ubicacion: null,
                 accesibilidad: null,
                 topografia: null,
@@ -549,8 +569,13 @@ export default {
                 areaPlantaBaja: '',
                 numeroNiveles: '',
                 areaNivelTipo: '',
-                numeroSotanos: '',
-                areaSotano: '',
+                sotanos: {
+                    status: false,
+                    data: {
+                        numeroSotanos: '',
+                        areaSotano: '',
+                    }
+                },
                 ubicacion: null,
                 accesibilidad: null,
                 topografia: null,
@@ -562,7 +587,12 @@ export default {
             console.log(this.edificacionNueva.edificaciones);
         },
         sotanosToggle(){
-            this.sotanos= !this.sotanos;
+            this.form.sotanos.status= !this.form.sotanos.status;
+
+            if(!this.form.sotanos.status){
+                this.form.sotanos.data.numeroSotanos= '';
+                this.form.sotanos.data.areaSotano= '';
+            }
         },
         deleteEdificacion(position){
             this.edificacionNueva.edificaciones= this.edificacionNueva.edificaciones.filter((edificacion, index)=> (
@@ -570,6 +600,8 @@ export default {
             ))
         },
         iniciarCotizacion(){
+            this.errores= [];
+
             if(this.edificacionesIndependientes == "false"){
                 this.edificacionNueva.edificaciones.forEach((edificacion)=> {
                     edificacion.calle= this.form.calle;
@@ -579,14 +611,114 @@ export default {
                     edificacion.areaPlantaBaja= this.form.areaPlantaBaja;
                     edificacion.numeroNiveles= this.form.numeroNiveles;
                     edificacion.areaNivelTipo= this.form.areaNivelTipo;
-                    edificacion.numeroSotanos= this.form.numeroSotanos;
-                    edificacion.areaSotano= this.form.areaSotano;
+                    edificacion.sotanos= this.form.sotanos;
                     edificacion.accesibilidad= this.form.accesibilidad;
                     edificacion.ubicacion= this.form.ubicacion;
                     edificacion.topografia= this.form.topografia;
                 });
             }
-            console.log(this.edificacionNueva);
+            
+            this.validaciones();
+        },
+        validaciones(){
+            this.edificacionNueva.edificaciones.forEach((edificacion, index)=> {
+                
+                //Validacion del campo ubicacion del proyecto
+                if(!edificacion.calle.trim()){
+                    this.errores.push({
+                        number: index+1,
+                        description: "Ingresa la Ubicación del proyecto",
+                    });
+                }
+
+                //Validacion del campo estado
+                if(edificacion.estado == null){
+                    this.errores.push({
+                        number: index+1,
+                        description: "Selecciona el estado de ubicación.",
+                    });
+                }
+
+                //Validacion del campo municipio
+                if(edificacion.municipio == null){
+                    this.errores.push({
+                        number: index+1,
+                        description: "Selecciona la ciudad o municipio de ubicación.",
+                    })
+                }
+
+                //validacion del campo codigo postal
+                if(!edificacion.codigoPostal.trim() || edificacion.codigoPostal.length !== 5){
+                    let err= {
+                        number: index+1,
+                    };
+
+                    if(!edificacion.codigoPostal.trim()){
+                        err.description= "El campo Código Postal no puede estar vacío";
+                        this.errores.push(err);
+                        return
+                    }
+                    if(edificacion.codigoPostal.length !== 5){
+                        err.description= "Ingresa un código postal valido";
+                        this.errores.push(err);
+                    }
+                }
+
+
+                //Validacion del campo area de planta baja
+                if(isNaN(edificacion.areaPlantaBaja) || !edificacion.areaPlantaBaja.trim()){
+                    let err= {
+                        number: index + 1
+                    };
+
+                    if(isNaN(edificacion.areaPlantaBaja)){
+                        err.description= "El campo Área de planta baja debe tener un valor numérico";
+                        this.errores.push(err);
+                        return
+                    }
+                    if(!edificacion.areaPlantaBaja.trim()){
+                        err.description= "El campo Área de planta baja no puede estar vacío";
+                        this.errores.push(err);
+                    }
+                }
+
+                //Validacion del campo numero de niveles tipo
+                if(isNaN(edificacion.numeroNiveles) || !edificacion.numeroNiveles.trim()){
+                    let err= {
+                        number: index + 1
+                    };
+
+                    if(isNaN(edificacion.numeroNiveles)){
+                        err.description= "El campo Número de niveles tipo debe tener un valor numérico";
+                        this.errores.push(err);
+                        return
+                    }
+                    if(!edificacion.numeroNiveles.trim()){
+                        err.description= "El campo Número de niveles tipo no puede estar vacío";
+                        this.errores.push(err);
+                    }
+                }
+
+                //Validacion del campo area del nivel tipo
+                if(isNaN(edificacion.areaNivelTipo) || !edificacion.areaNivelTipo.trim()){
+                    let err= {
+                        number: index + 1
+                    };
+
+                    if(isNaN(edificacion.areaNivelTipo)){
+                        err.description= "El campo Área del nivel tipo debe tener un valor numérico";
+                        this.errores.push(err);
+                        return
+                    }
+                    if(!edificacion.areaNivelTipo.trim()){
+                        err.description= "El campo Área del nivel tipo no puede estar vacío";
+                        this.errores.push(err);
+                    }
+                }
+
+                //validacion de los campos relacionados a los sotanos
+                
+            });
         }
     },
     computed: {
@@ -698,7 +830,7 @@ export default {
 
     .delete-button{
         position: relative;
-        left: 280px;
+        left: 265px;
         bottom: 5px;
     }
 </style>

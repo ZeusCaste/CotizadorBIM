@@ -104,13 +104,17 @@
             </b-row>
             <div class="my-5">
                 <div class="text-center">
-                    <b-form-checkbox
-                        v-model="sotanos"
-                        value="true"
-                        unchecked-value="false"
-                    >Sotanos</b-form-checkbox>
+                    <b-button
+                        variant="dark"
+                        size="md"
+                        class="w-50 button"
+                        @click="sotanosToggle()"
+                    >
+                        <b>Sotanos</b>
+                        <b-icon :icon="edificacion.sotanos.status ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
+                    </b-button>
                 </div>
-                <div v-if="sotanos === 'true'">
+                <div v-if="edificacion.sotanos.status">
                     <b-row>
                         <b-col>
                             <b-icon
@@ -119,7 +123,7 @@
                             ></b-icon>
                             <label for="">Número de sotanos</label>
                             <b-form-input
-                                v-model="edificacion.numeroSotanos"
+                                v-model="edificacion.sotanos.data.numeroSotanos"
                                 placeholder="2"
                             ></b-form-input>
                         </b-col>
@@ -132,7 +136,7 @@
                             ></b-icon>
                             <label for="">Área de sotano (m2)</label>
                             <b-form-input
-                                v-model="edificacion.areaSotano"
+                                v-model="edificacion.sotanos.data.areaSotano"
                                 placeholder="Introduce el area en m2"
                             ></b-form-input>
                         </b-col>
@@ -234,7 +238,15 @@ export default {
                     }
                 }
             })
-        },        
+        },
+        sotanosToggle(){
+            this.edificacion.sotanos.status= !this.edificacion.sotanos.status;
+
+            if(!this.edificacion.sotanos.status){
+                this.edificacion.sotanos.data.numeroSotanos= '';
+                this.edificacion.sotanos.data.areaSotano= '';
+            }
+        }, 
     },
     computed: {
         ...mapState(['accesibilidadOptions', 'topografiaOptions', 'ubicacionOptions']),
