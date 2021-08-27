@@ -70,7 +70,7 @@
                     <label for="">Área de planta baja (m2)</label>
                     <b-form-input
                         v-model="edificacion.areaPlantaBaja"
-                        placeholder="Introduce are en m2"
+                        placeholder="Introduce la área en m2"
                     ></b-form-input>
                 </b-col>
             </b-row>
@@ -98,7 +98,7 @@
                     <label for="">Área del nivel tipo (m2)</label>
                     <b-form-input
                         v-model="edificacion.areaNivelTipo"
-                        placeholder="Introduce el area en m2"
+                        placeholder="Introduce la área en m2"
                     ></b-form-input>
                 </b-col>
             </b-row>
@@ -152,10 +152,10 @@
                     <b-col>
                         <b-form-group v-slot="{ ariaDescribedby }">
                             <b-form-radio-group
-                                id="radio-group-accesibilidad"
+                                :id="setAccesibilidadId"
                                 v-model="edificacion.accesibilidad"
                                 :options="accesibilidadOptions"
-                                name="accesibilidad"
+                                :name="setAccesibilidadName"
                                 stacked
                                 :aria-describedby="ariaDescribedby"
                             ></b-form-radio-group>
@@ -172,10 +172,10 @@
                     <b-col>
                         <b-form-group v-slot="{ ariaDescribedby }">
                             <b-form-radio-group
-                                id="radio-group-topografia"
+                                :id="setTopografiaId"
                                 v-model="edificacion.topografia"
                                 :options="topografiaOptions"
-                                name="topografia"
+                                :name="setTopografiaName"
                                 stacked
                                 :aria-describedby="ariaDescribedby"
                             ></b-form-radio-group>
@@ -192,10 +192,10 @@
                     <b-col>
                         <b-form-group v-slot="{ ariaDescribedby }">
                             <b-form-radio-group
-                                id="radio-group-ubicacion"
+                                :id="setUbicacionId"
                                 v-model="edificacion.ubicacion"
                                 :options="ubicacionOptions"
-                                name="ubicacion"
+                                :name="setUbicacionName"
                                 stacked
                                 :aria-describedby="ariaDescribedby"
                             ></b-form-radio-group>
@@ -214,7 +214,11 @@ import {municipios} from '../../../db/municipios';
 
 export default {
     props: {
-        edificacion: Object
+        edificacion: Object,
+        idx: Number,
+    },
+    created(){
+        this.loadMunicipios();
     },
     data(){
         return{
@@ -252,6 +256,24 @@ export default {
         ...mapState(['accesibilidadOptions', 'topografiaOptions', 'ubicacionOptions']),
         setDisabledMunicipiosSelect(){
             return this.edificacion.estado ? false : true;
+        },
+        setUbicacionId(){
+            return `radio-group-ubicacion${this.idx}`;
+        },
+        setUbicacionName(){
+            return `ubicacion${this.idx}`;
+        },
+        setAccesibilidadId(){
+            return `radio-group-accesibilidad${this.idx}`;
+        },
+        setAccesibilidadName(){
+            return `accesibilidad${this.idx}`;
+        },
+        setTopografiaId(){
+            return `radio-group-topografia${this.idx}`;
+        },
+        setTopografiaName(){
+            return `topografia${this.idx}`;
         }
     }
 }
