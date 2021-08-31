@@ -106,9 +106,57 @@
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
             <div>
-                <div class="container testimonial-group">
-                <div class="d-flex row">
-                    <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-container">
+                <b-card no-body v-if="edificacionesIndependientes == 'true'">
+                    <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
+                        <b-dropdown 
+                            text="Edificaciones Agregadas" 
+                            right-alignment
+                            split
+                            split-variant="outline-info" 
+                            variant="info"
+                            class="m-2"
+                        >
+                            <template v-for="(edificacion, index) in edificacionNueva.edificaciones">
+                                <b-dropdown-item :key="index" :href="sethref(index)" @click="scrollIntoView">Edificacion #{{index + 1}}</b-dropdown-item>
+                            </template>
+                        </b-dropdown>
+                    </b-nav>
+                    <b-card-body
+                        id="nav-scroller"
+                        ref="content"
+                        class="card-edificaciones"
+                    >
+                        <div 
+                            v-for="(edificacion, index) in edificacionNueva.edificaciones" 
+                            :key="index" 
+                            class="edificacion-independiente" 
+                            :id="setIdHref(index)"
+                        >
+                            <div class="info-edificacion">
+                                <div class="row">
+                                    <b-button 
+                                        class="delete-button" 
+                                        variant="danger" 
+                                        size="sm"
+                                        @click="deleteEdificacion(index)"
+                                    >
+                                        <b-icon icon="trash" variant="white"></b-icon>
+                                    </b-button>
+                                    <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+                                </div>
+                                <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
+                                <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
+                            </div>
+                            <EdificacionIndependiente
+                                class="component"
+                                :edificacion="edificacion"
+                                :idx="index"
+                            />
+                        </div>
+                    </b-card-body>
+                </b-card>
+                <div v-if="edificacionesIndependientes == 'false'" class="d-flex row">
+                    <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-no-independiente">
                         <div class="info-edificacion">
                             <div class="row">
                                 <b-button 
@@ -124,14 +172,7 @@
                             <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                             <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                         </div>
-                        <EdificacionIndependiente
-                            class="component"
-                            v-if="edificacionesIndependientes == 'true'"
-                            :edificacion="edificacion"
-                            :idx="index"
-                        />
                     </div>
-                </div>
                 </div>
                 <div v-if="edificacionesIndependientes == 'false'" class="container build m-3">
                     <div class="w-50">
@@ -622,6 +663,20 @@ export default {
             this.validaciones();
             console.log(this.edificacionNueva.edificaciones);
         },
+        sethref(idx){
+            return `#edificacion${idx}`
+        },
+        setIdHref(idx){
+            return `edificacion${idx}`
+        },
+        scrollIntoView(event) {
+            event.preventDefault()
+            const href = event.target.getAttribute('href')
+            const el = href ? document.querySelector(href) : null
+            if (el) {
+            this.$refs.content.scrollTop = el.offsetTop
+            }
+        },
         validaciones(){
             this.edificacionNueva.edificaciones.forEach((edificacion, index)=> {
                 
@@ -917,7 +972,15 @@ export default {
         border-radius: 15px;
     }
 
-    .edificacion-container{
+    .edificacion-independiente{
+        border-width: 5px;
+        border: solid #07b3d9    2px;
+        margin: 10px auto;
+        width: 90%;
+        border-radius: 10px;
+    }
+
+    .edificacion-no-independiente{
         border-width: 5px;
         border: solid #07b3d9    2px;
         margin: 1.5% 2.5%;
@@ -929,5 +992,15 @@ export default {
         position: relative;
         left: 265px;
         bottom: 5px;
+    }
+
+    .card-edificaciones {
+        position:relative; 
+        height: 1340px; 
+        width: 65%; 
+        overflow-y:scroll; 
+        margin: 0 auto; 
+        background-color: #B2F0FE;
+        padding-bottom: 15px;
     }
 </style>
