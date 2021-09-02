@@ -491,10 +491,12 @@
 
 <script>
 import {mapState} from 'vuex';
+import firebase from '../../../plugins/firebase';
 import {estados} from '../../../db/estados';
 import {municipios} from '../../../db/municipios';
 import EdificacionIndependiente from './EdificacionIndependiente.vue';
 import {validateEmail, validateTelNumber} from '../../../utils/validations';
+
 
 export default {
     name: 'EdificacionNueva',
@@ -641,7 +643,7 @@ export default {
                 index !== position
             ))
         },
-        iniciarCotizacion(){
+        async iniciarCotizacion(){
             this.errores= [];
 
             if(this.edificacionesIndependientes == "false"){
@@ -661,7 +663,15 @@ export default {
             }
             
             this.validaciones();
-            console.log(this.edificacionNueva.edificaciones);
+            if(this.errores.length > 0) return
+
+            try {
+                const calculoCotizacion= firebase.functions().httpsCallable('cotizacionEdificacion');
+                const response= await calculoCotizacion(this.edificacionNueva);
+                console.log(response);
+            } catch (error) {
+                console.log(error.message);
+            }
         },
         sethref(idx){
             return `#edificacion${idx}`
@@ -678,6 +688,17 @@ export default {
             }
         },
         validaciones(){
+            //Validar que se haya agregado alguna edificacion
+            if(this.edificacionNueva.edificaciones.length == 0){
+                this.errores.push({
+                    number: "General",
+                    description: "Agrega edificaciones para realizar la cotización"
+                });
+
+                return
+            }
+
+            //Validaciones de los datos de las edificaciones
             this.edificacionNueva.edificaciones.forEach((edificacion, index)=> {
                 
                 //Validacion del campo ubicacion del proyecto
