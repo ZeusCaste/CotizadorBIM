@@ -105,56 +105,50 @@
                 ></b-icon>
                 <p class="font-weight-bold text-white ml-3 mt-2">Datos del Proyecto: </p>
             </div>
-            <div>
-                <b-card no-body v-if="edificacionesIndependientes == 'true'">
-                    <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
-                        <b-dropdown 
-                            text="Edificaciones Agregadas" 
-                            right-alignment
-                            split
-                            split-variant="outline-info" 
-                            variant="info"
-                            class="m-2"
-                        >
-                            <template v-for="(edificacion, index) in edificacionNueva.edificaciones">
-                                <b-dropdown-item :key="index" :href="sethref(index)" @click="scrollIntoView">Edificacion #{{index + 1}}</b-dropdown-item>
-                            </template>
-                        </b-dropdown>
-                    </b-nav>
-                    <b-card-body
-                        id="nav-scroller"
-                        ref="content"
-                        class="card-edificaciones"
-                    >
-                        <div 
-                            v-for="(edificacion, index) in edificacionNueva.edificaciones" 
-                            :key="index" 
-                            class="edificacion-independiente" 
-                            :id="setIdHref(index)"
-                        >
-                            <div class="info-edificacion">
-                                <div class="row">
-                                    <b-button 
-                                        class="delete-button" 
-                                        variant="danger" 
-                                        size="sm"
-                                        @click="deleteEdificacion(index)"
-                                    >
-                                        <b-icon icon="trash" variant="white"></b-icon>
-                                    </b-button>
-                                    <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+            <div class="my-3">
+                <b-row v-if="edificacionesIndependientes == 'true'">
+                    <b-col cols="4">
+                        <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
+                            <b>Edificaciones agregadas</b>
+                            <b-nav pills vertical>
+                                <template v-for="(edificacion, index) in edificacionNueva.edificaciones">
+                                    <b-nav-item :key="index" :href="sethref(index)"  class="btn btn-outline-primary mt-1">Edificación # {{index+1}}</b-nav-item>
+                                </template>
+                            </b-nav>
+                        </b-navbar>
+                    </b-col>
+                    <b-col cols="8">
+                        <div id="scrollspy-nested" style="position:relative; height:500px; overflow-y:auto">
+                            <div 
+                                v-for="(edificacion, index) in edificacionNueva.edificaciones" 
+                                :key="index" 
+                                class="edificacion-independiente" 
+                                :id="setIdHref(index)"
+                            >
+                                <div class="info-edificacion">
+                                    <div class="row">
+                                        <b-button 
+                                            class="delete-button" 
+                                            variant="danger" 
+                                            size="sm"
+                                            @click="deleteEdificacion(index)"
+                                        >
+                                            <b-icon icon="trash" variant="white"></b-icon>
+                                        </b-button>
+                                        <h6 class="text-center text-white">Edificación # {{index + 1}}</h6>
+                                    </div>
+                                    <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
+                                    <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                                 </div>
-                                <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
-                                <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
+                                <EdificacionIndependiente
+                                    class="component"
+                                    :edificacion="edificacion"
+                                    :idx="index"
+                                />
                             </div>
-                            <EdificacionIndependiente
-                                class="component"
-                                :edificacion="edificacion"
-                                :idx="index"
-                            />
                         </div>
-                    </b-card-body>
-                </b-card>
+                    </b-col>
+                </b-row>
                 <div v-if="edificacionesIndependientes == 'false'" class="d-flex row">
                     <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index" class="edificacion-no-independiente">
                         <div class="info-edificacion">
@@ -1011,7 +1005,7 @@ export default {
 
     .delete-button{
         position: relative;
-        left: 265px;
+        left: 355px;
         bottom: 5px;
     }
 
