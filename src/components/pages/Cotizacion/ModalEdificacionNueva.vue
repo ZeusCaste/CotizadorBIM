@@ -154,7 +154,7 @@
                         <div class="info-edificacion">
                             <div class="row">
                                 <b-button 
-                                    class="delete-button" 
+                                    class="delete-button dependiente" 
                                     variant="danger" 
                                     size="sm"
                                     @click="deleteEdificacion(index)"
@@ -479,6 +479,7 @@
                 <b class="h1">COTIZAR</b>
             </b-button>
         </div>
+        {{edificacionNueva}}
     </div>
   </b-modal>
 </template>
@@ -490,6 +491,7 @@ import {estados} from '../../../db/estados';
 import {municipios} from '../../../db/municipios';
 import EdificacionIndependiente from './EdificacionIndependiente.vue';
 import {validateEmail, validateTelNumber} from '../../../utils/validations';
+import {edificacionNueva} from '../../../db/edificacioNueva';
 
 
 export default {
@@ -656,13 +658,16 @@ export default {
                 });
             }
             
-            this.validaciones();
-            if(this.errores.length > 0) return
+            // this.validaciones();
+            // if(this.errores.length > 0) return
 
             try {
-                const calculoCotizacion= firebase.functions().httpsCallable('cotizacionEdificacion');
-                const response= await calculoCotizacion(this.edificacionNueva);
-                console.log(response);
+
+                const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
+                const response= await newConstructionQuotation(edificacionNueva);
+                const data= await response.data;
+
+                console.log(data);
             } catch (error) {
                 console.log(error.message);
             }
@@ -1006,6 +1011,12 @@ export default {
     .delete-button{
         position: relative;
         left: 355px;
+        bottom: 5px;
+    }
+
+    .delete-button.dependiente{
+        position: relative;
+        left: 275px;
         bottom: 5px;
     }
 
