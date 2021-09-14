@@ -485,7 +485,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 import firebase from '../../../plugins/firebase';
 import {estados} from '../../../db/estados';
 import {municipios} from '../../../db/municipios';
@@ -542,6 +542,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getDataCotizacionNuevaEdificacion']),
         onCreateCotizacion(){
             this.showModal();
         },
@@ -662,12 +663,9 @@ export default {
             // if(this.errores.length > 0) return
 
             try {
+                await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
+                this.hideModal();
 
-                const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
-                const response= await newConstructionQuotation(edificacionNueva);
-                const data= await response.data;
-
-                console.log(data);
             } catch (error) {
                 console.log(error.message);
             }

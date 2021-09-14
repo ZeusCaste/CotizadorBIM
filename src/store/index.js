@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebase from '../plugins/firebase';
 
 Vue.use(Vuex)
 
@@ -47,10 +48,28 @@ export default new Vuex.Store({
       {id: 2, text: "En esquina", value: 'en_esquina'},
       {id: 3, text: "Aislada", value: 'aislada'},
     ],
+    dataCotizacionNuevaEdificacion: {}
   },
   mutations: {
+    setDataNuevaEdificacion(state, payload){
+      state.dataCotizacionNuevaEdificacion= payload;
+    }
   },
   actions: {
+    async getDataCotizacionNuevaEdificacion({commit}, edificacion){
+      try {
+        const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
+        const response= await newConstructionQuotation(edificacion);
+        const data= await response.data;
+  
+        if(data.success){
+          commit('setDataNuevaEdificacion', data.data);
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   modules: {
   }
