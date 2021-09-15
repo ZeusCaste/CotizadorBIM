@@ -476,10 +476,15 @@
                 style="height: 80px;"
                 @click="iniciarCotizacion()"
             >
-                <b class="h1">COTIZAR</b>
+                <b v-if="!spinner" class="h1">COTIZAR</b>
+                <b-spinner 
+                    v-if="spinner"
+                    style="width: 3rem; height: 3rem;" 
+                    label="Large Spinner" 
+                    type="grow"
+                ></b-spinner>
             </b-button>
         </div>
-        {{edificacionNueva}}
     </div>
   </b-modal>
 </template>
@@ -505,6 +510,7 @@ export default {
     data(){
         return{
             edificacionesIndependientes: "false",
+            spinner: false,
             form: {
                 edificacion: null,
                 proyectos_estudios: [],
@@ -641,6 +647,7 @@ export default {
             ))
         },
         async iniciarCotizacion(){
+            this.spinner= true;
             this.errores= [];
 
             if(this.edificacionesIndependientes == "false"){
@@ -664,6 +671,7 @@ export default {
 
             try {
                 await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
+                this.spinner= false;
                 this.hideModal();
 
             } catch (error) {

@@ -45,33 +45,41 @@
 
 
         <!-- Seccion pata mostrar el resultado de los calculos -->
-        <div class="bg-warning my-5 p-3">
-            <h2>Importes</h2>
-            <div v-for="(amountsEdificacion, index) in dataCotizacionNuevaEdificacion.amounts" :key="index">
-                <p><strong>Edificacion # {{ index + 1 }} </strong></p>
+        <div v-if="Object.keys(this.dataCotizacionNuevaEdificacion).length > 0" class="bg-warning my-5 px-5 py-3">
+            <h2 class="text-center mt-3 mb-5">Importes y Tiempos de entrega</h2>
+            <div v-for="(amountsEdificacion, index) in dataCotizacionNuevaEdificacion.amounts" :key="index" class="mt-5">
+                <p class="h5"><strong>Edificacion # {{ index + 1 }} </strong></p>
                 <div v-for="(amount, field, idx) in amountsEdificacion" :key="idx">
-                    <p v-if="field== 'architecture'">Importe del proyecto Arquitectura: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'hydro_sanitaryInstallation'">Importe del proyecto Instalacion hidrosanitaria: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'electricalInstallation'">Importe del proyecto Instalacion electrica: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'airConditioningWithoutThermalBalance'">Importe del proyecto Aire acondicionado sin balance termico: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'airConditioningWithThermalBalance'">Importe del proyecto Aire acondicionado con balance termico: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'ventilationAndExtraction'">Importe del proyecto Ventilacion y extraccion: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'voiceAndData'">Importe del proyecto Voz y datos: {{amount}} sin incluir I.V.A.</p>
-                    <p v-if="field== 'totalAmount'">Importe total de la propuesta: {{amount}} sin incluir I.V.A.</p>
-                </div>
-            </div>
-            <h2>Tiempos de entrega</h2>
-            <div v-for="(deliveryTimes, index) in dataCotizacionNuevaEdificacion.deliveryTimes" :key="index">
-                <p><strong>Edificacion # {{ index + 1 }} </strong></p>
-                <div v-for="(time, field, idx) in deliveryTimes" :key="idx">
-                    <p v-if="field== 'architecture'">Tiempo de entrega del proyecto Arquitectura: {{time}}</p>
-                    <p v-if="field== 'hydro_sanitaryInstallation'">Tiempo de entrega del proyecto Instalacion hidrosanitaria: {{time}}</p>
-                    <p v-if="field== 'electricalInstallation'">Tiempo de entrega del proyecto Instalacion electrica: {{time}}</p>
-                    <p v-if="field== 'airConditioningWithoutThermalBalance'">Tiempo de entrega del proyecto Aire acondicionado sin balance termico: {{time}}</p>
-                    <p v-if="field== 'airConditioningWithThermalBalance'">Tiempo de entrega del proyecto Aire acondicionado con balance termico: {{time}}</p>
-                    <p v-if="field== 'ventilationAndExtraction'">Tiempo de entrega del proyecto Ventilacion y extraccion: {{time}}</p>
-                    <p v-if="field== 'voiceAndData'">Tiempo de entrega del proyecto Voz y datos: {{time}}</p>
-                    <p v-if="field== 'totalAmount'">Tiempo total estimado de ejecucion: {{time}}</p>
+                    <p v-if="field== 'architecture'">
+                        Importe del proyecto Arquitectura: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'hydro_sanitaryInstallation'">
+                        Importe del proyecto Instalación hidrosanitaria: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'electricalInstallation'">
+                        Importe del proyecto Instalación eléctrica: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'airConditioningWithoutThermalBalance'">
+                        Importe del proyecto Aire acondicionado sin balance térmico: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'airConditioningWithThermalBalance'">
+                        Importe del proyecto Aire acondicionado con balance térmico: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'ventilationAndExtraction'">
+                        Importe del proyecto Ventilacion y extracción: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b></p>
+                    <p v-if="field== 'voiceAndData'">
+                        Importe del proyecto Voz y datos: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                    </p>
+                    <p v-if="field== 'totalAmount'">
+                        Importe total de la propuesta: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
+                        Tiempo total estimado de ejecución: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index]["totalTime"]}} semanas.</b>
+                    </p>
                 </div>
             </div>
         </div>
@@ -97,7 +105,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['dataCotizacionNuevaEdificacion'])
+        ...mapState(['dataCotizacionNuevaEdificacion']),
     }
 }
 </script>
