@@ -46,9 +46,14 @@
 
         <!-- Seccion pata mostrar el resultado de los calculos -->
         <div v-if="Object.keys(this.dataCotizacionNuevaEdificacion).length > 0" class="bg-warning my-5 px-5 py-3">
-            <h2 class="text-center mt-3 mb-5">Importes y Tiempos de entrega</h2>
+            <h2 class="text-center mt-3 mb-5">COTIZADOR ARQUITECTURA Y ESTRUCTURA</h2>
             <div v-for="(amountsEdificacion, index) in dataCotizacionNuevaEdificacion.amounts" :key="index" class="mt-5">
                 <p class="h5"><strong>Edificacion # {{ index + 1 }} </strong></p>
+                <p>
+                    De tipo {{ dataCotizacionNuevaEdificacion.dataEdification[index].type }} 
+                    en {{dataCotizacionNuevaEdificacion.dataEdification[index].delegation}}, {{dataCotizacionNuevaEdificacion.dataEdification[index].state}}. 
+                    Con área total de {{dataCotizacionNuevaEdificacion.m2Construction[index]}} m<sup>2</sup>
+                </p>
                 <div v-for="(amount, field, idx) in amountsEdificacion" :key="idx">
                     <p v-if="field== 'architecture'">
                         Importe del proyecto Arquitectura: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
@@ -81,6 +86,12 @@
                         Tiempo total estimado de ejecución: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index]["totalTime"]}} semanas.</b>
                     </p>
                 </div>
+            </div>
+
+            <div class="text-center mt-5 mb-3">
+                <b-button size="lg" variant="outline-dark">
+                    Enviar
+                </b-button>
             </div>
         </div>
     </div>
