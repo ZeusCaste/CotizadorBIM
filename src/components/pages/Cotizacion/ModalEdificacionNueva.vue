@@ -667,9 +667,13 @@ export default {
             }
             
             // this.validaciones();
-            // if(this.errores.length > 0) return
+            // if(this.errores.length > 0) {
+            //     this.spinner= false;
+            //     return
+            // }
 
             try {
+                // await this.getDataCotizacionNuevaEdificacion(this.edificacionNueva);
                 await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
                 this.spinner= false;
                 this.hideModal();

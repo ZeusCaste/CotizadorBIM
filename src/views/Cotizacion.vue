@@ -89,7 +89,11 @@
             </div>
 
             <div class="text-center mt-5 mb-3">
-                <b-button size="lg" variant="outline-dark">
+                <b-button 
+                    size="lg" 
+                    variant="outline-dark"
+                    @click="sendPDF()"
+                >
                     Enviar
                 </b-button>
             </div>
@@ -99,6 +103,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import firebase from '../plugins/firebase';
 import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
 
 export default {
@@ -113,6 +118,11 @@ export default {
     methods: {
         openModal(){
             this.eventHub.$emit("create", {});
+        },
+        sendPDF(){
+            const generatePDF= firebase.functions().httpsCallable('generatePDF');
+            const response= generatePDF(this.dataCotizacionNuevaEdificacion);
+            console.log(response);
         }
     },
     computed: {
