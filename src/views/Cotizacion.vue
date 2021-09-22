@@ -46,6 +46,7 @@
 
         <!-- Seccion pata mostrar el resultado de los calculos -->
         <div v-if="Object.keys(this.dataCotizacionNuevaEdificacion).length > 0" class="bg-warning my-5 px-5 py-3">
+            <p class="text-right mt-4 mb-5 h5">{{moment().locale('es').format('LLLL')}}</p>
             <h2 class="text-center mt-3 mb-5">COTIZADOR ARQUITECTURA Y ESTRUCTURA</h2>
             <div v-for="(amountsEdificacion, index) in dataCotizacionNuevaEdificacion.amounts" :key="index" class="mt-5">
                 <p class="h5"><strong>Edificacion # {{ index + 1 }} </strong></p>
@@ -105,6 +106,7 @@
 import {mapState} from 'vuex';
 import firebase from '../plugins/firebase';
 import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
+import moment from 'moment';
 
 export default {
     components: {
@@ -112,7 +114,7 @@ export default {
     },
     data(){
         return{
-    
+            moment: moment,
         }
     },
     methods: {
