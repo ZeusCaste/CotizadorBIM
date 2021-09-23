@@ -61,9 +61,10 @@ export default new Vuex.Store({
         const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
         const response= await newConstructionQuotation(edificacion);
         const data= await response.data;
+        console.log(data);
   
         if(data.success){
-          commit('setDataNuevaEdificacion', data.data);
+          commit('setDataNuevaEdificacion', data.quotations);
         }
         
       } catch (error) {
