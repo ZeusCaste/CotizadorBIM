@@ -133,8 +133,8 @@ export const edificacionNueva= {
         }
     ], 
     "datos_contacto": { 
-        "nombreCompleto": "Francisco Martinez Castello", 
+        "nombreCompleto": "Maquino", 
         "numeroTelefono": "5548963256", 
-        "correoElectronico": "paco_chango@gmail.com" 
+        "correoElectronico": "mhernandezc1413@egresado.ipn.mx" 
     } 
 };

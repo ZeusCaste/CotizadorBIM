@@ -48,7 +48,7 @@
             <p class="text-right mt-4 mb-5 h5">{{moment().locale('es').format('LLLL')}}</p>
             <h2 class="text-center mt-3 mb-5">COTIZADOR ARQUITECTURA Y ESTRUCTURA</h2>
             <div v-for="(edificacion, index) in dataCotizacionNuevaEdificacion" :key="index" class="mt-5">
-                <p class="h5"><strong>Edificacion # {{ index + 1 }} </strong></p>
+                <p class="h5"><strong>Edificación # {{ index + 1 }} </strong></p>
                 <p>
                     De tipo {{ edificacion.dataEdification.type }} 
                     en {{edificacion.dataEdification.delegation}}, {{edificacion.dataEdification.state}}. 
@@ -76,7 +76,7 @@
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'ventilationAndExtraction'">
-                        Importe del proyecto Ventilacion y extracción: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Ventilación y extracción: <b>${{amount}} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     <p v-if="field== 'voiceAndData'">
                         Importe del proyecto Voz y datos: <b>${{amount}} sin incluir I.V.A.</b>
@@ -123,12 +123,12 @@ export default {
         },
         async sendPDF(){
             const generatePDF= firebase.functions().httpsCallable('generatePDF');
-            const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion});
+            const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion, datos_contacto: this.userContact});
             console.log(response);
         }
     },
     computed: {
-        ...mapState(['dataCotizacionNuevaEdificacion']),
+        ...mapState(['dataCotizacionNuevaEdificacion', 'userContact']),
     }
 }
 </script>
