@@ -133,8 +133,8 @@ export const edificacionNueva= {
         }
     ], 
     "datos_contacto": { 
-        "nombreCompleto": "Maquino", 
+        "nombreCompleto": "Martin Hernandez",
         "numeroTelefono": "5548963256", 
-        "correoElectronico": "mhernandezc1413@egresado.ipn.mx" 
+        "correoElectronico": "martinare.ipn@gmail.com" 
     } 
 };

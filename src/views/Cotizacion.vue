@@ -56,34 +56,34 @@
                 </p>
                 <div v-for="(amount, field, idx) in edificacion.amounts" :key="idx">
                    <p v-if="field== 'architecture'">
-                        Importe del proyecto Arquitectura: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Arquitectura: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                    </p>
                    <p v-if="field== 'hydro_sanitaryInstallation'">
-                        Importe del proyecto Instalación hidrosanitaria: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Instalación hidrosanitaria: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'electricalInstallation'">
-                        Importe del proyecto Instalación eléctrica: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Instalación eléctrica: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'airConditioningWithoutThermalBalance'">
-                        Importe del proyecto Aire acondicionado sin balance térmico: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Aire acondicionado sin balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'airConditioningWithThermalBalance'">
-                        Importe del proyecto Aire acondicionado con balance térmico: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Aire acondicionado con balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'ventilationAndExtraction'">
-                        Importe del proyecto Ventilación y extracción: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Ventilación y extracción: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     <p v-if="field== 'voiceAndData'">
-                        Importe del proyecto Voz y datos: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe del proyecto Voz y datos: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'totalAmount'">
-                        Importe total de la propuesta: <b>${{amount}} sin incluir I.V.A.</b>
+                        Importe total de la propuesta: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                         Tiempo total estimado de ejecución: <b>{{edificacion.deliveryTimes["totalTime"]}} semanas.</b>
                     </p>
                 </div>
@@ -96,6 +96,16 @@
                     @click="sendPDF()"
                 >
                     Enviar
+                </b-button>
+            </div>
+
+            <div class="text-center mt-5 mb-3">
+                <b-button 
+                    size="lg" 
+                    variant="outline-dark"
+                    @click="sendReport()"
+                >
+                    Reporte
                 </b-button>
             </div>
         </div>
@@ -124,6 +134,11 @@ export default {
         async sendPDF(){
             const generatePDF= firebase.functions().httpsCallable('generatePDF');
             const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion, datos_contacto: this.userContact});
+            console.log(response);
+        },
+        async sendReport(){
+            const sendQuotationReports= firebase.functions().httpsCallable('sendQuotationReports');
+            const response= await sendQuotationReports();
             console.log(response);
         }
     },
