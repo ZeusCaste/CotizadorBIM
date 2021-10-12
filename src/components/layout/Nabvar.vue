@@ -1,7 +1,7 @@
 <template>
     <div class="navbar navbar-dark" style="background-color: #000">
         <div class="ml-3">
-            <b-img 
+            <router-link to="/sobre-nosotros"><b-img 
                 :src="require('../../media/images/BIM-logo-2.jpg')" 
                 fluid 
                 alt="Responsive image"
@@ -12,7 +12,7 @@
                 fluid 
                 alt="Responsive image"
                 width="250"
-            ></b-img>
+            ></b-img></router-link>
         </div>
         <div>
             

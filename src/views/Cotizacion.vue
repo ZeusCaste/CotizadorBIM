@@ -119,9 +119,9 @@ export default {
         openModal(){
             this.eventHub.$emit("create", {});
         },
-        sendPDF(){
+        async sendPDF(){
             const generatePDF= firebase.functions().httpsCallable('generatePDF');
-            const response= generatePDF(this.dataCotizacionNuevaEdificacion);
+            const response= await generatePDF(this.dataCotizacionNuevaEdificacion);
             console.log(response);
         }
     },

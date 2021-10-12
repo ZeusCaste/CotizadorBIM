@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'Inicio',
-    component: ()=> import('../views/Inicio.vue'),
+    component: ()=> import('../views/SobreNosotros.vue'),
   },
   {
     path: '/arma-tu-cotizacion',
@@ -28,6 +28,11 @@ const routes = [
     path: '/sobre-nosotros',
     name: "Nosotros",
     component: ()=> import('../views/SobreNosotros.vue'),
+  },
+  {
+    path: '/admin',
+    name: "Admin",
+    component: ()=> import('../views/Admin.vue'),
   }
 ]
 
