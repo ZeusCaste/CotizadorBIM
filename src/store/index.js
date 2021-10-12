@@ -48,11 +48,15 @@ export default new Vuex.Store({
       {id: 2, text: "En esquina", value: 'en_esquina'},
       {id: 3, text: "Aislada", value: 'aislada'},
     ],
-    dataCotizacionNuevaEdificacion: {}
+    dataCotizacionNuevaEdificacion: {},
+    userContact: {}
   },
   mutations: {
     setDataNuevaEdificacion(state, payload){
       state.dataCotizacionNuevaEdificacion= payload;
+    },
+    setUserContact(state, payload){
+      state.userContact= payload;
     }
   },
   actions: {
@@ -61,9 +65,11 @@ export default new Vuex.Store({
         const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
         const response= await newConstructionQuotation(edificacion);
         const data= await response.data;
+        console.log(data);
   
         if(data.success){
-          commit('setDataNuevaEdificacion', data.data);
+          commit('setDataNuevaEdificacion', data.quotations);
+          commit('setUserContact', data.datos_contacto);
         }
         
       } catch (error) {

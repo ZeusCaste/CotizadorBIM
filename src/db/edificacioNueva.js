@@ -133,8 +133,8 @@ export const edificacionNueva= {
         }
     ], 
     "datos_contacto": { 
-        "nombreCompleto": "Francisco Martinez Castello", 
+        "nombreCompleto": "Martin Hernandez",
         "numeroTelefono": "5548963256", 
-        "correoElectronico": "paco_chango@gmail.com" 
+        "correoElectronico": "martinare.ipn@gmail.com" 
     } 
 };

@@ -43,47 +43,48 @@
             <ModalEdificacionNueva />
         </div>
 
-
         <!-- Seccion pata mostrar el resultado de los calculos -->
         <div v-if="Object.keys(this.dataCotizacionNuevaEdificacion).length > 0" class="bg-warning my-5 px-5 py-3">
+            <p class="text-right mt-4 mb-5 h5">{{moment().locale('es').format('LLLL')}}</p>
             <h2 class="text-center mt-3 mb-5">COTIZADOR ARQUITECTURA Y ESTRUCTURA</h2>
-            <div v-for="(amountsEdificacion, index) in dataCotizacionNuevaEdificacion.amounts" :key="index" class="mt-5">
-                <p class="h5"><strong>Edificacion # {{ index + 1 }} </strong></p>
+            <div v-for="(edificacion, index) in dataCotizacionNuevaEdificacion" :key="index" class="mt-5">
+                <p class="h5"><strong>Edificación # {{ index + 1 }} </strong></p>
                 <p>
-                    De tipo {{ dataCotizacionNuevaEdificacion.dataEdification[index].type }} 
-                    en {{dataCotizacionNuevaEdificacion.dataEdification[index].delegation}}, {{dataCotizacionNuevaEdificacion.dataEdification[index].state}}. 
-                    Con área total de {{dataCotizacionNuevaEdificacion.m2Construction[index]}} m<sup>2</sup>
+                    De tipo {{ edificacion.dataEdification.type }} 
+                    en {{edificacion.dataEdification.delegation}}, {{edificacion.dataEdification.state}}. 
+                    Con área total de {{edificacion.m2Construction}} m<sup>2</sup>
                 </p>
-                <div v-for="(amount, field, idx) in amountsEdificacion" :key="idx">
-                    <p v-if="field== 'architecture'">
-                        Importe del proyecto Arquitectura: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
-                    </p>
-                    <p v-if="field== 'hydro_sanitaryInstallation'">
-                        Importe del proyecto Instalación hidrosanitaria: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                <div v-for="(amount, field, idx) in edificacion.amounts" :key="idx">
+                   <p v-if="field== 'architecture'">
+                        Importe del proyecto Arquitectura: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
+                   </p>
+                   <p v-if="field== 'hydro_sanitaryInstallation'">
+                        Importe del proyecto Instalación hidrosanitaria: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'electricalInstallation'">
-                        Importe del proyecto Instalación eléctrica: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                        Importe del proyecto Instalación eléctrica: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'airConditioningWithoutThermalBalance'">
-                        Importe del proyecto Aire acondicionado sin balance térmico: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                        Importe del proyecto Aire acondicionado sin balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'airConditioningWithThermalBalance'">
-                        Importe del proyecto Aire acondicionado con balance térmico: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                        Importe del proyecto Aire acondicionado con balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'ventilationAndExtraction'">
-                        Importe del proyecto Ventilacion y extracción: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b></p>
+                        Importe del proyecto Ventilación y extracción: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     <p v-if="field== 'voiceAndData'">
-                        Importe del proyecto Voz y datos: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo de entrega del proyecto: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index][field]}} semanas.</b>
+                        Importe del proyecto Voz y datos: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                     </p>
                     <p v-if="field== 'totalAmount'">
-                        Importe total de la propuesta: <b>${{amountsEdificacion[field]}} sin incluir I.V.A.</b> 
-                        Tiempo total estimado de ejecución: <b>{{dataCotizacionNuevaEdificacion.deliveryTimes[index]["totalTime"]}} semanas.</b>
+                        Importe total de la propuesta: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                        Tiempo total estimado de ejecución: <b>{{edificacion.deliveryTimes["totalTime"]}} semanas.</b>
                     </p>
                 </div>
             </div>
@@ -97,6 +98,16 @@
                     Enviar
                 </b-button>
             </div>
+
+            <div class="text-center mt-5 mb-3">
+                <b-button 
+                    size="lg" 
+                    variant="outline-dark"
+                    @click="sendReport()"
+                >
+                    Reporte
+                </b-button>
+            </div>
         </div>
     </div>
 </template>
@@ -105,6 +116,7 @@
 import {mapState} from 'vuex';
 import firebase from '../plugins/firebase';
 import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
+import moment from 'moment';
 
 export default {
     components: {
@@ -112,7 +124,7 @@ export default {
     },
     data(){
         return{
-    
+            moment: moment,
         }
     },
     methods: {
@@ -121,12 +133,17 @@ export default {
         },
         async sendPDF(){
             const generatePDF= firebase.functions().httpsCallable('generatePDF');
-            const response= await generatePDF(this.dataCotizacionNuevaEdificacion);
+            const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion, datos_contacto: this.userContact});
+            console.log(response);
+        },
+        async sendReport(){
+            const sendQuotationReports= firebase.functions().httpsCallable('sendQuotationReports');
+            const response= await sendQuotationReports();
             console.log(response);
         }
     },
     computed: {
-        ...mapState(['dataCotizacionNuevaEdificacion']),
+        ...mapState(['dataCotizacionNuevaEdificacion', 'userContact']),
     }
 }
 </script>
