@@ -11,6 +11,7 @@
                   id="inline-form-input-FE"
                   v-model="form.economicFactors.companySituation"
                   aria-describedby="FE"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FE">
                   Factor Situación de la Empresa
@@ -22,6 +23,7 @@
                   id="inline-form-input-FM" 
                   aria-describedby="FM"
                   v-model="form.economicFactors.market"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FM">
                   Factor Mercado
@@ -33,6 +35,7 @@
                   id="inline-form-input-FR" 
                   aria-describedby="FR"
                   v-model="form.economicFactors.tabularReduction"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FR">
                   Factor Reducción Tabulador
@@ -46,6 +49,7 @@
                   id="inline-form-input-FT" 
                   aria-describedby="FT"
                   v-model="form.deliveryTimeFactors.tabuladorFactor2"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FT">
                   Factor Tabulador
@@ -57,6 +61,7 @@
                   id="inline-form-input-FEE" 
                   aria-describedby="FEE"
                   v-model="form.deliveryTimeFactors.efficiencyCompany"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FEE">
                   Factor Eficencia de la Empresa
@@ -68,6 +73,7 @@
                   id="inline-form-input-FC" 
                   aria-describedby="FC"
                   v-model="form.deliveryTimeFactors.companyWorkLoad"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FC">
                   Factor Carga de trabajo Empresa
@@ -81,6 +87,7 @@
                   id="inline-form-input-FCO" 
                   aria-describedby="FCO"
                   v-model="form.comissionFactors.comission"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FCO">
                   Factor Comisión
@@ -92,14 +99,35 @@
                   id="inline-form-input-FCC" 
                   aria-describedby="FCC"
                   v-model="form.comissionFactors.coordinatorComission"
+                  :readonly="!edit"
                 ></b-form-input>
                 <b-form-text id="FCC">
                   Factor Comisión Coordinador
                 </b-form-text>
               </td>
             </tr>
-            <b-button type="submit" variant="info">Editar</b-button>
+            <b-button 
+              class="mt-3"
+              type="submit" 
+              variant="info"
+              @click="editingFactors()"
+              size="lg"
+            >
+              {{ edit ? "Guardar" : "Editar" }}
+              <b-spinner v-if="spinner" variant="light"></b-spinner>
+            </b-button>
           </table>
+          <div class="my-3">
+            <b-alert
+              :show="dismissCountDown"
+              dismissible
+              :variant="alertStyle"
+              @dismissed="dismissCountDown=0"
+              @dismiss-count-down="countDownChanged"
+            >
+              {{ error ? error : success }}
+            </b-alert>
+          </div>
         </b-form>   
     </div>
 </template>
@@ -114,6 +142,11 @@ export default {
   },
   data() {
       return {
+        edit: false,
+        error: null,
+        success: null,
+        dismissCountDown: 0,
+        spinner: false,
         form: {
           economicFactors: {
             companySituation: 0,
@@ -143,6 +176,42 @@ export default {
         const factorsDoc= await factorsRef.get();
 
         this.form= Object.assign(this.form, factorsDoc.data());
+      },
+      async editingFactors(){
+        this.edit= !this.edit;
+        this.dismissCountDown= 0;
+        this.error= null;
+        this.success= null;
+
+        if(!this.edit){
+          this.spinner= true;
+          try {
+            const editFactors= firebase.functions().httpsCallable('editFactors');
+            const response= await editFactors(this.form);
+            console.log(response.data);
+            
+            if(response.data.success){
+              console.log('success');
+              this.dismissCountDown= 7;
+              this.success= response.data.msg;
+            }
+            this.spinner= false;
+
+          } catch (error) {
+            this.dismissCountDown= 7;
+            this.error= error.message;
+            this.edit= true;
+            this.spinner= false;
+          }
+        }        
+      },
+      countDownChanged(dismissCountDown){
+        this.dismissCountDown = dismissCountDown;
+      },
+    },
+    computed:{
+      alertStyle(){
+        return this.error !== null && this.success === null ? 'danger' : 'success'
       }
     }
   
