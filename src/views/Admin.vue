@@ -1,7 +1,11 @@
 <template>
     <div class="container">
-        <h1>Bienvenido administrador!</h1>
-        <p></p>
+      <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="p-2 bd-highlight">
+          <b-button variant="dark" @click.prevent="logout">Salir</b-button>
+          </div>
+      </div>
+      <h1>Bienvenido administrador: {{ user.email }}</h1>
         <b-form @submit="onSubmit" inline>
           <table class="table table-responsive">
             <tr><th>Factores Económicos</th>
@@ -147,6 +151,7 @@ export default {
         success: null,
         dismissCountDown: 0,
         spinner: false,
+        user: null,
         form: {
           economicFactors: {
             companySituation: 0,
@@ -169,6 +174,12 @@ export default {
       onSubmit(event) {
         event.preventDefault()
         //firebase.auth().createUserWithEmailAndPassword(this.form.email,this.form.password);
+        alert(JSON.stringify(this.form))
+      },
+      logout(){
+        firebase.auth().signOut().then(() => {
+          this.$router.push({name: 'Sesion'})
+        })
         //alert(JSON.stringify(this.form))
       },
       async getFactors(){
@@ -213,6 +224,15 @@ export default {
       alertStyle(){
         return this.error !== null && this.success === null ? 'danger' : 'success'
       }
+    },
+    created(){
+      firebase.auth().onAuthStateChanged(user => {
+        if(user){
+          this.user = user
+        }else {
+          this.user = null
+        }
+      })
     }
   
 }

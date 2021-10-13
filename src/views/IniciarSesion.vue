@@ -22,9 +22,16 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary">Ingresar</b-button>
-        <b-button type="registrar">Registrarse</b-button>
+        <b-row>
+          <b-col lg="2" class="pb-2"><b-button type="submit" variant="primary">Ingresar</b-button></b-col>
+          <b-col lg="1" class="pb-2"><b-button disabled type="registrar"  >Registrarse</b-button></b-col>
+        </b-row>
       </b-form>
+      <b-modal ref="my-modal" hide-footer>
+      <div class="d-block text-center">
+        <h3>El correo o contraseña  son incorrectos</h3>
+      </div>
+    </b-modal>
     </div>
 </template>
 
@@ -43,15 +50,23 @@ export default {
     },
     methods: {
       onSubmit(event) {
+        this.error  = '';
+        event.preventDefault()
+        if (this.form.email && this.form.password){
+          firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
+          .then(user => {
+            this.$router.push({name: 'Admin'})
+          }). catch( err => {
+            this.$refs['my-modal'].show()
+          })
+        }else{
+          this.$refs['my-modal'].show()
+        }
+        
+      },
+      onRegistrar(event) {
         event.preventDefault()
         firebase.auth().createUserWithEmailAndPassword(this.form.email,this.form.password);
-        //alert(JSON.stringify(this.form))
-      },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.password = ''
       }
     }
   
