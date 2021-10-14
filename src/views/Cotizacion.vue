@@ -109,16 +109,6 @@
                 >
                     {{ msg }}
                 </b-alert>
-            </div> 
-
-            <div class="text-center mt-5 mb-3">
-                <b-button 
-                    size="lg" 
-                    variant="outline-dark"
-                    @click="sendReport()"
-                >
-                    Reporte
-                </b-button>
             </div>
         </div>
     </div>
@@ -168,11 +158,6 @@ export default {
                 this.dismissCountDown= 7;
                 this.spinner= false;
             }
-        },
-        async sendReport(){
-            const sendQuotationReports= firebase.functions().httpsCallable('sendQuotationReports');
-            const response= await sendQuotationReports();
-            console.log(response);
         },
         countDownChanged(dismissCountDown){
             this.dismissCountDown = dismissCountDown;
