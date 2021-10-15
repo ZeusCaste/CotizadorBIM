@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <b-overlay :show="show" rounded="sm" @shown="onShown" @hidden="onHidden" :opacity="0.60" :variant="transparent">
+      <b-overlay show rounded="sm" :opacity="0.60" :variant="transparent">
         <b-card title="COLABORA CON NOSOTROS">
           <b-card-text>Muy pronto podrás colaborar con nosotros, queremos ofrecerte el mejor servicio.</b-card-text>
         </b-card>
@@ -19,21 +19,7 @@
 
 <script>
 export default {
-    data() {
-      return {
-        show: true,
-      }
-    },
-    methods: {
-      onShown() {
-        // Focus the cancel button when the overlay is showing
-        this.$refs.cancel.focus()
-      },
-      onHidden() {
-        // Focus the show button when the overlay is removed
-        this.$refs.show.focus()
-      }
-    }
+
   }
 </script>
 
