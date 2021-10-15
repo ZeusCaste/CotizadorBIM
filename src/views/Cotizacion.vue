@@ -96,17 +96,19 @@
                     @click="sendPDF()"
                 >
                     Enviar
+                    <b-spinner v-if="spinner" small label="Small Spinner"></b-spinner>
                 </b-button>
             </div>
-
-            <div class="text-center mt-5 mb-3">
-                <b-button 
-                    size="lg" 
-                    variant="outline-dark"
-                    @click="sendReport()"
+            <div class="my-3">
+                <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    :variant="alertStyle"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
                 >
-                    Reporte
-                </b-button>
+                    {{ msg }}
+                </b-alert>
             </div>
         </div>
     </div>
@@ -125,6 +127,11 @@ export default {
     data(){
         return{
             moment: moment,
+            msg: null,
+            spinner: false,
+            error: null,
+            success: false,
+            dismissCountDown: 0,
         }
     },
     methods: {
@@ -132,18 +139,35 @@ export default {
             this.eventHub.$emit("create", {});
         },
         async sendPDF(){
-            const generatePDF= firebase.functions().httpsCallable('generatePDF');
-            const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion, datos_contacto: this.userContact});
-            console.log(response);
+            this.msg= null;
+            this.error= false;
+            this.success= false;
+            try {
+                this.spinner= true;
+                const generatePDF= firebase.functions().httpsCallable('generatePDF');
+                const response= await generatePDF({dataCotizacion: this.dataCotizacionNuevaEdificacion, datos_contacto: this.userContact});
+                if(response.data.success){
+                    this.msg= response.data.msg;
+                    this.dismissCountDown= 7;
+                    this.spinner= false;
+                    this.eventHub.$emit("reset", {});
+                }
+            } catch (error) {
+                this.error= true;
+                this.msg= error.message;
+                this.dismissCountDown= 7;
+                this.spinner= false;
+            }
         },
-        async sendReport(){
-            const sendQuotationReports= firebase.functions().httpsCallable('sendQuotationReports');
-            const response= await sendQuotationReports();
-            console.log(response);
-        }
+        countDownChanged(dismissCountDown){
+            this.dismissCountDown = dismissCountDown;
+        },
     },
     computed: {
         ...mapState(['dataCotizacionNuevaEdificacion', 'userContact']),
+        alertStyle(){
+            return this.error !== null && this.success === null ? 'danger' : 'info'
+        }
     }
 }
 </script>

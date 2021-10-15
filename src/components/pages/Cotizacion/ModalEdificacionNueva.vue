@@ -506,6 +506,7 @@ export default {
     },
     created(){
         this.eventHub.$on('create', this.onCreateCotizacion);
+        this.eventHub.$on('reset', this.cleanFields);
     },
     data(){
         return{
@@ -666,15 +667,15 @@ export default {
                 });
             }
             
-             this.validaciones();
-             if(this.errores.length > 0) {
-                 this.spinner= false;
-                 return
-             }
+            // this.validaciones();
+            //  if(this.errores.length > 0) {
+            //      this.spinner= false;
+            //      return
+            // }
 
             try {
-                await this.getDataCotizacionNuevaEdificacion(this.edificacionNueva);
-                //await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
+                // await this.getDataCotizacionNuevaEdificacion(this.edificacionNueva);
+                await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
                 this.spinner= false;
                 this.hideModal();
 
