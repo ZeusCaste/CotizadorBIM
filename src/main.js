@@ -6,15 +6,16 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Particles from "particles.vue";
-
-
+import VueParticlesBg from "particles-bg-vue";
+import VueParticles from 'vue-particles';
 
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
 Vue.use(Particles);
-
+Vue.use(VueParticlesBg);
+Vue.use(VueParticles);
 // This is the event hub we'll use in every
 // component to communicate between them.
 var eventHub = new Vue();

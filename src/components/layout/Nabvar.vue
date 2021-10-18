@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="navbar navbar-dark" style="background-color: #000">
+        <div class="centered-content navbar navbar-dark" style="background-color: #000">
             <div class="ml-3">
                 <router-link to="/sobre-nosotros"><b-img 
                     :src="require('../../media/images/BIM-logo-2.jpg')" 
@@ -22,7 +22,9 @@
                 <router-link to="/iniciar-sesion" class="btn btn-outline-warning mx-2">Inicia Sesión</router-link>
             </div>
         </div>
-        <Particles
+        <!-- <particles-bg type="lines" :bg="true" num=200 /> -->
+        
+        <!-- <Particles
                 id="tsparticles"
                 :particlesInit="particlesInit"
                 :particlesLoaded="particlesLoaded"
@@ -31,8 +33,7 @@
                         color: {
                             value: '#fff'
                         },
-                        position: '50% 50%',
-                        repeat : 'no-repeat',
+                        position: '100% 100%',
                         size : 'cover',
                         opacity : 1
                     },
@@ -108,7 +109,7 @@
                     },
                     detectRetina: true
                 }"
-        />
+        /> -->
     </div>
 </template>
 

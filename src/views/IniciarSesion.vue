@@ -1,7 +1,8 @@
 <template>
     <div class="container">
+      <p class="display-4 font-weight-bold text-dark mt-1">Iniciar Sesión</p>
       <b-form @submit="onSubmit">
-        <b-form-group id="inputg1" label="Correo electrónico:" label-for="input-1">
+        <b-form-group class="text-dark text-left mt-5" id="inputg1" label="Correo electrónico:" label-for="input-1">
           <b-icon icon="envelope" font-scale="2"></b-icon>
             <b-form-input
               id="input-1"
@@ -12,8 +13,8 @@
             ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="inputg2" label="Contraseña:" label-for="input-2">
-          <b-icon icon="file-lock2-fill" font-scale="2"></b-icon>
+        <b-form-group class="text-dark text-left mt-5" id="inputg2" label="Contraseña:" label-for="input-2">
+          <b-icon  icon="file-lock2-fill" font-scale="2"></b-icon>
           <b-form-input
             id="input-2"
             v-model="form.password"
@@ -22,15 +23,19 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-row>
-          <b-col lg="2" class="pb-2"><b-button type="submit" variant="primary">Ingresar</b-button></b-col>
-          <b-col lg="1" class="pb-2"><b-button disabled type="registrar"  >Registrarse</b-button></b-col>
-        </b-row>
+        <div class="my-4">
+          <b-button class="mr-3" type="submit" variant="primary">Ingresar</b-button>
+          <b-button disabled type="registrar"  >Registrarse</b-button>
+        </div>
+        <!-- <b-row class="mt-5">
+          <b-col lg="2" class="pb-2"></b-col>
+          <b-col lg="1" class="pb-2"></b-col>
+        </b-row> -->
       </b-form>
       <b-modal ref="my-modal" hide-footer>
-      <div class="d-block text-center">
-        <h3>El correo o contraseña  son incorrectos</h3>
-      </div>
+        <div class="d-block text-center">
+          <h3>El correo o contraseña  son incorrectos</h3>
+        </div>
     </b-modal>
     </div>
 </template>
@@ -72,3 +77,12 @@ export default {
   
 }
 </script>
+<style lang="scss" scoped>
+  .container{
+    width: 35%;
+    background: #fff;
+    border: solid yellow 3px;
+    margin-top: 25px;
+    border-radius: 25px;
+  }
+</style>

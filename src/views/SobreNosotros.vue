@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-overlay show rounded="sm" opacity="0.30" variant="warning">
+    <!-- <b-overlay show rounded="sm" opacity="0.30" variant="warning">
       <template #overlay>
         <div class="text-center">
           <h1 class="display-3 text-white font-weight-bold">Nosotros</h1>
@@ -8,18 +8,24 @@
       </template>
         <b-card :img-src="require('../media/images/BIM.jpg')" img-alt="Card image" img-center >
         </b-card>
-    </b-overlay>
+    </b-overlay> -->
+    <div class="header">
+      <div class="img-header">
+        <h2 class="title display-3">Nosotros</h2>
+        <img class="img" :src="require('../../src/media/images/BIM.jpg')" alt="">
+      </div>
+    </div>
     <div class="nosotros-description">
       <div class="image">
         <img :src="require('../../src/media/images/BIMimagen.jpg')" alt="">
       </div>
       <div class="text my-auto">
-        <h1 class="text-warning">¿Quiénes somos?</h1>
-        <h5 class="text-justify">Somos una comunidad de ingenieros y expertos que ejecuta y supervisa proyectos de obra pública y privada 
+        <h5 class="text-justify text-dark">Somos una comunidad de ingenieros y expertos que ejecuta y supervisa proyectos de obra pública y privada 
           en las  áreas de construcción, remodelación y mantenimiento de inmuebles.<p></p>
           Contamos con un equipo profesional comprometido con la calidad de nuestros servicios cumpliendo el compromiso 
           adquirido con nuestros clientes.
         </h5>
+        <h1 class="text-warning">¿Quiénes somos?</h1>
       </div>
     </div>
     <!-- <b-card :img-src="require('../media/images/BIMimagen.jpg')" img-alt="Card image" img-left class="mb-3 mt-3">
@@ -60,6 +66,31 @@ export default {
 </script>
 
 <style scoped>
+  
+  .header{
+    background: #F4D03F ;
+    width: 100%;
+    height: auto;
+  }
+  
+  .title{
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    color: #000;
+    font-weight: bold;
+    opacity: unset;
+  }
+
+  .img-header{
+    opacity: 0.7;
+  }
+
+  .img-header .img{
+    width: 100%;
+    height: 400px;
+  }
+
   .nosotros-description, .nuestra-herramienta {
     margin: 40px 20px;
     display: flex;
