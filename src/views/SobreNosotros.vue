@@ -20,12 +20,12 @@
         <img :src="require('../../src/media/images/BIMimagen.jpg')" alt="">
       </div>
       <div class="text my-auto">
+        <h1 class="text-warning">¿Quiénes somos?</h1>
         <h5 class="text-justify text-dark">Somos una comunidad de ingenieros y expertos que ejecuta y supervisa proyectos de obra pública y privada 
           en las  áreas de construcción, remodelación y mantenimiento de inmuebles.<p></p>
           Contamos con un equipo profesional comprometido con la calidad de nuestros servicios cumpliendo el compromiso 
           adquirido con nuestros clientes.
         </h5>
-        <h1 class="text-warning">¿Quiénes somos?</h1>
       </div>
     </div>
     <!-- <b-card :img-src="require('../media/images/BIMimagen.jpg')" img-alt="Card image" img-left class="mb-3 mt-3">
@@ -47,10 +47,10 @@
     </b-card> -->
     <div class="nuestra-herramienta">
       <div>
-        <h3 class="text">
+        <h5 class="text">
           Hemos desarrollado una herramienta de cotización inmobiliaria la cual se basa en las normas, leyes y reglamentos mexicanos,
           utilizando de manera óptima el estimado paramétrico y la ingeniería de costos.
-        </h3>
+        </h5>
       </div>
       <div class="image">
         <img :src="require('../../src/media/images/cotizador2.jpg')" alt="">

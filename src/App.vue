@@ -38,7 +38,6 @@ import Navbar from './components/layout/Nabvar.vue';
   }
 
   .centered-content{
-    color: #ffffff;
     position: absolute;
     text-align: center;
     top: 0%;

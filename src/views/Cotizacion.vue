@@ -1,14 +1,14 @@
 <template>
     <div class="container">
         <div class="my-5">
-            <h1 class="text-center text-dark">Arma tu cotización</h1>
+            <h1 class="text-center text-dark display-3 font-weight-bold">Arma tu cotización</h1>
         </div>
         <!-- Seccion de botones -->
         <div class="button-container">
             <div class="cotizacion w-50">
                 <b-button
                     class="button btn-block"
-                    variant="outline-info"
+                    variant="outline-warning"
                     @click="openModal()"
                 >
                     <p class="texto">
@@ -27,7 +27,7 @@
             <div class="cotizacion w-50">
                 <b-button
                     class="button btn-block"
-                    variant="outline-info"
+                    variant="outline-warning"
                 >
                     <p class="texto">EDIFICACIÓN EXISTENTE</p>
                     <p class="icono">
@@ -175,12 +175,20 @@ export default {
 <style lang="scss" scoped>
     .button-container{
         display: flex;
-        flex-direction: row;
+        flex-direction: row;        
+    }
+
+    .cotizacion{
+        background: #000;
+        opacity: 0.7;
+        border-radius: 25px;
+        margin: 0px 10px;
     }
 
     .button{
         height: 200px;
         border-width: 3px;
+        border-radius: 15px;
     }
 
     .texto{

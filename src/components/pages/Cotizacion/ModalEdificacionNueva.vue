@@ -19,7 +19,7 @@
             <b-button
                 class="hide-modal"
                 size="sm"
-                variant="outline-info"
+                variant="outline-warning"
                 @click="hideModal()"
             >
                 <b-icon
@@ -30,7 +30,7 @@
             </b-button>
         </div>
         <div>
-            <div class="seccion bg-info">
+            <div class="seccion bg-warning">
                 <b-icon
                     icon="building"
                     variant="white"
@@ -97,7 +97,7 @@
 
         <!-- Datos del Proyecto -->
         <div>
-            <div class="seccion bg-info">
+            <div class="seccion bg-warning">
                 <b-icon
                     icon="clipboard-data"
                     variant="white"
@@ -404,7 +404,7 @@
 
         <!-- Datos de Contacto -->
         <div>
-            <div class="seccion bg-info">
+            <div class="seccion bg-warning">
                 <b-icon
                     icon="person-badge"
                     variant="white"

@@ -15,6 +15,25 @@
                     width="200"
                 ></b-img></router-link>
             </div>
+            <div class="fixed-top social-networks">
+                <b-col class=" d-flex flex-row justify-content-center">
+                    <br>
+                    <a class="mx-4" href="https://www.facebook.com/BIMSolucionesTacnologicas">
+                        <b-icon icon="facebook" scale="2"></b-icon>
+                    </a>
+                    <br>
+                    <br>
+                    <a class="mx-4" href="https://www.instagram.com/bim_soluciones_tecnologicas">
+                        <b-icon icon="instagram" scale="2" variant="warning"></b-icon>
+                    </a>
+                    <br>
+                    <br>
+                    <a class="mx-4" href="contacto@bimtech.solutions">
+                        <b-icon icon="envelope" scale="2"></b-icon>
+                    </a>
+                    <br>
+                </b-col>
+            </div>
             <div class="fixed-top menu">
                 <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-warning mx-2">Arma tu cotización</router-link>
                 <router-link to="/colabora-con-nosotros" class="btn btn-outline-warning mx-2">Colabora con nosotros</router-link>
@@ -151,6 +170,16 @@
         flex-direction: column;
         position: absolute;
         left: 870px;
-
     }
+
+    .social-networks{
+        width: 250px;
+        height: 75px;
+        left: 300px;
+        top: 20px;
+        background: #000;
+        padding: 20px;
+        margin: auto 20px;
+        border-radius: 15px;
+    }   
 </style>
