@@ -48,14 +48,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(ruta => ruta.meta.requieresAuth)){
-    const user = firebase.auth().currentUser;
-    if(user){
-      next();
-    }else{
-      next({
-        name : 'Sesion'
-      })
-    }
+    firebase.auth().onAuthStateChanged((user)=> {
+      if(user){
+        next();
+      }
+      else{
+        next({
+          name : 'Sesion'
+        })
+      }
+    });
   }else{
     next();
   }

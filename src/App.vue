@@ -39,7 +39,7 @@ import Navbar from './components/layout/Nabvar.vue';
 
   .centered-content{
     position: absolute;
-    text-align: center;
+    // text-align: center;
     top: 0%;
     width: 100%;
   }
