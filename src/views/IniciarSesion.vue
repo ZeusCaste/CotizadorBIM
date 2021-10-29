@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <p class="display-4 font-weight-bold text-dark mt-1">Iniciar Sesión</p>
+      <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
       <b-form @submit="onSubmit">
         <b-form-group class="text-dark text-left mt-5" id="inputg1" label="Correo electrónico:" label-for="input-1">
           <b-icon icon="envelope" font-scale="2"></b-icon>
@@ -25,12 +25,8 @@
         </b-form-group>
         <div class="my-4">
           <b-button class="mr-3" type="submit" variant="primary">Ingresar</b-button>
-          <b-button disabled type="registrar"  >Registrarse</b-button>
+          <b-button disabled type="registrar">Registrarse</b-button>
         </div>
-        <!-- <b-row class="mt-5">
-          <b-col lg="2" class="pb-2"></b-col>
-          <b-col lg="1" class="pb-2"></b-col>
-        </b-row> -->
       </b-form>
       <b-modal ref="my-modal" hide-footer>
         <div class="d-block text-center">
@@ -45,6 +41,13 @@
 import firebase from '../plugins/firebase';
 
 export default {
+  created(){
+    firebase.auth().onAuthStateChanged((user)=> {
+      if(user){
+        this.$router.push({name: 'Admin'});
+      }
+    });
+  },
   data() {
       return {
         form: {

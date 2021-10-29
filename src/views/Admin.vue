@@ -1,11 +1,14 @@
 <template>
     <div class="container">
-      <div class="d-flex flex-row-reverse bd-highlight">
+      <div class="d-flex flex-row-reverse my-4">
           <div class="p-2 bd-highlight">
-          <b-button variant="dark" @click.prevent="logout">Salir</b-button>
+            <b-button variant="dark" @click.prevent="logout()">
+              Cerrar Sesión
+              <b-icon icon="box-arrow-right"></b-icon>
+            </b-button>
           </div>
       </div>
-      <h1>Bienvenido administrador: {{ user.email }}</h1>
+      <h1>Bienvenido administrador: {{ user && user.email }}</h1>
         <table class="table table-responsive">
           <tr><th>Factores Económicos</th>
             <td>
@@ -149,7 +152,7 @@ export default {
         success: null,
         dismissCountDown: 0,
         spinner: false,
-        user: null,
+        user: {},
         form: {
           economicFactors: {
             companySituation: 0,
@@ -174,10 +177,8 @@ export default {
         //firebase.auth().createUserWithEmailAndPassword(this.form.email,this.form.password);
         // alert(JSON.stringify(this.form))
       },
-      logout(){
-        firebase.auth().signOut().then(() => {
-          this.$router.push({name: 'Sesion'})
-        })
+      async logout(){
+        await firebase.auth().signOut()
         //alert(JSON.stringify(this.form))
       },
       async getFactors(){
@@ -228,7 +229,7 @@ export default {
         if(user){
           this.user = user
         }else {
-          this.user = null
+          this.user = {}
         }
       });
     }

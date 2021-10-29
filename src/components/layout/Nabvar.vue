@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="centered-content navbar navbar-dark" style="background-color: #000">
+        <div class="centered-content navbar navbar-dark px-3" style="background-color: #000">
             <div class="ml-3">
                 <router-link to="/sobre-nosotros"><b-img 
                     :src="require('../../media/images/BIM-logo-2.jpg')" 
@@ -38,111 +38,35 @@
                 <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-warning mx-2">Arma tu cotización</router-link>
                 <router-link to="/colabora-con-nosotros" class="btn btn-outline-warning mx-2">Colabora con nosotros</router-link>
                 <router-link to="/sobre-nosotros" class="btn btn-outline-warning mx-2">Sobre nosotros</router-link>
-                <router-link to="/iniciar-sesion" class="btn btn-outline-warning mx-2">Inicia Sesión</router-link>
+                <router-link to="/iniciar-sesion" class="btn btn-outline-warning mx-2">{{ authenticated ? "Mi Sesión" : "Iniciar Sesión" }}</router-link>
             </div>
         </div>
-        <!-- <particles-bg type="lines" :bg="true" num=200 /> -->
-        
-        <!-- <Particles
-                id="tsparticles"
-                :particlesInit="particlesInit"
-                :particlesLoaded="particlesLoaded"
-                :options="{
-                    background: {
-                        color: {
-                            value: '#fff'
-                        },
-                        position: '100% 100%',
-                        size : 'cover',
-                        opacity : 1
-                    },
-                    fpsLimit: 60,
-                    interactivity: {
-                        detectsOn: 'canvas',
-                        events: {
-                            onClick: {
-                                enable: true,
-                                mode: 'push'
-                            },
-                            onHover: {
-                                enable: true,
-                                mode: 'repulse'
-                            },
-                            resize: true
-                        },
-                        modes: {
-                            bubble: {
-                                distance: 400,
-                                duration: 2,
-                                opacity: 0.8,
-                                size: 40
-                            },
-                            push: {
-                                quantity: 4
-                            },
-                            repulse: {
-                                distance: 200,
-                                duration: 0.4
-                            }
-                        }
-                    },
-                    particles: {
-                        color: {
-                            value: '#FCC301'
-                        },
-                        links: {
-                            color: '#000',
-                            distance: 150,
-                            enable: true,
-                            opacity: 0.5,
-                            width: 1
-                        },
-                        collisions: {
-                            enable: true
-                        },
-                        move: {
-                            direction: 'none',
-                            enable: true,
-                            outMode: 'bounce',
-                            random: false,
-                            speed: 1,
-                            straight: false
-                        },
-                        number: {
-                            density: {
-                                enable: true,
-                                value_area: 800
-                            },
-                            value: 80
-                        },
-                        opacity: {
-                            value: 0.5
-                        },
-                        shape: {
-                            type: 'square'
-                        },
-                        size: {
-                            random: true,
-                            value: 5
-                        }
-                    },
-                    detectRetina: true
-                }"
-        /> -->
     </div>
 </template>
 
 <script>
+import firebase from '../../plugins/firebase';
 
     export default {
         name: "Navbar",
+        created(){
+            firebase.auth().onAuthStateChanged((user)=> {
+                if(user){
+                    this.authenticated= true;
+                }
+                else{
+                    this.authenticated= false;
+                }
+            });
+        },
         data(){
             return{
-                
+                authenticated: false,
             }
         },
         methods: {
         },
+
 
     }
 </script>
@@ -153,7 +77,7 @@
     }
 
     .menu{
-        left: 600px;
+        left: 750px;
         top: 20px;
         background: #000;
         padding: 20px;
@@ -175,7 +99,7 @@
     .social-networks{
         width: 250px;
         height: 75px;
-        left: 300px;
+        left: 400px;
         top: 20px;
         background: #000;
         padding: 20px;

@@ -4,7 +4,6 @@
       class="background"
       color="#FCC301"
       linesColor="#000"
-      lineOpacity=1
     ></vue-particles>
     <div class="centered-content">
       <Navbar />
