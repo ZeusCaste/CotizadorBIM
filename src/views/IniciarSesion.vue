@@ -1,7 +1,11 @@
 <template>
     <div class="container">
       <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
+
+      <!-- Formulario para iniciar sesion -->
       <b-form @submit="onSubmit">
+
+        <!-- Input correo electronico -->
         <b-form-group class="text-dark text-left mt-5" id="inputg1" label="Correo electrónico:" label-for="input-1">
           <b-icon icon="envelope" font-scale="2"></b-icon>
             <b-form-input
@@ -13,6 +17,7 @@
             ></b-form-input>
         </b-form-group>
 
+        <!-- Input contraseña -->
         <b-form-group class="text-dark text-left mt-5" id="inputg2" label="Contraseña:" label-for="input-2">
           <b-icon  icon="file-lock2-fill" font-scale="2"></b-icon>
           <b-form-input
@@ -23,11 +28,18 @@
             required
           ></b-form-input>
         </b-form-group>
-        <div class="my-4">
+
+        <!-- Boton de inicio y link para cambiar al formulario de registro -->
+        <div class="my-4 text-center">
           <b-button class="mr-3" type="submit" variant="primary">Ingresar</b-button>
           <b-button disabled type="registrar">Registrarse</b-button>
         </div>
       </b-form>
+
+      <!-- Alerts para mostrar errores -->
+      <div v-if="error">
+        <b-alert show variant="danger">Danger Alert</b-alert>
+      </div>
       <b-modal ref="my-modal" hide-footer>
         <div class="d-block text-center">
           <h3>El correo o contraseña  son incorrectos</h3>
@@ -50,6 +62,7 @@ export default {
   },
   data() {
       return {
+        error: false,
         form: {
           email: '',
           password: '',
@@ -65,7 +78,7 @@ export default {
           .then(user => {
             this.$router.push({name: 'Admin'})
           }). catch( err => {
-            this.$refs['my-modal'].show()
+            this.error= true;
           })
         }else{
           this.$refs['my-modal'].show()
