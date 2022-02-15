@@ -31,9 +31,9 @@ const routes = [
     component: ()=> import('../views/SobreNosotros.vue'),
   },
   {
-    path: '/admin',
-    name: "Admin",
-    component: ()=> import('../views/Admin.vue'),
+    path: '/admin-session',
+    name: "AdminSession",
+    component: ()=> import('../views/AdminSession.vue'),
     meta:{
       requieresAuth: true
     }

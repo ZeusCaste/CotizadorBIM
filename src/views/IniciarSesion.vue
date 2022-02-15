@@ -56,7 +56,7 @@ export default {
   created(){
     firebase.auth().onAuthStateChanged((user)=> {
       if(user){
-        this.$router.push({name: 'Admin'});
+        this.$router.push({name: 'AdminSession'});
       }
     });
   },
@@ -76,7 +76,7 @@ export default {
         if (this.form.email && this.form.password){
           firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
           .then(user => {
-            this.$router.push({name: 'Admin'})
+            this.$router.push({name: 'AdminSession'})
           }). catch( err => {
             this.error= true;
           })
