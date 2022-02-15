@@ -21,9 +21,9 @@ const routes = [
     component: ()=> import('../views/ColaboraNosotros.vue'),
   },
   {
-    path: '/iniciar-sesion',
+    path: '/acceso-cuenta',
     name: 'Sesion',
-    component: ()=> import('../views/IniciarSesion.vue'),
+    component: ()=> import('../views/AccountAccess.vue'),
   },
   {
     path: '/sobre-nosotros',

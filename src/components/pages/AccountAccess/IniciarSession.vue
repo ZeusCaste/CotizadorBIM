@@ -50,7 +50,7 @@
 
 <script>
 
-import firebase from '../plugins/firebase';
+import firebase from '../../../plugins/firebase';
 
 export default {
   created(){
@@ -70,13 +70,13 @@ export default {
       }
     },
     methods: {
-      onSubmit(event) {
+      async onSubmit(event) {
         this.error  = '';
         event.preventDefault()
         if (this.form.email && this.form.password){
-          firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
+          await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
           .then(user => {
-            this.$router.push({name: 'AdminSession'})
+            // this.$router.push({name: 'AdminSession'})
           }). catch( err => {
             this.error= true;
           })
