@@ -38,7 +38,7 @@
                 <router-link to="/arma-tu-cotizacion" class="button-menu btn btn-outline-warning mx-2">Arma tu cotización</router-link>
                 <router-link to="/colabora-con-nosotros" class="btn btn-outline-warning mx-2">Colabora con nosotros</router-link>
                 <router-link to="/sobre-nosotros" class="btn btn-outline-warning mx-2">Sobre nosotros</router-link>
-                <router-link to="/iniciar-sesion" class="btn btn-outline-warning mx-2">{{ authenticated ? "Mi Sesión" : "Iniciar Sesión" }}</router-link>
+                <router-link to="/acceso-cuenta" class="btn btn-outline-warning mx-2">{{ authenticated ? "Mi Sesión" : "Iniciar Sesión" }}</router-link>
             </div>
         </div>
     </div>
