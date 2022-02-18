@@ -13,7 +13,6 @@
               v-model="form.email"
               type="email"
               placeholder="Ingrese su correo electrónico"
-              required
             ></b-form-input>
         </b-form-group>
 
@@ -25,7 +24,6 @@
             v-model="form.password"
             type="password"
             placeholder="Ingrese su contraseña"
-            required
           ></b-form-input>
         </b-form-group>
 
@@ -38,13 +36,8 @@
 
       <!-- Alerts para mostrar errores -->
       <div v-if="error">
-        <b-alert show variant="danger">Danger Alert</b-alert>
+        <b-alert class="text-center" show variant="danger"><h4>{{ errorMessage }}</h4></b-alert>
       </div>
-      <b-modal ref="my-modal" hide-footer>
-        <div class="d-block text-center">
-          <h3>El correo o contraseña  son incorrectos</h3>
-        </div>
-    </b-modal>
     </div>
 </template>
 
@@ -63,6 +56,7 @@ export default {
   data() {
       return {
         error: false,
+        errorMessage: "",
         form: {
           email: '',
           password: '',
@@ -71,18 +65,21 @@ export default {
     },
     methods: {
       async onSubmit(event) {
-        this.error  = '';
-        event.preventDefault()
-        if (this.form.email && this.form.password){
-          await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
+        this.error  = false;
+        this.errorMessage= "";
+        event.preventDefault();
+        if (!this.form.email.trim() && !this.form.password.trim()){
+          this.error= true;
+          this.errorMessage= "Ingresa tu correo y contraseña";
+          return
+        }
+        await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
           .then(user => {
             // this.$router.push({name: 'AdminSession'})
           }). catch( err => {
             this.error= true;
+            this.errorMessage= "Correo o contraseña incorrectos"
           })
-        }else{
-          this.$refs['my-modal'].show()
-        }
         
       },
       onRegistrar(event) {
