@@ -6,31 +6,39 @@
       <b-form @submit="onSubmit">
 
         <!-- Input correo electronico -->
-        <b-form-group class="text-dark text-left mt-5" id="inputg1" label="Correo electrónico:" label-for="input-1">
-          <b-icon icon="envelope" font-scale="2"></b-icon>
-            <b-form-input
-              id="input-1"
-              v-model="form.email"
-              type="email"
-              placeholder="Ingrese su correo electrónico"
-            ></b-form-input>
+        <b-form-group class="text-dark text-left mt-5 " id="inputg1" label="Correo electrónico:" label-for="input-1">
+          <b-row>
+            <b-icon class="ml-3" icon="envelope-fill" font-scale="2"></b-icon>
+            <b-col>
+              <b-form-input
+                id="input-1"
+                v-model="form.email"
+                type="email"
+                placeholder="Correo Electrónico"
+              ></b-form-input>
+            </b-col>
+          </b-row>
         </b-form-group>
 
         <!-- Input contraseña -->
         <b-form-group class="text-dark text-left mt-5" id="inputg2" label="Contraseña:" label-for="input-2">
-          <b-icon  icon="file-lock2-fill" font-scale="2"></b-icon>
-          <b-form-input
-            id="input-2"
-            v-model="form.password"
-            type="password"
-            placeholder="Ingrese su contraseña"
-          ></b-form-input>
+          <b-row>
+            <b-icon class="ml-3"  icon="file-lock2-fill" font-scale="2"></b-icon>
+            <b-col>
+              <b-form-input
+                id="input-2"
+                v-model="form.password"
+                type="password"
+                placeholder="Ingrese su contraseña"
+              ></b-form-input>
+            </b-col>
+          </b-row>
         </b-form-group>
 
         <!-- Boton de inicio y link para cambiar al formulario de registro -->
         <div class="my-4 text-center">
           <b-button class="mr-3" type="submit" variant="primary">Ingresar</b-button>
-          <b-button disabled type="registrar">Registrarse</b-button>
+          <b-button variant="link" disabled type="registrar">Registrarse</b-button>
         </div>
       </b-form>
 
@@ -95,7 +103,7 @@ export default {
     width: 35%;
     background: #fff;
     border: solid yellow 3px;
-    margin-top: 25px;
+    margin-top: 70px;
     border-radius: 25px;
   }
 </style>
