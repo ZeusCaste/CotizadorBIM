@@ -182,10 +182,14 @@ export default {
         //alert(JSON.stringify(this.form))
       },
       async getFactors(){
-        const factorsRef= firebase.firestore().collection('factors').doc('bQS31BEEdF9n5HHatkB9');
-        const factorsDoc= await factorsRef.get();
+        try {
+          const factorsRef= firebase.firestore().collection('factors').doc('bQS31BEEdF9n5HHatkB9');
+          const factorsDoc= await factorsRef.get();
 
-        this.form= Object.assign(this.form, factorsDoc.data());
+          this.form= Object.assign(this.form, factorsDoc.data());
+        } catch (error) {
+          console.log(error);
+        }
       },
       async editingFactors(){
         this.edit= !this.edit;
