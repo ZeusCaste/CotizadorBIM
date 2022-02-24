@@ -51,12 +51,8 @@ import firebase from '../../plugins/firebase';
         name: "Navbar",
         created(){
             firebase.auth().onAuthStateChanged((user)=> {
-                if(user){
-                    this.authenticated= true;
-                }
-                else{
-                    this.authenticated= false;
-                }
+                if(user) this.authenticated= true;
+                else this.authenticated= false;
             });
         },
         data(){
