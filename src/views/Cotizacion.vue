@@ -5,40 +5,8 @@
         </div>
         <!-- Seccion de botones -->
         <div class="button-container">
-            <div class="cotizacion w-50">
-                <b-button
-                    class="button btn-block"
-                    variant="outline-warning"
-                    @click="openModal()"
-                >
-                    <p class="texto">
-                        EDIFICACÓN NUEVA
-                    </p>
-
-                   <p class="icono">
-                        <b-icon
-                            icon="clipboard-plus"
-                            animation="throb"
-                            scale="5"
-                        ></b-icon>
-                   </p>
-                </b-button>
-            </div>
-            <div class="cotizacion w-50">
-                <b-button
-                    class="button btn-block"
-                    variant="outline-warning"
-                >
-                    <p class="texto">EDIFICACIÓN EXISTENTE</p>
-                    <p class="icono">
-                        <b-icon
-                            icon="house"
-                            animation="throb"
-                            scale="5"
-                        ></b-icon>
-                    </p>
-                </b-button>
-           </div>
+            <BottonAccion :title="'Edificacion Nueva'" :action="openModal" :icon="'clipboard-plus'" />
+            <BottonAccion :title="'Edificacion Existente'" :action="openModal" :icon="'house'" />
 
             <ModalEdificacionNueva />
         </div>
@@ -50,6 +18,7 @@
 </template>
 
 <script>
+import BottonAccion from '../components/pages/Cotizacion/BotonAccion.vue';
 import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
 import ResultadosCotizacion from '../components/pages/Cotizacion/ResultadosCotizacion.vue';
 
@@ -57,6 +26,7 @@ export default {
     components: {
         ModalEdificacionNueva,
         ResultadosCotizacion,
+        BottonAccion,
     },
     data(){
         return{
@@ -76,27 +46,5 @@ export default {
         display: flex;
         flex-direction: row;        
     }
-
-    .cotizacion{
-        background: #000;
-        opacity: 0.7;
-        border-radius: 25px;
-        margin: 0px 10px;
-    }
-
-    .button{
-        height: 200px;
-        border-width: 3px;
-        border-radius: 15px;
-    }
-
-    .texto{
-        margin-top: -50px;
-        font-weight: bold;
-    }
-
-    .icono{
-        margin-top: 50px;
-    }
-
+    
 </style>
