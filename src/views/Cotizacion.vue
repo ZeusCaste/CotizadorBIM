@@ -5,8 +5,8 @@
         </div>
         <!-- Seccion de botones -->
         <div class="button-container">
-            <BottonAccion :title="'Edificacion Nueva'" :action="openModal" :icon="'clipboard-plus'" />
-            <BottonAccion :title="'Edificacion Existente'" :action="openModal" :icon="'house'" />
+            <BottonAccion :title="'Edificacion Nueva'" :action="openModalEdificacionNueva" :icon="'clipboard-plus'" />
+            <BottonAccion :title="'Edificacion Existente'" :action="openModalEdificacionExistente" :icon="'house'" />
 
             <ModalEdificacionNueva />
         </div>
@@ -34,8 +34,11 @@ export default {
         }
     },
     methods: {
-        openModal(){
+        openModalEdificacionNueva(){
             this.eventHub.$emit("create", {});
+        },
+        openModalEdificacionExistente(){
+            console.log("Muy pronto");
         }
     }
 }
