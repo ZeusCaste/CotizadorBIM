@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-direction-row">
       <div class="nabvar-session">
-        <NabvarSession :menuComponents="['Maquino', 'Maquinola', 'Maquinotiuch']" />
+        <NabvarSession :menuComponents="adminMenu" />
       </div>
       <div class="container">
         <div class="d-flex flex-row-reverse my-4">
@@ -157,6 +157,7 @@ export default {
   },
   data() {
       return {
+        adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "---> Cerrar Sesión"],
         edit: false,
         error: null,
         success: null,
