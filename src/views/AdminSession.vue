@@ -4,6 +4,9 @@
         <NabvarSession :menuComponents="adminMenu" />
       </div>
       <div class="container my-5">
+        <div class="mb-5">
+          <h1>Bienvenido administrador: {{ user && user.email }}</h1>
+        </div>
         <Factores />
       </div>
     </div>
@@ -30,6 +33,7 @@ export default {
   },
   data() {
     return {
+      user: '',
       adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "---> Cerrar Sesión"],
     }
   },  

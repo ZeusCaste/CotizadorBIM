@@ -1,14 +1,5 @@
 <template>
     <div>
-        <!-- <div class="d-flex flex-row-reverse my-4">
-            <div class="p-2 bd-highlight">
-                <b-button variant="dark" @click.prevent="logout()">
-                    Cerrar Sesión
-                    <b-icon icon="box-arrow-right"></b-icon>
-                </b-button>
-            </div>
-        </div> -->
-        <h1>Bienvenido administrador: {{ user && user.email }}</h1>
         <table class="table table-responsive">
             <tr><th>Factores Económicos</th>
                 <td>
