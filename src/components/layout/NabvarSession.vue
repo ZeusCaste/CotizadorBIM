@@ -4,7 +4,7 @@
             <div v-for="(menuName, idx) in menuComponents" :key="idx">
                 <b-button 
                     class="text-left mt-1 font-weight-bold shadow"
-                    :class="activedMenu == menuName ? 'actived-menu' : 'desactivedMenu'"
+                    :class="selectedMenu == menuName ? 'actived-menu' : 'desactivedMenu'"
                     variant="warning"
                     block 
                     @click="showContent(menuName)"
@@ -21,15 +21,17 @@ export default {
     name: "NabvarSession",
     props: {
         menuComponents: Array,
+        selectedMenu: String,
+        setNewSelectedMenu: Function,
     },
     data(){
         return {
-            activedMenu: '',
+
         }
     },
     methods: {
-        showContent(newActivedMenu){
-            this.activedMenu= newActivedMenu;
+        showContent(newSelectedMenu){
+            this.$props.setNewSelectedMenu(newSelectedMenu);
         }
     }
 }

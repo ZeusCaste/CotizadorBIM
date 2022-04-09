@@ -1,13 +1,13 @@
 <template>
     <div class="d-flex flex-direction-row">
       <div class="nabvar-session">
-        <NabvarSession :menuComponents="adminMenu" />
+        <NabvarSession :menuComponents="adminMenu" :selectedMenu="selectedMenu" :setNewSelectedMenu="setNewSelectedMenu" />
       </div>
       <div class="container my-5">
         <div class="mb-5">
           <h1>Bienvenido administrador: {{ user && user.email }}</h1>
         </div>
-        <Factores />
+        <Factores v-if="selectedMenu === 'Factores'" />
       </div>
     </div>
     
@@ -35,8 +35,14 @@ export default {
     return {
       user: '',
       adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "---> Cerrar Sesión"],
+      selectedMenu: '',
     }
-  },  
+  },
+  methods: {
+    setNewSelectedMenu(newSelectedMenu){
+      this.selectedMenu= newSelectedMenu;
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
