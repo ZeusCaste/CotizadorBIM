@@ -10,7 +10,6 @@
         <Factores v-if="selectedMenu === 'Factores'" />
       </div>
     </div>
-    
 </template>
 
 <script>
@@ -26,6 +25,7 @@ export default {
     Factores,
   },
   created(){
+    this.selectedMenu= 'Factores'
     firebase.auth().onAuthStateChanged(user => {
       if(user) this.user = user;
       else this.user = {};
