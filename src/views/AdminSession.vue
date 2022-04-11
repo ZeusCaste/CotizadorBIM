@@ -8,6 +8,7 @@
           <h1>Bienvenido administrador: {{ user && user.email }}</h1>
         </div>
         <Factores v-if="selectedMenu === 'Factores'" />
+        <Quotations v-if="selectedMenu === 'Cotizaciones Realizadas'" />
       </div>
     </div>
 </template>
@@ -16,6 +17,7 @@
 import firebase from '../plugins/firebase';
 import NabvarSession from '../components/layout/NabvarSession.vue';
 import Factores from '../components/pages/AdminSession/Factors.vue';
+import Quotations from '../components/pages/AdminSession/QuotationsTable.vue';
 
 
 export default {
@@ -23,9 +25,10 @@ export default {
   components: {
     NabvarSession,
     Factores,
+    Quotations
   },
   created(){
-    this.selectedMenu= 'Factores'
+    this.selectedMenu= 'Factores';
     firebase.auth().onAuthStateChanged(user => {
       if(user) this.user = user;
       else this.user = {};
