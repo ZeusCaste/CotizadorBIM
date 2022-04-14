@@ -3,8 +3,14 @@
         <b-table
             :fields="fields"
             :items="items"
+            striped
+            bordered
+            foot-clone
+            hover
+            head-variant="dark"
+            table-variant="light"
         >
-
+            
         </b-table>
     </div>
 </template>
