@@ -12,6 +12,9 @@
                 </b-row>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="w-50 m-auto">
+                    <b-input placeholder="Buscar" v-model="buscarRegistro"></b-input>
+                </div>
             </div>
         </div>
         <b-table
@@ -24,6 +27,7 @@
             head-variant="dark"
             table-variant="light"
             :per-page="mostrar"
+            :filter="buscarRegistro"
         >
             
         </b-table>
@@ -39,6 +43,7 @@ export default {
         return{
             showOptions: [5, 10, 15, 20],
             mostrar: 10,
+            buscarRegistro: '',
             fields: [
                 {'label': "ID", 'key': 'id', 'sortable': false},
                 {'label': "Nombre", 'key': 'name', 'sortable': true},
