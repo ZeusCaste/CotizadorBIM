@@ -1,5 +1,19 @@
 <template>
     <div>
+        <div class="container row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <b-row class="d-flex mx-3 mb-3">
+                    <div class="mx-2 mt-1">
+                        <label for="mostrar">Mostrar</label>
+                    </div>
+                    <div class="mx-2">
+                        <b-form-select name="mostrar" v-model="mostrar" :options="showOptions"></b-form-select>
+                    </div>
+                </b-row>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+            </div>
+        </div>
         <b-table
             :fields="fields"
             :items="items"
@@ -9,6 +23,7 @@
             hover
             head-variant="dark"
             table-variant="light"
+            :per-page="mostrar"
         >
             
         </b-table>
@@ -22,6 +37,8 @@ export default {
     name: "QuotationsTable",
     data(){
         return{
+            showOptions: [5, 10, 15, 20],
+            mostrar: 10,
             fields: [
                 {'label': "ID", 'key': 'id', 'sortable': false},
                 {'label': "Nombre", 'key': 'name', 'sortable': true},
