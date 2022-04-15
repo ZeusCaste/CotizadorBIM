@@ -29,8 +29,14 @@
             :per-page="mostrar"
             :filter="buscarRegistro"
             :current-page="currentPage"
+            :busy="isBusy"
         >
-            
+            <template #table-busy>
+                <div class="text-center text-danger my-2">
+                    <b-spinner class="align-middle"></b-spinner>
+                    <strong>Loading...</strong>
+                </div>
+            </template>
         </b-table>
         <div class="container d-flex justify-content-between">
             <div class="mx-2">
@@ -68,6 +74,7 @@ export default {
             ],
             items: [],
             currentPage: 1,
+            isBusy: false,
         }
     },
     created(){
@@ -75,6 +82,7 @@ export default {
     },
     methods: {
         getQuotations(){
+            this.isBusy= true;
             try {
                 const ref= firebase.firestore().collection('quotations');
                 ref.onSnapshot((snapshot)=> {
@@ -82,11 +90,13 @@ export default {
                         // console.log("id: " + doc.id + " data: " + doc.data());
                         this.items.push({ 'id': doc.id, ...doc.data() });
                     })
-                })
+                });
+
             } catch (error) {
                 console.log(error);
             }
 
+            this.isBusy= false;
         }
     },
     computed: {
