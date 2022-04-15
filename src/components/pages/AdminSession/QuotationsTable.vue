@@ -28,9 +28,24 @@
             table-variant="light"
             :per-page="mostrar"
             :filter="buscarRegistro"
+            :current-page="currentPage"
         >
             
         </b-table>
+        <div class="container d-flex justify-content-between">
+            <div class="mx-2">
+                <p>Mostrando del {{ currentPage * mostrar - mostrar + 1 }} al {{ currentPage * mostrar }} de {{ getItemsLength }}</p>
+            </div> 
+            <div class="mx-2">
+                <b-pagination
+                    pills
+                    v-model="currentPage"
+                    :per-page="mostrar"
+                    :total-rows="getItemsLength"
+                >
+                </b-pagination>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -52,6 +67,7 @@ export default {
                 {'label': "Enlace", 'key': 'link', 'sortable': false},
             ],
             items: [],
+            currentPage: 1,
         }
     },
     created(){
@@ -71,6 +87,11 @@ export default {
                 console.log(error);
             }
 
+        }
+    },
+    computed: {
+        getItemsLength(){
+            return this.items.length;
         }
     }
 }
