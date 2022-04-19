@@ -4,8 +4,9 @@
         <NabvarSession :menuComponents="adminMenu" :selectedMenu="selectedMenu" :setNewSelectedMenu="setNewSelectedMenu" />
       </div>
       <div class="container my-5">
-        <div class="mb-5">
-          <h1>Bienvenido administrador: {{ user && user.email }}</h1>
+        <div class="mb-5 d-flex justify-content-between align-items-center">
+          <h1>{{ selectedMenu }}</h1>
+          <h5>Bienvenido administrador: {{ user && user.email }}</h5>
         </div>
         <Factores v-if="selectedMenu === 'Factores'" />
         <Quotations v-if="selectedMenu === 'Cotizaciones Realizadas'" />
