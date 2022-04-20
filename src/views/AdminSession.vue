@@ -11,6 +11,7 @@
         <Factores v-if="selectedMenu === 'Factores'" />
         <Quotations v-if="selectedMenu === 'Cotizaciones Realizadas'" />
         <Projects v-if="selectedMenu === 'Proyectos'" />
+        <Partners v-if="selectedMenu === 'Colaboradores'" />
       </div>
     </div>
 </template>
@@ -21,6 +22,7 @@ import NabvarSession from '../components/layout/NabvarSession.vue';
 import Factores from '../components/pages/AdminSession/Factors.vue';
 import Quotations from '../components/pages/AdminSession/QuotationsTable.vue';
 import Projects from '../components/pages/AdminSession/ProjectsTable.vue';
+import Partners from '../components/pages/AdminSession/ParternsTable.vue';
 
 
 export default {
@@ -29,7 +31,8 @@ export default {
     NabvarSession,
     Factores,
     Quotations, 
-    Projects
+    Projects,
+    Partners,
   },
   created(){
     this.selectedMenu= 'Factores';
