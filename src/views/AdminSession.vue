@@ -12,6 +12,7 @@
         <Quotations v-if="selectedMenu === 'Cotizaciones Realizadas'" />
         <Projects v-if="selectedMenu === 'Proyectos'" />
         <Partners v-if="selectedMenu === 'Colaboradores'" />
+        <Customers v-if="selectedMenu === 'Clientes'" />
       </div>
     </div>
 </template>
@@ -23,6 +24,7 @@ import Factores from '../components/pages/AdminSession/Factors.vue';
 import Quotations from '../components/pages/AdminSession/QuotationsTable.vue';
 import Projects from '../components/pages/AdminSession/ProjectsTable.vue';
 import Partners from '../components/pages/AdminSession/ParternsTable.vue';
+import Customers from '../components/pages/AdminSession/CustomersTable.vue';
 
 
 export default {
@@ -33,6 +35,7 @@ export default {
     Quotations, 
     Projects,
     Partners,
+    Customers
   },
   created(){
     this.selectedMenu= 'Factores';
