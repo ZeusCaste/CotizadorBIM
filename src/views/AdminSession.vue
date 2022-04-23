@@ -47,13 +47,22 @@ export default {
   data() {
     return {
       user: '',
-      adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "---> Cerrar Sesión"],
+      adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "Cerrar Sesión"],
       selectedMenu: '',
     }
   },
   methods: {
     setNewSelectedMenu(newSelectedMenu){
       this.selectedMenu= newSelectedMenu;
+    }
+  },
+  watch: {
+    selectedMenu(newMenu, oldMenu){
+      if(newMenu === 'Cerrar Sesión'){
+        firebase.auth().signOut().then(()=> {
+          console.log("User Signed Out");
+        });
+      }
     }
   }
 }
