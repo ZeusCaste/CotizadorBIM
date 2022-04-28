@@ -37,6 +37,10 @@
                     <strong>Loading...</strong>
                 </div>
             </template>
+
+            <template #cell(startDate)="data">
+                {{ moment(data.item.startDate).format('DD/MM/YYYY') }}
+            </template>
         </b-table>
         <div class="container d-flex justify-content-between">
             <div class="mx-2">
@@ -56,6 +60,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import firebase from '../../../plugins/firebase';
 
 export default {
@@ -66,7 +71,6 @@ export default {
             mostrar: 10,
             buscarRegistro: '',
             fields: [
-                {'label': "ID", 'key': 'id', 'sortable': false},
                 {'label': "Nombre", 'key': 'name', 'sortable': true},
                 {'label': "Correo", 'key': 'email', 'sortable': true},
                 {'label': "Fecha Inicio", 'key': 'startDate', 'sortable': true},
@@ -76,6 +80,7 @@ export default {
             items: [],
             currentPage: 1,
             isBusy: false,
+            moment,
         }
     },
     created(){
