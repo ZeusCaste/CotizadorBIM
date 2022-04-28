@@ -37,6 +37,9 @@
                     <strong>Loading...</strong>
                 </div>
             </template>
+            <template #cell(date)="data">
+                {{ moment(data.item.date).format('DD/MM/YYYY') }}
+            </template>
         </b-table>
         <div class="container d-flex justify-content-between">
             <div class="mx-2">
@@ -56,6 +59,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import firebase from '../../../plugins/firebase';
 
 export default {
@@ -74,6 +78,7 @@ export default {
             items: [],
             currentPage: 1,
             isBusy: false,
+            moment
         }
     },
     created(){
