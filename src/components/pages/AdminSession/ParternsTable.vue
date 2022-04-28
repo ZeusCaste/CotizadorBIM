@@ -71,7 +71,6 @@ export default {
             mostrar: 10,
             buscarRegistro: '',
             fields: [
-                {'label': "ID", 'key': 'id', 'sortable': false},
                 {'label': "Nombre", 'key': 'name', 'sortable': true},
                 {'label': "Correo", 'key': 'email', 'sortable': true},
                 {'label': "Fecha de registro", 'key': 'registerDate', 'sortable': true},
