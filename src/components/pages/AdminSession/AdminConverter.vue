@@ -3,8 +3,8 @@
         <div class="container">
             <b-row class="form-content">
                 <b-col>
-                    <b-input placeholder="Email"></b-input>
-                    <b-button class="mt-3" variant="info">Convertir Administrador</b-button>
+                    <b-input placeholder="Email" v-model="email"></b-input>
+                    <b-button class="mt-3" variant="info" @click="converterToAdmin()">Convertir Administrador</b-button>
                 </b-col>
                 <b-col></b-col>
             </b-row>
@@ -14,7 +14,16 @@
 
 <script>
 export default {
-
+    data(){
+        return{
+            email: '',
+        }
+    },
+    methods: {
+        converterToAdmin(){
+            console.log(this.email);
+        }
+    }
 }
 </script>
 
@@ -22,8 +31,8 @@ export default {
     .form-content{
         border: 2px solid;
         border-color: rgb(252, 167, 41);
-        margin: 10px 25px;
-        padding: 10px 15px;
+        margin: 20px 25px;
+        padding: 20px 15px;
         border-radius: 5px;
     }
 </style>
