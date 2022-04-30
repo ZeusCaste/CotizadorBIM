@@ -13,6 +13,7 @@
         <Projects v-if="selectedMenu === 'Proyectos'" />
         <Partners v-if="selectedMenu === 'Colaboradores'" />
         <Customers v-if="selectedMenu === 'Clientes'" />
+        <AdminConverter v-if="selectedMenu === 'Convertir Administrador'" />
       </div>
     </div>
 </template>
@@ -25,6 +26,7 @@ import Quotations from '../components/pages/AdminSession/QuotationsTable.vue';
 import Projects from '../components/pages/AdminSession/ProjectsTable.vue';
 import Partners from '../components/pages/AdminSession/ParternsTable.vue';
 import Customers from '../components/pages/AdminSession/CustomersTable.vue';
+import AdminConverter from '../components/pages/AdminSession/AdminConverter.vue';
 
 
 export default {
@@ -35,7 +37,8 @@ export default {
     Quotations, 
     Projects,
     Partners,
-    Customers
+    Customers,
+    AdminConverter
   },
   created(){
     this.selectedMenu= 'Factores';
@@ -47,7 +50,7 @@ export default {
   data() {
     return {
       user: '',
-      adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "Cerrar Sesión"],
+      adminMenu: ["Factores", "Cotizaciones Realizadas", "Proyectos", "Colaboradores", "Clientes", "---> Perfil", "Convertir Administrador", "Cerrar Sesión"],
       selectedMenu: '',
     }
   },
