@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import { validateEmail } from '../../../utils/validations';
+
+
 export default {
     data(){
         return{
@@ -21,7 +24,12 @@ export default {
     },
     methods: {
         converterToAdmin(){
-            console.log(this.email);
+            if(!validateEmail(this.email)){
+                console.log("Email invalido");
+                return
+            }
+
+            console.log("va que va");
         }
     }
 }
