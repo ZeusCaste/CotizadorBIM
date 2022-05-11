@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import firebase from '../../../plugins/firebase';
 import { validateEmail } from '../../../utils/validations';
 
 
@@ -23,13 +24,19 @@ export default {
         }
     },
     methods: {
-        converterToAdmin(){
+        async converterToAdmin(){
             if(!validateEmail(this.email)){
                 console.log("Email invalido");
                 return
             }
 
-            console.log("va que va");
+            try {
+                const createAdminUser= firebase.functions().httpsCallable('createAdminUser');
+                const response= await createAdminUser({ 'email': this.email, 'name': 'el maquino' });
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }
