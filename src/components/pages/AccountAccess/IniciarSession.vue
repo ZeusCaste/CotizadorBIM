@@ -38,7 +38,11 @@
         <!-- Boton de inicio y link para cambiar al formulario de registro -->
         <div class="my-4 text-center">
           <b-button class="mr-3" type="submit" variant="primary">Ingresar</b-button>
-          <b-button variant="link" disabled type="registrar">Registrarse</b-button>
+          <b-button 
+            variant="link"
+            type="registrar"
+            @click="goToRegister(false)"
+          >Registrarse</b-button>
         </div>
       </b-form>
 
@@ -83,16 +87,14 @@ export default {
         }
         await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
           .then(user => {
-            // this.$router.push({name: 'AdminSession'})
           }). catch( err => {
             this.error= true;
             this.errorMessage= "Correo o contraseña incorrectos"
           })
         
       },
-      onRegistrar(event) {
-        event.preventDefault()
-        firebase.auth().createUserWithEmailAndPassword(this.form.email,this.form.password);
+      goToRegister(state){
+        this.eventHub.$emit('change-form', state)
       }
     }
   
