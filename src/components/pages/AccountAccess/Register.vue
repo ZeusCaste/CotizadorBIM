@@ -6,11 +6,11 @@
                 <b-icon icon="facebook" class="mx-2"></b-icon>
                 Continuar con Facebook
             </b-button>
-            <b-button variant="danger" class="my-2">
+            <b-button variant="danger" class="my-2" @click="signUpWithGoogle()">
                 <b-icon icon="google" class="mx-2"></b-icon>
                 Continuar con Google
             </b-button>
-            <b-button variant="info" class="my-2">
+            <b-button variant="info" class="my-2" @click="signUpWithEmailAndPassword()">
                 <b-icon icon="at" class="mx-2"></b-icon>
                 Continua con cuenta email
             </b-button>
@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import firebase from '../../../plugins/firebase';
+
+
 export default {
     data(){
         return {
@@ -46,6 +49,25 @@ export default {
     methods: {
         goToLogIn(state){
             this.eventHub.$emit('change-form', state);
+        },
+        signUpWithGoogle(){
+            const provider= new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup( provider )
+                .then(( result )=> {
+                    console.log(result);
+                })
+                .catch(( err )=> {
+                    console.log(err);
+                });
+        },
+        signUpWithEmailAndPassword(){
+            firebase.auth().createUserWithEmailAndPassword('maquinola@gmail.com', 'abc123')
+                .then(( response )=> {
+                    console.log(response);
+                })
+                .catch(( err )=> {
+                    console.log(err);
+                })
         }
     }
 }

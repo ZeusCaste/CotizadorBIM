@@ -49,6 +49,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(to.matched.some(ruta => ruta.meta.requieresAuth)){
     firebase.auth().onAuthStateChanged((user)=> {
+      console.log(user);
       if(user) next();
       else next({ name : 'Sesion' })
     });
