@@ -2,11 +2,18 @@
     <div class="container px-5">
         <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
         <div class="my-4 text-center d-flex flex-column">
-            <b-button class="btn btn-danger my-2">
+            <b-button variant="primary" class="my-2">
+                <b-icon icon="facebook" class="mx-2"></b-icon>
+                Continuar con Facebook
+            </b-button>
+            <b-button variant="danger" class="my-2">
                 <b-icon icon="google" class="mx-2"></b-icon>
                 Continuar con Google
             </b-button>
-            <b-button class="btn btn-info my-2">Continua con email</b-button>
+            <b-button variant="info" class="my-2">
+                <b-icon icon="at" class="mx-2"></b-icon>
+                Continua con cuenta email
+            </b-button>
         </div>
         <div class="my-4">
             <b-form-checkbox
