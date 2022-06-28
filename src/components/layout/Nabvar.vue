@@ -2,7 +2,7 @@
     <div id="app">
         <div class="centered-content navbar navbar-dark px-3" style="background-color: #000">
             <div class="ml-3">
-                <router-link to="/sobre-nosotros"><b-img 
+                <router-link to="/"><b-img 
                     :src="require('../../media/images/BIM-logo-2.jpg')" 
                     fluid 
                     alt="Responsive image"
@@ -37,24 +37,24 @@
             <div class="fixed-top menu">
                 <router-link 
                     @click.native="changeOptionMenu('Arma tu cotizacion')" 
-                    to="/arma-tu-cotizacion" 
+                    to="/create-quotation" 
                     class="btn btn-outline-warning mx-2"
                     :class="optionMenuActivated === 'Arma tu cotizacion' && 'btn-warning text-dark font-weight-bold'"
                 >Arma tu cotización</router-link>
                 <router-link 
                     @click.native="changeOptionMenu('Colabora con nosotros')"
-                    to="/colabora-con-nosotros" 
+                    to="/collaborate-with-us" 
                     class="btn btn-outline-warning mx-2"
                     :class="optionMenuActivated === 'Colabora con nosotros' && 'btn-warning text-dark font-weight-bold'"
                 >Colabora con nosotros</router-link>
                 <router-link 
-                    to="/sobre-nosotros" 
+                    to="/" 
                     class="btn btn-outline-warning mx-2"
                     @click.native="changeOptionMenu('Sobre nosotros')"
                     :class="optionMenuActivated === 'Sobre nosotros' && 'btn-warning text-dark font-weight-bold'"
                 >Sobre nosotros</router-link>
                 <router-link 
-                    to="/acceso-cuenta" 
+                    to="/account-access" 
                     class="btn btn-outline-warning mx-2"
                     @click.native="changeOptionMenu(authenticated ? 'Mi Sesion' : 'Iniciar Sesion')"
                     :class="(optionMenuActivated === 'Iniciar Sesion' || optionMenuActivated === 'Mi Sesion') && 'btn-warning text-dark font-weight-bold'"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import firebase from '../../plugins/firebase';
+    import firebase from '../../plugins/firebase';
 
     export default {
         name: "Navbar",
@@ -86,8 +86,12 @@ import firebase from '../../plugins/firebase';
                 this.optionMenuActivated= option;
             }
         },
-
-
+        watch: {
+            $route(to, from){
+                console.log(to);
+                console.log(from);
+            }
+        }
     }
 </script>
 

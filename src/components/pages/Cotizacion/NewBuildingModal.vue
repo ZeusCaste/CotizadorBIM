@@ -490,19 +490,18 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
-import firebase from '../../../plugins/firebase';
-import {estados} from '../../../db/estados';
-import {municipios} from '../../../db/municipios';
-import EdificacionIndependiente from './EdificacionIndependiente.vue';
-import {validateEmail, validateTelNumber} from '../../../utils/validations';
-import {edificacionNueva} from '../../../db/edificacioNueva';
+import { mapState, mapActions } from 'vuex';
+import { estados } from '../../../db/estados';
+import { municipios } from '../../../db/municipios';
+import IndependentBuilding from './IndependentBuilding.vue';
+import { validateEmail, validateTelNumber } from '../../../utils/validations';
+import { edificacionNueva } from '../../../db/edificacioNueva';
 
 
 export default {
     name: 'EdificacionNueva',
     components: {
-        EdificacionIndependiente
+        IndependentBuilding
     },
     created(){
         this.eventHub.$on('create', this.onCreateCotizacion);
@@ -668,7 +667,7 @@ export default {
             }
             
             this.validaciones();
-             if(this.errores.length > 0) {
+            if(this.errores.length > 0) {
                  this.spinner= false;
                  return
             }
@@ -684,13 +683,13 @@ export default {
             }
         },
         sethref(idx){
-            return `#edificacion${idx}`
+            return `#edificacion${idx}`;
         },
         setIdHref(idx){
-            return `edificacion${idx}`
+            return `edificacion${idx}`;
         },
         scrollIntoView(event) {
-            event.preventDefault()
+            event.preventDefault();
             const href = event.target.getAttribute('href')
             const el = href ? document.querySelector(href) : null
             if (el) {

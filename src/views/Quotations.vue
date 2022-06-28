@@ -5,28 +5,28 @@
         </div>
         <!-- Seccion de botones -->
         <div class="button-container">
-            <BottonAccion :title="'Edificacion Nueva'" :action="openModalEdificacionNueva" :icon="'clipboard-plus'" />
-            <BottonAccion :title="'Edificacion Existente'" :action="openModalEdificacionExistente" :icon="'house'" />
+            <ActionButton :title="'Edificacion Nueva'" :action="openNewBuildingModal" :icon="'clipboard-plus'" />
+            <ActionButton :title="'Edificacion Existente'" :action="openExistingBuildingModal" :icon="'house'" />
 
-            <ModalEdificacionNueva />
+            <NewBuildingModal />
         </div>
 
         <!-- Seccion pata mostrar el resultado de los calculos -->
-        <ResultadosCotizacion />
+        <QuotationResults />
 
     </div>
 </template>
 
 <script>
-import BottonAccion from '../components/pages/Cotizacion/BotonAccion.vue';
-import ModalEdificacionNueva from '../components/pages/Cotizacion/ModalEdificacionNueva';
-import ResultadosCotizacion from '../components/pages/Cotizacion/ResultadosCotizacion.vue';
+import ActionButton from '../components/pages/Cotizacion/ActionButton.vue';
+import NewBuildingModal from '../components/pages/Cotizacion/NewBuildingModal.vue';
+import QuotationResults from '../components/pages/Cotizacion/QuotationResults.vue';
 
 export default {
     components: {
-        ModalEdificacionNueva,
-        ResultadosCotizacion,
-        BottonAccion,
+        NewBuildingModal,
+        QuotationResults,
+        ActionButton,
     },
     data(){
         return{
@@ -34,10 +34,10 @@ export default {
         }
     },
     methods: {
-        openModalEdificacionNueva(){
+        openNewBuildingModal(){
             this.eventHub.$emit("create", {});
         },
-        openModalEdificacionExistente(){
+        openExistingBuildingModal(){
             console.log("Muy pronto");
         }
     }

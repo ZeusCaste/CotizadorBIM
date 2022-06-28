@@ -1,18 +1,18 @@
 <template>
   <div>
-    <IniciarSession v-if="login" />
+    <LogIn v-if="login" />
     <Register v-else />
   </div>
 </template>
 
 <script>
-import IniciarSession from '../components/pages/AccountAccess/IniciarSession.vue';
+import LogIn from '../components/pages/AccountAccess/LogIn.vue';
 import Register from '../components/pages/AccountAccess/Register.vue';
 
 
 export default {
   components: {
-    IniciarSession,
+    LogIn,
     Register,
   },
   data(){

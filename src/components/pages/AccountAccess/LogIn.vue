@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <router-view></router-view>
       <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
 
       <!-- Formulario para iniciar sesion -->
@@ -54,8 +55,8 @@
 </template>
 
 <script>
-
 import firebase from '../../../plugins/firebase';
+
 
 export default {
   created(){

@@ -7,36 +7,43 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Inicio',
-    component: ()=> import('../views/SobreNosotros.vue'),
+    name: 'Home',
+    component: ()=> import('../views/AboutUs.vue'),
   },
   {
-    path: '/arma-tu-cotizacion',
-    name: 'Cotizacion',
-    component: ()=> import('../views/Cotizacion.vue'),
+    path: '/create-quotation',
+    name: 'CreateQuotation',
+    component: ()=> import('../views/Quotations.vue'),
   },
   {
-    path: '/colabora-con-nosotros',
-    name: "Colabora",
-    component: ()=> import('../views/ColaboraNosotros.vue'),
+    path: '/collaborate-with-us',
+    name: "CollaborateWIthUs",
+    component: ()=> import('../views/CollaborateWithUs.vue'),
   },
   {
-    path: '/acceso-cuenta',
-    name: 'Sesion',
+    path: '/account-access',
+    name: 'AccountAccess',
     component: ()=> import('../views/AccountAccess.vue'),
   },
   {
     path: '/sobre-nosotros',
     name: "Nosotros",
-    component: ()=> import('../views/SobreNosotros.vue'),
+    component: ()=> import('../views/AboutUs.vue'),
   },
   {
-    path: '/admin-session',
-    name: "AdminSession",
-    component: ()=> import('../views/AdminSession.vue'),
-    meta:{
-      requieresAuth: true
-    }
+    path: '/account',
+    name: 'Account',
+    component: ()=> import('../views/Account.vue'),
+    children: [
+      {
+        path: 'admin-session',
+        name: "AdminSession",
+        component: ()=> import('../views/AdminSession.vue'),
+        meta:{
+          requieresAuth: true
+        }
+      }
+    ]
   }
 ]
 
