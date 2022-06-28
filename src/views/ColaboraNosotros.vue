@@ -1,28 +1,34 @@
 <template>
-  <div class="container">
-      <b-overlay show rounded="sm" :opacity="0.60" :variant="transparent">
-        <b-card title="COLABORA CON NOSOTROS">
-          <b-card-text>Muy pronto podrás colaborar con nosotros, queremos ofrecerte el mejor servicio.</b-card-text>
-        </b-card>
-      <template #overlay>
-        <div class="text-center">
-          <b-icon icon="stopwatch" font-scale="8" animation="throb"></b-icon>
-          <h1 id="cancel-label" class="display-6">Muy pronto! Estamos trabajando...</h1>
-          <!--p id="cancel-label" font-size="10"></p-->
+  <div class="container mt-5">
+    <div class="colaborate-with-us row col-12">
+      <div class="sub-container col-xl-6 col-md-8 col-sm-12 col-lg-6">
+        <h1 class="display-3 font-weight-bolder">¡Colabora con nosotros!</h1>
+      </div>
+      <div class="sub-container col-xl-6 col-md-4 col-sm-12 col-lg-6 mt-4">
+        <p>
+          Si tienes conocimientos que quieres compartir con otros profesionales, te dedicas a la industria de la construcción.
+          Te invitamos a ser parte de BIMTECH.
+        </p>
+        <p>
+          Actualmente contamos con una gran oportunidad de clientes y proyectos en varios estados de la república
+        </p>
+        <div class="my-5">
+          <b-button variant="dark" class="text-warning">Registrate aqui</b-button>
         </div>
-      </template>
-        <b-card :img-src="require('../media/images/team.png')" img-alt="Card image" img-center class="mb-3 mt-3">
-        </b-card>
-      </b-overlay>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+export default { 
 
-  }
+}
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .colaborate-with-us{
+    background: rgba(250, 232, 41, 0.6);
+    padding: 10px 5px;
+  }
 </style>

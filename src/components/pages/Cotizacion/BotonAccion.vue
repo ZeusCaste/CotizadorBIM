@@ -1,5 +1,5 @@
 <template>
-  <div class="cotizacion w-50">
+    <div class="cotizacion w-50">
         <b-button
             class="button btn-block"
             variant="outline-warning"
