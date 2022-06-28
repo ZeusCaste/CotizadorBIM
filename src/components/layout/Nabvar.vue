@@ -36,28 +36,28 @@
             </div>
             <div class="fixed-top menu">
                 <router-link 
-                    @click.native="changeOptionMenu('Arma tu cotizacion')" 
+                    @click.native="changeOptionMenu('create-quotation')" 
                     to="/create-quotation" 
                     class="btn btn-outline-warning mx-2"
-                    :class="optionMenuActivated === 'Arma tu cotizacion' && 'btn-warning text-dark font-weight-bold'"
+                    :class="optionMenuActivated === 'create-quotation' && 'btn-warning text-dark font-weight-bold'"
                 >Arma tu cotización</router-link>
                 <router-link 
-                    @click.native="changeOptionMenu('Colabora con nosotros')"
+                    @click.native="changeOptionMenu('collaborate-with-us')"
                     to="/collaborate-with-us" 
                     class="btn btn-outline-warning mx-2"
-                    :class="optionMenuActivated === 'Colabora con nosotros' && 'btn-warning text-dark font-weight-bold'"
+                    :class="optionMenuActivated === 'collaborate-with-us' && 'btn-warning text-dark font-weight-bold'"
                 >Colabora con nosotros</router-link>
                 <router-link 
                     to="/" 
                     class="btn btn-outline-warning mx-2"
-                    @click.native="changeOptionMenu('Sobre nosotros')"
-                    :class="optionMenuActivated === 'Sobre nosotros' && 'btn-warning text-dark font-weight-bold'"
+                    @click.native="changeOptionMenu('about-us')"
+                    :class="optionMenuActivated === 'about-us' && 'btn-warning text-dark font-weight-bold'"
                 >Sobre nosotros</router-link>
                 <router-link 
                     to="/account-access" 
                     class="btn btn-outline-warning mx-2"
-                    @click.native="changeOptionMenu(authenticated ? 'Mi Sesion' : 'Iniciar Sesion')"
-                    :class="(optionMenuActivated === 'Iniciar Sesion' || optionMenuActivated === 'Mi Sesion') && 'btn-warning text-dark font-weight-bold'"
+                    @click.native="changeOptionMenu('account-access')"
+                    :class="optionMenuActivated === 'account-access' && 'btn-warning text-dark font-weight-bold'"
                 >{{ authenticated ? "Mi Sesión" : "Iniciar Sesión" }}</router-link>
             </div>
         </div>
@@ -78,7 +78,7 @@
         data(){
             return{
                 authenticated: false,
-                optionMenuActivated: 'Sobre nosotros'
+                optionMenuActivated: 'AboutUs'
             }
         },
         methods: {
@@ -88,8 +88,14 @@
         },
         watch: {
             $route(to, from){
-                console.log(to);
-                console.log(from);
+                let routeArre = to.fullPath.split('/');
+                
+                if( routeArre.includes('account') ){
+                    this.changeOptionMenu('account-access');
+                }
+                if( to.fullPath === '/'){
+                    this.changeOptionMenu('about-us');
+                }
             }
         }
     }

@@ -1,6 +1,5 @@
 <template>
-    <div class="container">
-      <router-view></router-view>
+    <div class="container mb-5">
       <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
 
       <!-- Formulario para iniciar sesion -->

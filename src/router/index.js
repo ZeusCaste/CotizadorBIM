@@ -26,8 +26,8 @@ const routes = [
     component: ()=> import('../views/AccountAccess.vue'),
   },
   {
-    path: '/sobre-nosotros',
-    name: "Nosotros",
+    path: '/about-us',
+    name: "AboutUs",
     component: ()=> import('../views/AboutUs.vue'),
   },
   {
@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
     firebase.auth().onAuthStateChanged((user)=> {
       console.log(user);
       if(user) next();
-      else next({ name : 'Sesion' })
+      else next({ name : 'AccountAccess' })
     });
   }else{
     next();

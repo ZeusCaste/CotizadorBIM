@@ -1,5 +1,5 @@
 <template>
-    <div class="container px-5">
+    <div class="container px-5 mb-5">
         <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
         <div class="my-4 text-center d-flex flex-column">
             <b-button variant="primary" class="my-2">
