@@ -52,22 +52,14 @@ export default {
         },
         signUpWithGoogle(){
             const provider= new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup( provider )
-                .then(( result )=> {
-                    console.log(result);
-                })
-                .catch(( err )=> {
-                    console.log(err);
-                });
+            firebase.auth().signInWithPopup(provider)
+                .then((result)=> { console.log(result) })
+                .catch((err)=> { console.log(err) });
         },
         signUpWithEmailAndPassword(){
             firebase.auth().createUserWithEmailAndPassword('maquinola@gmail.com', 'abc123')
-                .then(( response )=> {
-                    console.log(response);
-                })
-                .catch(( err )=> {
-                    console.log(err);
-                })
+                .then((response)=> { console.log(response) })
+                .catch((err)=> { console.log(err) })
         }
     }
 }

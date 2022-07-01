@@ -48,7 +48,7 @@
 
       <!-- Alerts para mostrar errores -->
       <div v-if="error">
-        <b-alert class="text-center" show variant="danger"><h4>{{ errorMessage }}</h4></b-alert>
+        <b-alert class="text-center" show variant="danger">{{ errorMessage }}</b-alert>
       </div>
     </div>
 </template>
@@ -58,46 +58,39 @@ import firebase from '../../../plugins/firebase';
 
 
 export default {
-  created(){
-    firebase.auth().onAuthStateChanged((user)=> {
-      if(user){
-        console.log(user);
-        this.$router.push({name: 'AdminSession'});
-      }
-    });
-  },
+  name: 'LogIn',
   data() {
-      return {
-        error: false,
-        errorMessage: "",
-        form: {
-          email: '',
-          password: '',
-        },
-      }
-    },
-    methods: {
-      async onSubmit(event) {
-        this.error  = false;
-        this.errorMessage= "";
-        event.preventDefault();
-        if (!this.form.email.trim() && !this.form.password.trim()){
-          this.error= true;
-          this.errorMessage= "Ingresa tu correo y contraseña";
-          return
-        }
-        await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
-          .then(user => {
-          }). catch( err => {
-            this.error= true;
-            this.errorMessage= "Correo o contraseña incorrectos"
-          })
-        
+    return {
+      error: false,
+      errorMessage: "",
+      form: {
+        email: '',
+        password: '',
       },
-      goToRegister(state){
-        this.eventHub.$emit('change-form', state)
-      }
     }
+  },
+  methods: {
+    async onSubmit(event) {
+      event.preventDefault();
+      this.error = false;
+      this.errorMessage = "";
+
+      if (!this.form.email.trim() && !this.form.password.trim()){
+        this.error= true;
+        this.errorMessage= "Ingresa tu correo y contraseña";
+        return
+      }
+      await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
+        .then((user) => { console.log('Logged User') })
+        .catch((err) => {
+          this.error= true;
+          this.errorMessage= "Correo o contraseña incorrectos"
+        });
+    },
+    goToRegister(state){
+      this.eventHub.$emit('change-form', state)
+    }
+  }
   
 }
 </script>

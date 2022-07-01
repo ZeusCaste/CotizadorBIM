@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import firebase from '../plugins/firebase';
 import LogIn from '../components/pages/AccountAccess/LogIn.vue';
 import Register from '../components/pages/AccountAccess/Register.vue';
 
@@ -26,6 +27,20 @@ export default {
     }
   },
   created(){
+    firebase.auth().onAuthStateChanged((user)=> {
+      if(user){
+        user.getIdTokenResult()
+          .then((getIdTokenResult) => {
+            if(getIdTokenResult.claims.admin){
+              this.$router.push({ name: 'AdminSession' });
+              return
+            }
+            
+            this.$router.push({ name: 'UserFilters' });
+          })
+      }
+    });
+    // Events
     this.eventHub.$on('change-form', this.changeForm);
   }
 }

@@ -71,8 +71,8 @@
         name: "Navbar",
         created(){
             firebase.auth().onAuthStateChanged((user)=> {
-                if(user) this.authenticated= true;
-                else this.authenticated= false;
+                if(user){ this.authenticated= true; }
+                else{ this.authenticated= false; }
             });
         },
         data(){
@@ -90,12 +90,8 @@
             $route(to, from){
                 let routeArre = to.fullPath.split('/');
                 
-                if( routeArre.includes('account') ){
-                    this.changeOptionMenu('account-access');
-                }
-                if( to.fullPath === '/'){
-                    this.changeOptionMenu('about-us');
-                }
+                if( routeArre.includes('account') ){ this.changeOptionMenu('account-access'); }
+                if( to.fullPath === '/'){ this.changeOptionMenu('about-us'); }
             }
         }
     }
