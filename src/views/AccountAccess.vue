@@ -35,8 +35,11 @@ export default {
               this.$router.push({ name: 'AdminSession' });
               return
             }
-            
-            this.$router.push({ name: 'UserFilters' });
+            if(!getIdTokenResult.claims.definedUser){
+              this.$router.push({ name: 'UserFilters' });
+              this.setLoggedInUserData(user);
+              return
+            }
           })
       }
     });
