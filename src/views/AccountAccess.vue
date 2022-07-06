@@ -37,7 +37,7 @@ export default {
             }
             if(!getIdTokenResult.claims.definedUser){
               this.$router.push({ name: 'UserFilters' });
-              this.setLoggedInUserData(user);
+              console.log('here');
               return
             }
           })

@@ -1,18 +1,21 @@
 <template>
     <div class="container">
-        <b-button variant="info" @click="logOut()">User</b-button>
+        <b-button variant="info" @click="logOut()"> User </b-button>
         <PasswordForm v-if="signInProvider === 'password'"/>
+        <GoogleForm v-if="signInProvider === 'google'" />
     </div>
 </template>
 
 <script>
 import firebase from '../plugins/firebase';
 import PasswordForm from '../components/pages/UserFilters/PasswordForm.vue';
+import GoogleForm from '../components/pages/UserFilters/GoogleForm.vue';
 
 export default {
     name: 'UserFilters',
     components: {
         PasswordForm,
+        GoogleForm,
     },
     data() {
         return {
@@ -29,11 +32,19 @@ export default {
                 this.$router.push({ name: AccountAccess });
                 return
             }
-            
-            currentUser.getIdTokenResult().then((idTokenResult) => {
-                if(idTokenResult.signInProvider === 'password'){ this.signInProvider = 'password' }
-                
-            }).catch(error => { console.log(error) });
+
+            currentUser.getIdTokenResult()
+                // idTokenResult es un objeto no iterable
+                .then((idTokenResult) => {
+                    if(idTokenResult.signInProvider === 'password'){ return this.signInProvider = 'password' }
+                    if(idTokenResult.signInProvider === 'google.com'){ 
+                        this.signInProvider = 'google';
+                        console.log(this.signInProvider);
+                        console.log('google');
+                        return
+                    }
+                })
+                .catch(error => { console.log(error) });
         },
         logOut(){
             firebase.auth().signOut().then((result) => {
