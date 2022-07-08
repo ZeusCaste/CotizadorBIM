@@ -1,6 +1,6 @@
 <template>
-    <div class="container px-5 mb-5">
-        <div v-if="!mood">
+    <div>
+        <div v-if="!mood" class="all-registers container px-5 mb-5">
             <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
             <h4 class="mt-5">Selecciona una forma de registro </h4>
             <div class="my-4 text-center d-flex flex-column">
@@ -65,10 +65,10 @@ export default {
             this.eventHub.$emit('change-form', state);
         },
         signUpWithGoogle(){
-            const provider= new firebase.auth.GoogleAuthProvider();
+            const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
-                .then((result)=> { console.log(result) })
-                .catch((err)=> { console.log(err) });
+                .then((result) => { console.log(result) })
+                .catch((err) => { console.log(err) });
         },
         toEmailPasswordRegister(){
             this.mood = 'password';
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .container{
+    .all-registers {
         width: 35%;
         background: #fff;
         border: solid yellow 3px;
