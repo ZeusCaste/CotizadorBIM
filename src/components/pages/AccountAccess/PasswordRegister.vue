@@ -1,11 +1,11 @@
 <template>
-    <div class="full-container">
-        <div class="container">
-            <h1>Registro con Correo y Contraseña</h1>
+    <div class="full-container d-flex justify-content-center py-5">
+        <div class="custom-container">
             <div>
+            <h1>Registro con Correo y Contraseña</h1>
                 <form>
                     <!-- User Name Input -->
-                    <b-form-group class="text-dark text-left mt-5" id="name" label="Nombre de usuario:" label-for="name">
+                    <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre de usuario:" label-for="name">
                         <b-row>
                             <b-icon class="ml-3" icon="person-square" font-scale="2"></b-icon>
                             <b-col>
@@ -15,7 +15,7 @@
                     </b-form-group>
 
                     <!-- Email Input -->
-                    <b-form-group class="text-dark text-left mt-5" id="email" label="Correo electrónico:" label-for="email">
+                    <b-form-group class="text-dark text-left mt-3" id="email" label="Correo electrónico:" label-for="email">
                         <b-row>
                             <b-icon class="ml-3" icon="envelope-fill" font-scale="2"></b-icon>
                             <b-col>
@@ -25,9 +25,9 @@
                     </b-form-group>
                     
                     <!-- Password Input -->
-                    <b-form-group class="text-dark text-left mt-5" id="password" label="Contraseña:" label-for="password">
+                    <b-form-group class="text-dark text-left mt-3" id="password" label="Contraseña:" label-for="password">
                         <b-row>
-                            <b-icon class="ml-3" icon="asterisk" font-scale="2"></b-icon>
+                            <b-icon class="ml-3" icon="file-lock2-fill" font-scale="2"></b-icon>
                             <b-col>
                                 <b-form-input id="password" type="password" placeholder="Contraseña" />
                             </b-col>
@@ -35,23 +35,21 @@
                     </b-form-group>
 
                     <!-- Repeat Password Input -->
-                    <b-form-group class="text-dark text-left mt-5" id="password" label="Repite la contraseña" label-for="repeat-password">
+                    <b-form-group class="text-dark text-left mt-3" id="password" label="Repite la contraseña" label-for="repeat-password">
                         <b-row>
-                            <b-icon class="ml-3" icon="asterisk" font-scale="2"></b-icon>
+                            <b-icon class="ml-3" icon="file-lock2-fill" font-scale="2"></b-icon>
                             <b-col>
                                 <b-form-input id="repeat-password" type="password" placeholder="Repite la contraseña" />
                             </b-col>
                         </b-row>
                     </b-form-group>
                     
-                    <!-- Submit button -->
-                    <div>
+                    <!-- Action buttons -->
+                    <div class="d-flex justify-content-between mt-5">
                         <b-button variant="info">Registrarse</b-button>
+                        <b-button size="sm" variant="link" @click="returnToRegisterMood()">Regresar a opciones de registro</b-button>
                     </div>
                 </form>
-            </div>
-            <div>
-                <b-button variant="dark" @click="returnToRegisterMood()">Regresar a opciones de registro</b-button>
             </div>
         </div>
     </div>
@@ -62,7 +60,7 @@ export default {
     name: 'PasswordRegister',
     data() {
         return {
-
+            
         }
     },
     methods: {
@@ -76,5 +74,12 @@ export default {
 <style lang="scss" scoped>
     .full-container{
         background: rgba(250, 232, 41, 0.4);
+
+        .custom-container {
+            width: 35%;
+            padding: 10px 20px;
+            border: 5px solid #000;
+            border-radius: 20px;
+        }
     }
 </style>
