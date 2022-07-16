@@ -3,6 +3,7 @@
         <b-button variant="info" @click="logOut()"> User </b-button>
         <PasswordForm v-if="signInProvider === 'password'"/>
         <GoogleForm v-if="signInProvider === 'google'" />
+        <FacebookForm v-if="signInProvider === 'facebook'" />
     </div>
 </template>
 
@@ -10,12 +11,14 @@
 import firebase from '../plugins/firebase';
 import PasswordForm from '../components/pages/UserFilters/PasswordForm.vue';
 import GoogleForm from '../components/pages/UserFilters/GoogleForm.vue';
+import FacebookForm from '../components/pages/UserFilters/FacebookForm.vue';
 
 export default {
     name: 'UserFilters',
     components: {
         PasswordForm,
         GoogleForm,
+        FacebookForm,
     },
     data() {
         return {
@@ -36,13 +39,9 @@ export default {
             currentUser.getIdTokenResult()
                 // idTokenResult es un objeto no iterable
                 .then((idTokenResult) => {
-                    if(idTokenResult.signInProvider === 'password'){ return this.signInProvider = 'password' }
-                    if(idTokenResult.signInProvider === 'google.com'){ 
-                        this.signInProvider = 'google';
-                        console.log(this.signInProvider);
-                        console.log('google');
-                        return
-                    }
+                    if(idTokenResult.signInProvider === 'password') { return this.signInProvider = 'password' }
+                    if(idTokenResult.signInProvider === 'google.com') { return this.signInProvider = 'google' }
+                    if(idTokenResult.signInProvider === 'facebook.com') { return this.signInProvider = 'facebook' }
                 })
                 .catch(error => { console.log(error) });
         },
