@@ -2,9 +2,19 @@
     <div class="container mb-5">
       <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
 
-      <!-- Formulario para iniciar sesion -->
-      <b-form @submit="onSubmit">
+      <div class="my-4 mx-3 text-center d-flex flex-column">
+        <b-button variant="primary" class="my-2" @click="signUpWithFacebook()">
+          <b-icon icon="facebook" class="mx-2"></b-icon>
+          Continuar con Facebook
+        </b-button>
+        <b-button variant="danger" class="my-2" @click="signUpWithGoogle()">
+          <b-icon icon="google" class="mx-2"></b-icon>
+          Continuar con Google
+        </b-button>
+      </div>
 
+      <!-- Formulario para iniciar sesion con email y password -->
+      <b-form @submit="onSubmit">
         <!-- Input correo electronico -->
         <b-form-group class="text-dark text-left mt-5 " id="inputg1" label="Correo electrónico:" label-for="input-1">
           <b-row>
@@ -21,7 +31,7 @@
         </b-form-group>
 
         <!-- Input contraseña -->
-        <b-form-group class="text-dark text-left mt-5" id="inputg2" label="Contraseña:" label-for="input-2">
+        <b-form-group class="text-dark text-left mt-3" id="inputg2" label="Contraseña:" label-for="input-2">
           <b-row>
             <b-icon class="ml-3"  icon="file-lock2-fill" font-scale="2"></b-icon>
             <b-col>
@@ -89,7 +99,19 @@ export default {
     },
     goToRegister(state){
       this.eventHub.$emit('change-form', state)
-    }
+    },
+    signUpWithGoogle(){
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => { console.log(result) })
+        .catch((err) => { console.log(err) });
+    },
+    signUpWithFacebook(){
+      const provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(result => { console.log(result) })
+        .catch(error => { console.log(error) });
+    },
   }
   
 }
