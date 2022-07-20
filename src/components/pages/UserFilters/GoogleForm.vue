@@ -1,12 +1,23 @@
 <template>
     <div>
-        <h1>Google</h1>
+        <UserTypeForm />
     </div>
 </template>
 
 <script>
-export default {
+import UserTypeForm from './UserTypeForm.vue';
 
+
+export default {
+    name: 'GoogleForm',
+    components: {
+        UserTypeForm,
+    },
+    data() {
+        return {
+
+        }
+    }
 }
 </script>
 

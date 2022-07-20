@@ -1,12 +1,18 @@
 <template>
     <div>
-        <h1>Password</h1>
+        <UserTypeForm />
     </div>
 </template>
 
 <script>
-export default {
+import UserTypeForm from './UserTypeForm.vue';
 
+
+export default {
+    name: 'UserTypeForm',
+    components: {
+        UserTypeForm
+    }
 }
 </script>
 

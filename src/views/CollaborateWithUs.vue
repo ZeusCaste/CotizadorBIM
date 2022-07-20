@@ -13,7 +13,7 @@
           Actualmente contamos con una gran oportunidad de clientes y proyectos en varios estados de la república
         </p>
         <div class="my-5">
-          <router-link to="/acceso-cuenta" class="animate__animated animate__tada animate__delay-2s btn btn-dark text-warning">
+          <router-link to="/account-access" class="animate__animated animate__tada animate__delay-2s btn btn-dark text-warning">
             Registrate aqui
           <b-icon icon="hand-index" variant="warning" animation="throb"></b-icon>
           </router-link>

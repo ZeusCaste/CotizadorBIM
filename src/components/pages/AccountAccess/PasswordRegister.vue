@@ -5,11 +5,11 @@
             <h1>Registro con Correo y Contraseña</h1>
                 <form>
                     <!-- User Name Input -->
-                    <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre de usuario:" label-for="name">
+                    <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre completo:" label-for="name">
                         <b-row>
                             <b-icon class="ml-3" icon="person-square" font-scale="2"></b-icon>
                             <b-col>
-                                <b-form-input v-model="userName" id="name" type="text" placeholder="Nombre de usuario" />
+                                <b-form-input v-model="userName" id="name" type="text" placeholder="Nombre completo" />
                             </b-col>
                         </b-row>
                     </b-form-group>
