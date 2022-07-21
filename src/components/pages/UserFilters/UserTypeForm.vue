@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h3><span>Nombre Completo: </span>{{ displayName }}</h3>
-        <h3><span>Email: </span>{{ email }}</h3>
-        <h3><span>Email verificado: </span>{{ emailVerified ? 'Si' : 'No' }}</h3>
-        <h3><span>Numero Telefonico: </span>{{ phoneNumber }}</h3>
+        <h5><span>Nombre Completo: </span>{{ displayName }}</h5>
+        <h5><span>Email: </span>{{ email }}</h5>
+        <h5><span>Email verificado: </span>{{ emailVerified ? 'Si' : 'No' }}</h5>
+        <h5><span>Numero Telefonico: </span>{{ phoneNumber }}</h5>
     </div>
 </template>
 
