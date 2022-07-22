@@ -22,10 +22,13 @@
         </div>
       </div>
     </div>
-    <div>
-      <Card :title="title1" :description="description1" />
-      <Card :title="title2" :description="description2" />
-      <Card :title="title3" :description="description3" />
+    <div class="container-cwu2">
+      <h1 class="text-warning text-center font-weight-bolder">¿Estas preparado para esta aventura?</h1>
+      <div class="cards-container">
+        <Card :title="title1" :description="description1" />
+        <Card :title="title2" :description="description2" />
+        <Card :title="title3" :description="description3" />
+      </div>
     </div>
   </div>
 </template>
@@ -61,5 +64,19 @@ export default {
   .sub-container {
     text-align: center;
     margin: auto 0;
+  }
+
+  .container-cwu2 {
+    background-color: #000;
+    height: 100vh;
+    padding-top: 180px;
+  }
+
+  .cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 50px;
+    flex-wrap: wrap;
   }
 </style>
