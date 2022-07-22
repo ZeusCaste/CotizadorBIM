@@ -90,7 +90,7 @@ export default {
     .all-registers {
         background: #fff;
         border: solid yellow 3px;
-        margin-top: 70px;
         border-radius: 25px;
+        margin-top: 70px;
     }
 </style>

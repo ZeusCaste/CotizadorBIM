@@ -1,6 +1,6 @@
 <template>
     <div class="full-container d-flex justify-content-center py-5">
-        <div class="custom-container">
+        <div class="col-12">
             <div>
             <h1>Registro con Correo y Contraseña</h1>
                 <form>
@@ -50,9 +50,9 @@
                     </div>
                     
                     <!-- Action buttons -->
-                    <div class="d-flex justify-content-between mt-5">
-                        <b-button @click="SignUp()" variant="info">Registrarse</b-button>
-                        <b-button size="sm" variant="link" @click="returnToRegisterMood()" >Regresar a opciones de registro</b-button>
+                    <div class="row text-center mt-4">
+                        <b-button class="col-10 col-sm-10 col-md-8 col-lg-8 col-xl-4 mx-auto my-3" @click="SignUp()" variant="info">Registrarse</b-button>
+                        <b-button class="col-10 col-sm-10 col-md-8 col-lg-8 col-xl-4 mx-auto" size="sm" variant="link" @click="returnToRegisterMood()" >Regresar a opciones de registro</b-button>
                     </div>
                 </form>
             </div>
@@ -115,12 +115,10 @@ export default {
 <style lang="scss" scoped>
     .full-container{
         background: rgba(250, 232, 41, 0.4);
-
-        .custom-container {
-            width: 35%;
-            padding: 10px 20px;
-            border: 5px solid #000;
-            border-radius: 20px;
-        }
+        border: 5px solid #000;
+        border-radius: 20px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 </style>
