@@ -5,7 +5,7 @@
         <div class="sub-container col-xl-6 col-md-12 col-sm-12 col-lg-6">
           <h1 class="display-3 font-weight-bolder">¡Colabora con nosotros!</h1>
         </div>
-        <div class="sub-container col-xl-6 col-md-12 col-sm-12 col-lg-6">
+        <div class="sub-container col-xl-6 col-md-12 col-sm-12 col-lg-6 font-weight-bold">
           <h4>
             Si tienes conocimientos que quieres compartir con otros profesionales, te dedicas a la industria de la construcción.
             Te invitamos a ser parte de BIMTECH.
@@ -14,9 +14,9 @@
             Actualmente contamos con una gran oportunidad de clientes y proyectos en varios estados de la república
           </h4>
           <div class="my-5">
-            <router-link to="/account-access" class="animate__animated animate__tada animate__delay-2s btn btn-dark text-warning">
+            <router-link to="/account-access" class="animate__animated animate__tada animate__delay-2s btn btn-dark text-white font-weight-bolder">
               Registrate aqui
-            <b-icon icon="hand-index" variant="warning" animation="throb"></b-icon>
+            <b-icon icon="hand-index" variant="white" animation="throb"></b-icon>
             </router-link>
           </div>
         </div>

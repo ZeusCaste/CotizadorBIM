@@ -1,5 +1,5 @@
 <template>
-    <div class="container mb-5">
+    <div class="container mb-5 col-10 col-xl-4 col-lg-6 col-md-7 col-sm-10">
       <p class="display-4 font-weight-bold text-dark mt-1 text-center">Iniciar Sesión</p>
 
       <div class="my-4 mx-3 text-center d-flex flex-column">
@@ -118,7 +118,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .container{
-    width: 35%;
     background: #fff;
     border: solid yellow 3px;
     margin-top: 70px;
