@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="col-10 col-xl-5 col-lg-7 col-md-7 col-sm-12">
         <div v-if="!mood" class="all-registers container px-5 mb-5">
             <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
             <h4 class="mt-5">Selecciona una forma de registro </h4>
@@ -88,7 +88,6 @@ export default {
 
 <style lang="scss" scoped>
     .all-registers {
-        width: 35%;
         background: #fff;
         border: solid yellow 3px;
         margin-top: 70px;

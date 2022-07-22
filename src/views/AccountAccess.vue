@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-content-center">
     <LogIn v-if="login" />
     <Register v-else />
   </div>
