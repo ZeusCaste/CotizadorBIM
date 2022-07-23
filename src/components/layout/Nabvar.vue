@@ -114,7 +114,8 @@
                 </div>
             </div>
         </nav>
-        <div class="fixed-bottom social-networks">
+        <SocialNetworkNavbar />
+        <!-- <div class="fixed-bottom social-networks">
             <div>
                 <a class="mx-4" href="https://www.facebook.com/BIMSolucionesTacnologicas">
                     <b-icon icon="facebook" scale="2"></b-icon>
@@ -130,15 +131,19 @@
                     <b-icon icon="envelope" scale="2"></b-icon>
                 </a>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
     import firebase from '../../plugins/firebase';
+    import SocialNetworkNavbar from './SocialNetworkNavbar.vue';
 
     export default {
         name: "Navbar",
+        components: {
+            SocialNetworkNavbar
+        },
         created(){
             firebase.auth().onAuthStateChanged((user)=> {
                 if(user){ this.authenticated= true; }
