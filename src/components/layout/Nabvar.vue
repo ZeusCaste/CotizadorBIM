@@ -82,7 +82,17 @@
                     ></b-img>
                 </router-link>
             </div>
-            <b-button class="navbar-toggler" variant="warning" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <b-button 
+                id="collapse-button"
+                class="navbar-toggler" 
+                variant="warning" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation"
+            >
                 <b-icon icon="list" variant="warning"></b-icon>
             </b-button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -159,6 +169,7 @@
         methods: {
             changeOptionMenu(option){
                 this.optionMenuActivated= option;
+                document.getElementById('collapse-button').click();
             }
         },
         watch: {

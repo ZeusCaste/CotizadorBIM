@@ -40,7 +40,6 @@ export default {
 </script>
 
 <style scoped>
-  
   .header{
     background: #F4D03F ;
     width: 100%;
@@ -89,6 +88,18 @@ export default {
     margin-left: 20px;
     margin-right: 20px;
     text-align: justify;
+  }
+
+  @media (max-width: 600px) {
+    .header {
+      background-color: crimson;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 990px) {
+    .header {
+      background-color: darkcyan;
+    }
   }
 
 </style>

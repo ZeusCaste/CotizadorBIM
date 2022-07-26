@@ -79,4 +79,35 @@ export default {
     margin-top: 50px;
     flex-wrap: wrap;
   }
+
+  @media (max-width: 600px) {
+    .colaborate-with-us {
+      height: 110vh;
+    }
+
+    .container-cwu2 {
+      height: 160vh;
+      padding-top: 50px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 990px) {
+    .container-cwu2 {
+      height: 145vh;
+      padding-top: 50px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  @media (min-width: 991px) and (max-width: 1200px) {
+    .container-cwu2 {
+      height: 130vh;
+      padding-top: 50px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 </style>
