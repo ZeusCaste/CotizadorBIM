@@ -7,7 +7,7 @@
     ></vue-particles>
     <div class="centered-content">
       <Navbar />
-      <div>
+      <div class="mb-5">
         <router-view />
       </div>
     </div>
