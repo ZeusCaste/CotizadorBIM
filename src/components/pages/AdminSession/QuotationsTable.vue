@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="container row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <b-row class="d-flex mx-3 mb-3">
+        <div class="container row my-sm-5 my-5">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-11 col-11">
+                <b-row class="d-flex mx-auto mb-3">
                     <div class="mx-2 mt-1">
                         <label for="mostrar">Mostrar</label>
                     </div>
@@ -11,8 +11,8 @@
                     </div>
                 </b-row>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="w-50 m-auto">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-11 col-11">
+                <div class="w-75 mx-auto">
                     <b-input placeholder="Buscar" v-model="buscarRegistro"></b-input>
                 </div>
             </div>
@@ -30,6 +30,7 @@
             :filter="buscarRegistro"
             :current-page="currentPage"
             :busy="isBusy"
+            responsive
         >
             <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -41,11 +42,11 @@
                 {{ moment(data.item.date).format('DD/MM/YYYY') }}
             </template>
         </b-table>
-        <div class="container d-flex justify-content-between">
-            <div class="mx-2">
+        <div class="mx-3 d-flex justify-content-between row">
+            <div class="mx-2 col-xl-5 col-lg-4 col-md-6 col-sm-12 col-12">
                 <p>Mostrando del {{ currentPage * mostrar - mostrar + 1 }} al {{ currentPage * mostrar }} de {{ getItemsLength }}</p>
             </div> 
-            <div class="mx-2">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                 <b-pagination
                     pills
                     v-model="currentPage"

@@ -1,7 +1,8 @@
 <template>
     <div>
         <table class="table table-responsive">
-            <tr><th>Factores Económicos</th>
+            <tr>
+                <th>Factores Económicos</th>
                 <td>
                     <label class="sr-only" for="inline-form-input-FE">Factor Situación de la Empresa</label>
                     <b-form-input 

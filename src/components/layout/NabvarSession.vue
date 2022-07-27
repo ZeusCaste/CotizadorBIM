@@ -1,7 +1,8 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg">
-            <button 
+            <button
+                id="nav-session-button"
                 class="btn btn-dark navbar-toggler bg-dark" 
                 type="button" 
                 data-toggle="collapse" 
@@ -29,19 +30,6 @@
                 </ul>
             </div>
         </nav>
-        <!-- <b-nav vertical pills >
-            <div v-for="(menuName, idx) in menuComponents" :key="idx">
-                <b-button 
-                    class="text-left mt-1 font-weight-bold shadow"
-                    :class="selectedMenu == menuName ? 'actived-menu' : 'desactivedMenu'"
-                    variant="warning"
-                    block 
-                    @click="showContent(menuName)"
-                >
-                    {{ menuName }}
-                </b-button>
-            </div>
-        </b-nav> -->
     </div>
 </template>
 
@@ -61,6 +49,7 @@ export default {
     methods: {
         showContent(newSelectedMenu){
             this.$props.setNewSelectedMenu(newSelectedMenu);
+            document.getElementById('nav-session-button').click();
         }
     }
 }
