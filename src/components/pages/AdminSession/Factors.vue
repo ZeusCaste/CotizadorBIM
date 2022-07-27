@@ -159,24 +159,13 @@ export default {
         }
     },
     methods: {
-        onSubmit(event) {
-            event.preventDefault()
-            //firebase.auth().createUserWithEmailAndPassword(this.form.email,this.form.password);
-            // alert(JSON.stringify(this.form))
-        },
-        async logout(){
-            // await firebase.auth().signOut();
-            //alert(JSON.stringify(this.form))
-        },
         async getFactors(){
             try {
                 const factorsRef= firebase.firestore().collection('factors').doc('bQS31BEEdF9n5HHatkB9');
                 const factorsDoc= await factorsRef.get();
-
                 this.form= Object.assign(this.form, factorsDoc.data());
-            } catch (error) {
-                console.log(error);
-            }
+
+            } catch (error) { console.log(error) }
         },
         async editingFactors(){
             this.edit= !this.edit;
@@ -190,11 +179,10 @@ export default {
                     const editFactors= firebase.functions().httpsCallable('editFactors');
                     const response= await editFactors(this.form);
                     
-                    if(response.data.success){
-                    console.log('success');
-                    this.dismissCountDown= 7;
-                    this.success= response.data.msg;
-                    await this.getFactors();
+                    if(response.data.success) {
+                        this.dismissCountDown= 7;
+                        this.success= response.data.msg;
+                        await this.getFactors();
                     }
                     this.spinner= false;
 
