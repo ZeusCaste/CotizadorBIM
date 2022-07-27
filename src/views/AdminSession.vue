@@ -1,9 +1,9 @@
 <template>
-    <div class="d-flex flex-direction-row">
-      <div class="nabvar-session">
+    <div class="row mx-3">
+      <div class="col-xl-1 col-lg-1 col-md-11 col-11 col-sm-11 mx-auto my-2 my-xl-5 my-lg-4 my-md-3 my-sm-2">
         <NabvarSession :menuComponents="adminMenu" :selectedMenu="selectedMenu" :setNewSelectedMenu="setNewSelectedMenu" />
       </div>
-      <div class="container my-5">
+      <div class="container col-xl-9 col-lg-8 col-md-11 col-11 col-sm-11 mx-auto my-2 my-xl-5 my-lg-4 my-md-3 my-sm-2 px-4">
         <div class="mb-5 d-flex justify-content-between align-items-center">
           <h1>{{ selectedMenu }}</h1>
           <h5>Bienvenido administrador: {{ user && user.email }}</h5>
@@ -71,9 +71,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .nabvar-session {
-    margin-top: 40px;
-    margin-left: 50px;
-    width: 14%;
-  }
+
 </style>

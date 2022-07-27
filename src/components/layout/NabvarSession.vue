@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-lg">
             <button 
-                class="btn btn-dark navbar-toggler" 
+                class="btn btn-dark navbar-toggler bg-dark" 
                 type="button" 
                 data-toggle="collapse" 
                 data-target="#navbarSupportedContent-user" 
