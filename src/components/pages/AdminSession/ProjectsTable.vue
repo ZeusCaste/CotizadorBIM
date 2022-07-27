@@ -93,22 +93,16 @@ export default {
                 const ref= firebase.firestore().collection('projects');
                 ref.onSnapshot((snapshot)=> {
                     snapshot.forEach((doc)=> {
-                        // console.log("id: " + doc.id + " data: " + doc.data());
                         this.items.push({ 'id': doc.id, ...doc.data() });
                     })
                 });
-
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) { console.log(error) }
 
             this.isBusy= false;
         }
     },
     computed: {
-        getItemsLength(){
-            return this.items.length;
-        }
+        getItemsLength(){ return this.items.length }
     }
 }
 </script>

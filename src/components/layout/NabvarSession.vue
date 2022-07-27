@@ -49,7 +49,9 @@ export default {
     methods: {
         showContent(newSelectedMenu){
             this.$props.setNewSelectedMenu(newSelectedMenu);
-            document.getElementById('nav-session-button').click();
+            if(window.screen.width < 992) {
+                document.getElementById('nav-session-button').click();
+            }
         }
     }
 }

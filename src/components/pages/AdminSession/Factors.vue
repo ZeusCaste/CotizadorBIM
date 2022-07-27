@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <table class="table table-responsive">
-            <tr>
-                <th>Factores Económicos</th>
-                <td>
+    <div class="my-5">
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    <p><strong> Factores Económicos </strong></p>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FE">Factor Situación de la Empresa</label>
                     <b-form-input 
                         id="inline-form-input-FE"
@@ -12,8 +14,8 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FE"> Factor Situación de la Empresa </b-form-text>
-                </td>
-                <td>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FM">Factor Mercado</label>
                     <b-form-input 
                         id="inline-form-input-FM" 
@@ -22,8 +24,8 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FM"> Factor Mercado </b-form-text>
-                </td>
-                <td>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FR">Factor Reducción Tabulador</label>
                     <b-form-input 
                         id="inline-form-input-FR" 
@@ -32,10 +34,13 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FR"> Factor Reducción Tabulador </b-form-text>
-                </td>
-            </tr>
-            <tr><th>Factores Tiempos de entrega</th>
-                <td>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p><strong> Factores Tiempos de Entrega</strong></p>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FT">Factor Tabulador</label>
                     <b-form-input 
                         id="inline-form-input-FT" 
@@ -44,8 +49,8 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FT"> Factor Tabulador </b-form-text>
-                </td>
-                <td>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FEE">Factor Eficencia de la Empresa</label>
                     <b-form-input 
                         id="inline-form-input-FEE" 
@@ -54,8 +59,8 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FEE"> Factor Eficencia de la Empresa </b-form-text>
-                </td>
-                <td>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FC">Factor Carga de trabajo Empresa</label>
                     <b-form-input 
                         id="inline-form-input-FC" 
@@ -64,10 +69,13 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FC"> Factor Carga de trabajo Empresa </b-form-text>
-                </td>
-            </tr>
-            <tr><th>Factores de Comisión</th>
-                <td>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p><strong> Factores de Comisión</strong></p>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FCO">Factor Comisión</label>
                     <b-form-input 
                         id="inline-form-input-FCO" 
@@ -76,8 +84,8 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FCO"> Factor Comisión </b-form-text>
-                </td>
-                <td>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
                     <label class="sr-only" for="inline-form-input-FCC">Factor Comisión Coordinador</label>
                     <b-form-input 
                         id="inline-form-input-FCC" 
@@ -86,30 +94,32 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FCC"> Factor Comisión Coordinador </b-form-text>
-                </td>
-            </tr>
-            <b-button 
-                class="mt-3"
-                type="submit" 
-                variant="info"
-                @click="editingFactors()"
-                size="lg"
-            >
-                {{ edit ? "Guardar" : "Editar" }}
-            <b-spinner v-if="spinner" variant="light"></b-spinner>
-            </b-button>
-        </table>
-        <div class="my-3">
-            <b-alert
-                :show="dismissCountDown"
-                dismissible
-                :variant="alertStyle"
-                @dismissed="dismissCountDown=0"
-                @dismiss-count-down="countDownChanged"
-            >
-                {{ error ? error : success }}
-            </b-alert>
-        </div>  
+                </div>
+            </div>
+            <div>
+                <b-button 
+                    class="mt-3"
+                    type="submit" 
+                    variant="info"
+                    @click="editingFactors()"
+                    size="lg"
+                >
+                    {{ edit ? "Guardar" : "Editar" }}
+                    <b-spinner v-if="spinner" variant="light"></b-spinner>
+                </b-button>
+            </div>
+            <div class="my-3">
+                <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    :variant="alertStyle"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+                >
+                    {{ error ? error : success }}
+                </b-alert>
+            </div>
+        </div>
     </div>
 </template>
 

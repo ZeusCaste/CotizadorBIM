@@ -169,7 +169,9 @@
         methods: {
             changeOptionMenu(option){
                 this.optionMenuActivated= option;
-                document.getElementById('collapse-button').click();
+                if(window.screen.width < 992){
+                    document.getElementById('collapse-button').click();
+                }
             }
         },
         watch: {

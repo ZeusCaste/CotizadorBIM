@@ -71,10 +71,10 @@ export default {
             mostrar: 10,
             buscarRegistro: '',
             fields: [
-                {'label': "Nombre", 'key': 'name', 'sortable': true},
-                {'label': "Correo", 'key': 'email', 'sortable': true},
-                {'label': "Fecha de registro", 'key': 'registerDate', 'sortable': true},
-                {'label': "Visualizar Registro", 'key': 'link', 'sortable': false},
+                { 'label': "Nombre", 'key': 'name', 'sortable': true },
+                { 'label': "Correo", 'key': 'email', 'sortable': true },
+                { 'label': "Fecha de registro", 'key': 'registerDate', 'sortable': true },
+                { 'label': "Visualizar Registro", 'key': 'link', 'sortable': false },
             ],
             items: [],
             currentPage: 1,
@@ -92,22 +92,17 @@ export default {
                 const ref= firebase.firestore().collection('customers');
                 ref.onSnapshot((snapshot)=> {
                     snapshot.forEach((doc)=> {
-                        // console.log("id: " + doc.id + " data: " + doc.data());
                         this.items.push({ 'id': doc.id, ...doc.data() });
                     })
                 });
 
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) { console.log(error) }
 
             this.isBusy= false;
         }
     },
     computed: {
-        getItemsLength(){
-            return this.items.length;
-        }
+        getItemsLength(){ return this.items.length }
     }
 }
 </script>
