@@ -30,12 +30,18 @@
         <img class="img-fluid" :src="require('../../src/media/images/cotizador2.jpg')" alt="">
       </div>
     </div>
+    <ImgCarousell />
   </div>
 </template>
 
 <script>
+import ImgCarousell from '../components/pages/AbouUs/ImgCarousell.vue';
+
 export default {
   name: 'Home',
+  components: {
+    ImgCarousell,
+  }
 }
 </script>
 

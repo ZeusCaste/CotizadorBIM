@@ -51,9 +51,9 @@
             <!-- Form Datos Personales -->
             <b-card no-body class="mb-1">
                 <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.accordion-1 variant="info">Datos Personales</b-button>
+                    <b-button block v-b-toggle.accordion-personal-data variant="info">Datos Personales</b-button>
                 </b-card-header>
-                <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+                <b-collapse id="accordion-personal-data" visible accordion="accordion-personal-data" role="tabpanel">
                     <b-card-body class="row">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
@@ -142,6 +142,29 @@
                                 </b-row>
                             </b-form-group>
                         </div>
+                    </b-card-body>
+                </b-collapse>
+            </b-card>
+
+            <!-- Formacion Academica -->
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-academic-education variant="info">Formación Académica</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+                    <b-card-body class="row">
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="bornDate" id="bornDate" type="date" placeholder="Fecha de Nacimiento" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        
                     </b-card-body>
                 </b-collapse>
             </b-card>
