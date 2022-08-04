@@ -37,6 +37,9 @@
             <div class="carousel-item">
                 <img src="../../../media/images/mapsCarousell/map-0012.jpg" class="d-block w-75 img-fluid mx-auto" alt="...">
             </div>
+            <div class="carousel-item">
+                <img src="../../../media/images/mapsCarousell/map-00013.jpg" class="d-block w-75 img-fluid mx-auto" alt="...">
+            </div>
         </div>
         <button class="carousel-control-prev btn btn-info" type="button" data-target="#carouselExampleFade" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
