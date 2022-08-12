@@ -90,11 +90,17 @@ export default {
         this.errorMessage= "Ingresa tu correo y contraseña";
         return
       }
-      await firebase.auth().signInWithEmailAndPassword(this.form.email,this.form.password)
+
+      await firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
         .then((user) => { console.log('Logged User') })
         .catch((err) => {
           this.error= true;
-          this.errorMessage= "Correo o contraseña incorrectos"
+          if(err.code === 'auth/user-not-found'){
+            this.errorMessage= "Usuario no encontrado";
+            return
+          }
+          console.log(err);
+          // this.errorMessage= "Correo o contraseña incorrectos"
         });
     },
     goToRegister(state){
