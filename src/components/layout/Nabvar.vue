@@ -59,7 +59,6 @@
                 </div>
             </div>
         </nav>
-        <SocialNetworkNavbar />
     </div>
 </template>
 

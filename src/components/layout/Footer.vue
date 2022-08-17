@@ -5,7 +5,7 @@
                 &copy; 2022 BIM Tech Solutions || Todos los derechos reservados
             </div>
             <div class="col-xl-3 col-lg-4 col-12 col-md-12 col-sm-12 text-center mt-4">
-                Social NetWork
+                <SocialNetworkNavbar />
             </div>
             <div class="col-xl-3 col-lg-4 col-12 col-md-12 col-sm-12 text-center font-weight-bolder mt-4">
                 contacto@bimtech.solutions
@@ -15,8 +15,14 @@
 </template>
 
 <script>
+import SocialNetworkNavbar from '../layout/SocialNetworkNavbar.vue';
+
+
 export default {
     name: "Footer",
+    components: {
+        SocialNetworkNavbar,
+    },
     data(){
         return {
 
@@ -33,8 +39,8 @@ export default {
         justify-content: space-around;
         align-items: center;
         color: #fff;
-        padding-top: 5%;
-        padding-bottom: 5%;
+        padding-top: 3%;
+        padding-bottom: 3%;
     }
 
     .footer-container {
