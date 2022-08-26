@@ -41,6 +41,14 @@
             <template #cell(date)="data">
                 {{ moment(data.item.date).format('DD/MM/YYYY') }}
             </template>
+
+            <template #cell(download)="data">
+                <div class="text-center">
+                    <b-button @click="downloadPDF(data.item.id)">
+                        <b-icon icon="download"></b-icon>
+                    </b-button>
+                </div>
+            </template>
         </b-table>
         <div class="mx-3 d-flex justify-content-between row">
             <div class="mx-2 col-xl-5 col-lg-4 col-md-6 col-sm-12 col-12">
@@ -71,10 +79,10 @@ export default {
             mostrar: 10,
             buscarRegistro: '',
             fields: [
-                {'label': "Nombre", 'key': 'name', 'sortable': true},
-                {'label': "Correo", 'key': 'email', 'sortable': true},
-                {'label': "Fecha", 'key': 'date', 'sortable': true},
-                {'label': "Enlace", 'key': 'link', 'sortable': false},
+                { 'label': "Nombre", 'key': 'name', 'sortable': true },
+                { 'label': "Correo", 'key': 'email', 'sortable': true },
+                { 'label': "Fecha", 'key': 'date', 'sortable': true },
+                { 'label': "Descargar", 'key': 'download' },
             ],
             items: [],
             currentPage: 1,
@@ -98,6 +106,9 @@ export default {
             } catch (error) { console.log(error) }
 
             this.isBusy= false;
+        },
+        downloadPDF(documentID){
+            console.log(documentID);
         }
     },
     computed: {
