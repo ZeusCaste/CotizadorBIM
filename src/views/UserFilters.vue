@@ -1,18 +1,18 @@
 <template>
     <div class="container">
         <b-button variant="info" @click="logOut()"> User </b-button>
-        <PasswordForm v-if="signInFirebaseProvider === 'password'" />
+        <UserTypeForm />
     </div>
 </template>
 
 <script>
 import firebase from '../plugins/firebase';
-import PasswordForm from '../components/pages/UserFilters/PasswordForm.vue';
+import UserTypeForm from '../components/pages/UserFilters/UserTypeForm.vue';
 
 export default {
     name: 'UserFilter',
     components: {
-        PasswordForm
+        UserTypeForm,
     },
     async created(){
         this.signInFirebaseProvider = await this.getCurrentUser();
