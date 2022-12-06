@@ -9,7 +9,7 @@ import UserTypeForm from './UserTypeForm.vue';
 
 
 export default {
-    name: 'UserTypeForm',
+    name: 'PasswordForm',
     components: {
         UserTypeForm
     }

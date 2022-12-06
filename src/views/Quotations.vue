@@ -49,5 +49,9 @@ export default {
         display: flex;
         flex-direction: row;        
     }
+
+    .container {
+        min-height: 90vh;
+    }
     
 </style>
