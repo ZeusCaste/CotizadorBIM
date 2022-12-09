@@ -2,31 +2,31 @@
     <div class="col-10 col-xl-5 col-lg-7 col-md-7 col-sm-12">
         <div v-if="!mood" class="all-registers container px-5 mb-5">
             <p class="display-4 font-weight-bold text-dark mt-1 text-center mt-4">Únete a BIMTECH</p>
-            <h4 class="mt-5">Selecciona una forma de registro </h4>
-            <div class="my-4 text-center d-flex flex-column">
-                <b-button variant="primary" class="my-2" @click="signUpWithFacebook()">
-                    <b-icon icon="facebook" class="mx-2"></b-icon>
-                    Continuar con Facebook
-                </b-button>
-                <b-button variant="danger" class="my-2" @click="signUpWithGoogle()">
-                    <b-icon icon="google" class="mx-2"></b-icon>
-                    Continuar con Google
-                </b-button>
-                <b-button variant="info" class="my-2" @click="toEmailPasswordRegister()">
-                    <b-icon icon="at" class="mx-2"></b-icon>
-                    Continua con cuenta email
-                </b-button>
-            </div>
             <div class="my-4">
                 <b-form-checkbox
                     id="checkbox-1"
-                    v-model="termnsAndCondition"
+                    v-model="termsAndConditions"
                     name="checkbox-1"
                     value="accepted"
                     unchecked-value="not_accepted"
                 >
                     Acepto los términos y condiciones de las <a href="">politicas de privacidad</a>
                 </b-form-checkbox>
+            </div>
+            <h4 class="mt-5">Selecciona una forma de registro </h4>
+            <div class="my-4 text-center d-flex flex-column">
+                <b-button :disabled="termsAndConditions !== 'accepted'" variant="primary" class="my-2" @click="signUpWithFacebook()">
+                    <b-icon icon="facebook" class="mx-2"></b-icon>
+                    Continuar con Facebook
+                </b-button>
+                <b-button :disabled="termsAndConditions !== 'accepted'" variant="danger" class="my-2" @click="signUpWithGoogle()">
+                    <b-icon icon="google" class="mx-2"></b-icon>
+                    Continuar con Google
+                </b-button>
+                <b-button :disabled="termsAndConditions !== 'accepted'" variant="info" class="my-2" @click="toEmailPasswordRegister()">
+                    <b-icon icon="at" class="mx-2"></b-icon>
+                    Continua con cuenta email
+                </b-button>
             </div>
             <div class="text-center mb-4">
                 ¿Tienes cuenta en BIMTECH?
@@ -52,7 +52,7 @@ export default {
     },
     data(){
         return {
-            termnsAndCondition: 'not_accepted',
+            termsAndConditions: 'not_accepted',
             mood: '',
         }
     },
