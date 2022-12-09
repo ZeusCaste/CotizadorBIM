@@ -7,7 +7,7 @@
                         <b-row>
                             <b-icon class="ml-3" icon="person-fill" font-scale="2"></b-icon>
                             <b-col>
-                                <b-form-input v-model="displayName" id="name" type="text" placeholder="Nombre Completo" />
+                                <b-form-input disabled v-model="displayName" id="name" type="text" placeholder="Nombre Completo" />
                             </b-col>
                         </b-row>
                     </b-form-group>
@@ -17,10 +17,27 @@
                         <b-row>
                             <b-icon class="ml-3" icon="at" font-scale="2"></b-icon>
                             <b-col>
-                                <b-form-input v-model="email" id="email" type="email" placeholder="Email" />
+                                <b-form-input disabled v-model="email" id="email" type="email" placeholder="Email" />
                             </b-col>
+                            <b-button v-if="!emailVerified" variant="dark">Verificar</b-button>
                         </b-row>
                     </b-form-group>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 mx-auto">
+                    <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Tipo de usuario" label-for="phoneNumber">
+                        <b-row>
+                            <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
+                            <b-col>
+                                <b-form-input v-model="phoneNumber" id="phoneNumber" type="tel" placeholder="Número telefónico" />
+                            </b-col>
+                            <b-button variant="dark" :disabled="!phoneNumber">Verificar</b-button>
+                        </b-row>
+                    </b-form-group>
+                </div>
+                <div class="col-5 mx-auto">
+
                 </div>
             </div>
             <div class="row">
@@ -46,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <div class="my-5">
+        <div class="my-5" v-if="userType === 'partner'">
 
             <!-- Form Datos Personales -->
             <b-card no-body class="mb-1">
@@ -209,6 +226,7 @@ export default {
             this.email = email;
             this.emailVerified = emailVerified;
             this.phoneNumber = phoneNumber;
+            console.log(firebase.auth().currentUser);
         }
     }
 }

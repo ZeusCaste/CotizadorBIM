@@ -19,7 +19,7 @@ export default {
     },
     data() {
         return {
-            signInFirebaseProvider: 'password',
+            signInFirebaseProvider: '',
         }
     },
     methods: {
