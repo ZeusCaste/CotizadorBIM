@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import 'firebase/functions';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 // PROD
 // const firebaseConfig = {

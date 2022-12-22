@@ -10,7 +10,8 @@
                     value="accepted"
                     unchecked-value="not_accepted"
                 >
-                    Acepto los términos y condiciones de las <a href="">politicas de privacidad</a>
+                    Acepto los términos y condiciones de las <a href="https://firebasestorage.googleapis.com/v0/b/pruebascotizadorbim.appspot.com/o/aviso-privacidad%2FAviso%20de%20privacidad.pdf?alt=media&token=7f0b11bf-1df1-4a3f-8d9e-04b4369c88c4">politicas de privacidad</a>
+                    <b-button variant="success" @click="getURLFromFirebaseStorage()">Test</b-button>
                 </b-form-checkbox>
             </div>
             <h4 class="mt-5">Selecciona una forma de registro </h4>
@@ -63,6 +64,19 @@ export default {
     methods: {
         goToLogIn(state){
             this.eventHub.$emit('change-form', state);
+        },
+        async getURLFromFirebaseStorage(){
+            // Creamos una referencia al servicio storage de firebase
+            const storage = firebase.storage();
+            //creamos una referencia 
+            const storageRef = storage.ref();
+            // Con nuestra referencia apuntamos a una ruta especifica
+            const privacidadFile = storageRef.child('aviso-privacidad/aviso-de-privacidad.pdf');
+            //Obtenemos la ruta de descargar
+            const url = await privacidadFile.getDownloadURL();
+            console.log(url);
+            //const files = await privacidadFile.listAll();
+            
         },
         signUpWithGoogle(){
             const provider = new firebase.auth.GoogleAuthProvider();
