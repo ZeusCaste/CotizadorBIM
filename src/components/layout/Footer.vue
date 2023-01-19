@@ -8,7 +8,9 @@
                 <SocialNetworkNavbar />
             </div>
             <div class="col-xl-3 col-lg-4 col-12 col-md-12 col-sm-12 text-center font-weight-bolder mt-4">
-                contacto@bimtech.solutions
+                <a href="mailto:contacto@bimtech.solutions?Subject=Interesado%20en%20saber%20mas%20de%20ustedes">
+                    contacto@bimtech.solutions
+                </a>
             </div>
         </div>
     </div>
