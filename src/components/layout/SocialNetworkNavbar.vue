@@ -1,13 +1,13 @@
 <template>
     <div>
         <b-navbar-nav class="navbar-items d-flex flex-row justify-content-around">
-            <b-nav-item href="https://www.facebook.com/BIMSolucionesTacnologicas" class="m-2">
+            <b-nav-item href="https://www.facebook.com/BIMSolucionesTacnologicas" class="m-2" target="_blank">
                 <b-icon icon="facebook" scale="2" variant="primary"></b-icon>
             </b-nav-item>
-            <b-nav-item href="https://www.instagram.com/bim_soluciones_tecnologicas" class="m-2">
+            <b-nav-item href="https://www.instagram.com/bim_soluciones_tecnologicas" class="m-2" target="_blank">
                 <b-icon icon="instagram" scale="2" variant="warning"></b-icon>
             </b-nav-item>
-            <b-nav-item href="contacto@bimtech.solutions" class="m-2">
+            <b-nav-item href="contacto@bimtech.solutions" class="m-2" target="_blank">
                 <b-icon icon="youtube" scale="2" variant="danger"></b-icon>
             </b-nav-item>
         </b-navbar-nav>
