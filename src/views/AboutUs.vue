@@ -3,7 +3,7 @@
     <div class="header">
       <div class="img-header">
         <h2 class="title">Nosotros</h2>
-        <img class="img-fluid" :src="require('../../src/media/images/BIM.jpg')" alt="">
+        <img class="img-fluid" :src="require('../../src/media/images/BIM-us.jpg')" alt="">
       </div>
     </div>
     <div class="mx-auto d-flex flex-xl-row flex-lg-row flex-column-reverse flex-md-column-reverse flex-sm-column-reverse nosotros-description">
@@ -54,6 +54,7 @@ export default {
   
   .title{
     width: 50%;
+    margin-top: 20px;
     position: absolute;
     left: 0; 
     right: 0;
@@ -62,7 +63,7 @@ export default {
     color: #000;
     opacity: unset;
     font-weight: bold;
-    font-size: 11vw;
+    font-size: 9vw;
     text-align: center;
   }
 
@@ -70,6 +71,7 @@ export default {
     opacity: 0.7;
     width: 100%;
     height: auto;
+    border-bottom-left-radius: 15%;
   }
 
   .img-fluid {
