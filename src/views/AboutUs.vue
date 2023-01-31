@@ -7,8 +7,8 @@
       </div>
     </div>
     <div class="mx-auto d-flex flex-xl-row flex-lg-row flex-column-reverse flex-md-column-reverse flex-sm-column-reverse nosotros-description">
-      <div class="col-xl-6 col-lg-6 mx-0">
-        <img class="img-fluid" :src="require('../../src/media/images/BIMimagen.jpg')" alt="">
+      <div class="col-xl-6 col-lg-6 mx-0 my-auto">
+        <img class="img-fluid img-BIM" :src="require('../../src/media/images/BIMimagen.jpg')" alt="">
       </div>
       <div class="col-xl-6 col-lg-6 my-auto">
         <h1 class="text-warning">¿Quiénes somos?</h1>
@@ -21,13 +21,14 @@
     </div>
     <div class="mx-auto d-flex flex-xl-row flex-lg-row flex-column-reverse flex-md-column-reverse flex-sm-column-reverse nuestra-herramienta">
       <div class="col-xl-6 col-lg-6 my-auto">
+        <h1 class="text-warning text-center mx-5 mt-5">Nuestra herramienta</h1>
         <h5 class="text-justify text-warning my-5 px-2 py-4">
           Hemos desarrollado una herramienta de cotización inmobiliaria la cual se basa en las normas, leyes y reglamentos mexicanos,
           utilizando de manera óptima el estimado paramétrico y la ingeniería de costos.
         </h5>
       </div>
-      <div class="col-xl-6 col-lg-6 image mx-0">
-        <img class="img-fluid" :src="require('../../src/media/images/cotizador2.jpg')" alt="">
+      <div class="col-xl-6 col-lg-6 mx-5">
+        <img class="img-fluid img-out-tool" :src="require('../../src/media/images/cotizador3.jpg')" alt="">
       </div>
     </div>
     <ImgCarousell />
@@ -80,19 +81,33 @@ export default {
   }
 
   .nosotros-description {
-    margin-top: 25px;
+    margin-top: 60px;
     padding-left: 20px;
     padding-right: 20px;
     text-align: center;
     margin-bottom: 25px;
   }
 
+  .img-BIM {
+    width: 75%;
+    border-radius: 10%;
+    box-shadow: 5px 5px 5px;
+  }
+
+  .img-out-tool {
+    margin-top: 10px;
+    width: 85%;
+    border-radius: 5%;
+    box-shadow: 2px 2px 10px rgb(248, 248, 152);
+  }
+
   .nuestra-herramienta {
-    background: #1B1818     ;
-    margin-bottom: 20px;
+    background: #1B1818;
     color: rgb(192, 192, 192);
-    padding-top: 15px;
+    padding-top: 25px;
+    padding-bottom: 35px;
     margin-top: 8%;
+    margin-bottom: 25px;
     margin-left: 20px;
     margin-right: 20px;
     text-align: justify;
@@ -102,11 +117,19 @@ export default {
     .header {
       background-color: crimson;
     }
+
+    .img-BIM {
+      width: 100%;
+    }
   }
 
   @media (min-width: 600px) and (max-width: 990px) {
     .header {
       background-color: darkcyan;
+    }
+
+    .img-BIM {
+      width: 90%;
     }
   }
 
