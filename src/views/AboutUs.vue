@@ -32,18 +32,15 @@
       </div>
     </div>
     <Constructions />
-    <ImgCarousell />
   </div>
 </template>
 
 <script>
-import ImgCarousell from '../components/pages/AbouUs/ImgCarousell.vue';
 import Constructions from '../components/pages/AbouUs/Constructions.vue';
 
 export default {
   name: 'Home',
   components: {
-    ImgCarousell,
     Constructions
   }
 }

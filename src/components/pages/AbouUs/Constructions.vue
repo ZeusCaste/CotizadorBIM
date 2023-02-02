@@ -3,16 +3,37 @@
         <div>
             <h4 class="construction-title">Galería de proyectos</h4>
         </div>
-        <div class="project-container">
+        <div :hidden="hiddenProjects" class="project-container">
             <div v-for="project in projects" :key="project" class="m-3">
-                <b-button class="construction-button" variant="outline-warning">{{ project }}</b-button>
+                <b-button 
+                    class="construction-button" 
+                    variant="outline-warning"
+                    @click="displayHiddenProjects(project)"
+                >
+                    {{ project }}
+                </b-button>
+            </div>
+        </div>
+        <div :hidden="!hiddenProjects" class="mx-4">
+            <div>
+                <h4 class="font-weight-bolder">{{ activedGalery }}</h4>
+                <b-button class="showCarousell" variant="warning" @click="showCarousell()">X</b-button>
+            </div>
+            <div>
+                <ImgCarousell />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import ImgCarousell from './ImgCarousell.vue';
+
 export default {
+    name: 'Constructions',
+    components: {
+        ImgCarousell
+    },
     data(){
         return {
             projects: [
@@ -23,7 +44,18 @@ export default {
                 'Aire acondicionado con balance térmico',
                 'Ventilación y Extracción',
                 'Voz y Datos'
-            ]
+            ],
+            hiddenProjects: false,
+            activedGalery: ''
+        }
+    },
+    methods: {
+        displayHiddenProjects(galery){
+            this.hiddenProjects = true;
+            this.activedGalery = galery;
+        },
+        showCarousell(){
+            this.hiddenProjects = false;
         }
     }
 }
@@ -61,5 +93,11 @@ export default {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .showCarousell {
+        border-radius: 50%;
+        margin-bottom: 20px;
+        font-weight: bold;
     }
 </style>
