@@ -53,8 +53,36 @@
 </template>
 
 <script>
-export default {
+import firebase from '../../../plugins/firebase';
 
+export default {
+    name: 'ImgCarousell',
+    created(){
+        this.getFilesFromFirebaseStorage();
+    },
+    data(){
+        return {
+
+        }
+    },
+    methods: {
+        async getFilesFromFirebaseStorage(){
+             // Creamos una referencia al servicio storage de firebase
+            const storage = firebase.storage();
+            //creamos una referencia 
+            const storageRef = storage.ref();
+
+            // Con nuestra referencia apuntamos a una ruta especifica
+            const aire_acondicionado_balances_files = storageRef.child('Galeria/a-acondicionado-con-balance'); 
+
+            const list_files = await aire_acondicionado_balances_files.list();
+            list_files.items.forEach( async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+            //Obtenemos la ruta de descargar
+            // const url = await privacidadFile.getDownloadURL();
+        }
+    }
 }
 </script>
 
