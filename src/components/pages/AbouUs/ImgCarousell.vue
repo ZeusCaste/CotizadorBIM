@@ -75,16 +75,20 @@ export default {
             // Con nuestra referencia apuntamos a una ruta especifica
             const aire_acondicionado_balances_ref = storageRef.child('Galeria/a-acondicionado-con-balance');
             const arquitectura_ref = storageRef.child('Galeria/arquitectura');
+            const edificacion_existente_ref = storageRef.child('Galeria/edificacion-existente');
 
             const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
-            aire_acondicionado_balances_files.items.forEach(async(element) => {
+            aire_acondicionado_balances_files.items.forEach(async (element) => {
                 console.log(await element.getDownloadURL());
             });
-            //Obtenemos la ruta de descargar
-            // const url = await privacidadFile.getDownloadURL();
 
             const arquitectura_files = await arquitectura_ref.list();
             arquitectura_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const edificacion_existente_files = await edificacion_existente_ref.list();
+            edificacion_existente_files.items.forEach(async (element) => {
                 console.log(await element.getDownloadURL());
             });
         }
