@@ -76,6 +76,7 @@ export default {
             const aire_acondicionado_balances_ref = storageRef.child('Galeria/a-acondicionado-con-balance');
             const arquitectura_ref = storageRef.child('Galeria/arquitectura');
             const edificacion_existente_ref = storageRef.child('Galeria/edificacion-existente');
+            const energia_ref = storageRef.child('Galeria/energia');
 
             const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
             aire_acondicionado_balances_files.items.forEach(async (element) => {
@@ -89,6 +90,11 @@ export default {
 
             const edificacion_existente_files = await edificacion_existente_ref.list();
             edificacion_existente_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const energia_files = await energia_ref.list();
+            energia_files.items.forEach(async (element) => {
                 console.log(await element.getDownloadURL());
             });
         }
