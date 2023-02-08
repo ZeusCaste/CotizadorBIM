@@ -78,6 +78,7 @@ export default {
             const edificacion_existente_ref = storageRef.child('Galeria/edificacion-existente');
             const energia_ref = storageRef.child('Galeria/energia');
             const estructura_ref = storageRef.child('Galeria/estructura');
+            const ins_hidrosanitaria_ref = storageRef.child('Galeria/ins-hidrosanitaria');
 
             const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
             aire_acondicionado_balances_files.items.forEach(async (element) => {
@@ -101,6 +102,11 @@ export default {
 
             const estructura_files = await estructura_ref.list();
             estructura_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const ins_hidrosanitaria_files = await ins_hidrosanitaria_ref.list();
+            ins_hidrosanitaria_files.items.forEach(async (element) => {
                 console.log(await element.getDownloadURL());
             });
         }
