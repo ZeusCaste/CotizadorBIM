@@ -79,6 +79,7 @@ export default {
             const energia_ref = storageRef.child('Galeria/energia');
             const estructura_ref = storageRef.child('Galeria/estructura');
             const ins_hidrosanitaria_ref = storageRef.child('Galeria/ins-hidrosanitaria');
+            const proteccion_contra_incendios_ref = storageRef.child('Galeria/proteccion-contra-incendios');
 
             const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
             aire_acondicionado_balances_files.items.forEach(async (element) => {
@@ -107,6 +108,11 @@ export default {
 
             const ins_hidrosanitaria_files = await ins_hidrosanitaria_ref.list();
             ins_hidrosanitaria_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const proteccion_contra_incendios_files = await proteccion_contra_incendios_ref.list();
+            proteccion_contra_incendios_files.items.forEach(async (element) => {
                 console.log(await element.getDownloadURL());
             });
         }
