@@ -21,13 +21,13 @@
     </div>
     <div class="mx-auto d-flex flex-xl-row flex-lg-row flex-column-reverse flex-md-column-reverse flex-sm-column-reverse nuestra-herramienta">
       <div class="col-xl-6 col-lg-6 my-auto">
-        <h1 class="text-warning text-center mx-5 mt-5">Nuestra herramienta</h1>
-        <h5 class="text-justify text-warning my-5 px-2 py-4">
+        <h1 class="text-warning text-center mx-5 mt-3">Nuestra herramienta</h1>
+        <h5 class="text-justify text-warning my-5 px-5 py-4">
           Hemos desarrollado una herramienta de cotización inmobiliaria la cual se basa en las normas, leyes y reglamentos mexicanos,
           utilizando de manera óptima el estimado paramétrico y la ingeniería de costos.
         </h5>
       </div>
-      <div class="col-xl-6 col-lg-6 mx-5">
+      <div class="col-xl-6 col-lg-6 mx-0">
         <img class="img-fluid img-out-tool" :src="require('../../src/media/images/cotizador3.jpg')" alt="">
       </div>
     </div>
