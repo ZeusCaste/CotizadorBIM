@@ -27,12 +27,16 @@
 </template>
 
 <script>
+import firebase from '../../../plugins/firebase';
 import ImgCarousell from './ImgCarousell.vue';
 
 export default {
     name: 'Constructions',
     components: {
         ImgCarousell
+    },
+    created(){
+        this.getFilesFromFirebaseStorage();
     },
     data(){
         return {
@@ -56,6 +60,56 @@ export default {
         },
         showCarousell(){
             this.hiddenProjects = false;
+        },
+        async getFilesFromFirebaseStorage(){
+             // Creamos una referencia al servicio storage de firebase
+            const storage = firebase.storage();
+            //creamos una referencia 
+            const storageRef = storage.ref();
+
+            // Con nuestra referencia apuntamos a una ruta especifica
+            const aire_acondicionado_balances_ref = storageRef.child('Galeria/a-acondicionado-con-balance');
+            const arquitectura_ref = storageRef.child('Galeria/arquitectura');
+            const edificacion_existente_ref = storageRef.child('Galeria/edificacion-existente');
+            const energia_ref = storageRef.child('Galeria/energia');
+            const estructura_ref = storageRef.child('Galeria/estructura');
+            const ins_hidrosanitaria_ref = storageRef.child('Galeria/ins-hidrosanitaria');
+            const proteccion_contra_incendios_ref = storageRef.child('Galeria/proteccion-contra-incendios');
+
+            const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
+            aire_acondicionado_balances_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const arquitectura_files = await arquitectura_ref.list();
+            arquitectura_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const edificacion_existente_files = await edificacion_existente_ref.list();
+            edificacion_existente_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const energia_files = await energia_ref.list();
+            energia_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const estructura_files = await estructura_ref.list();
+            estructura_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const ins_hidrosanitaria_files = await ins_hidrosanitaria_ref.list();
+            ins_hidrosanitaria_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
+
+            const proteccion_contra_incendios_files = await proteccion_contra_incendios_ref.list();
+            proteccion_contra_incendios_files.items.forEach(async (element) => {
+                console.log(await element.getDownloadURL());
+            });
         }
     }
 }
