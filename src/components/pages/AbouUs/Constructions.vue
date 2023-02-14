@@ -41,16 +41,18 @@ export default {
     data(){
         return {
             projects: [
-                'Arquitectura', 
-                'Instalación hidrosanitaria', 
-                'Instalación Eléctrica',
-                'Aire acondicionado sin balance térmico',
                 'Aire acondicionado con balance térmico',
-                'Ventilación y Extracción',
-                'Voz y Datos'
+                'Arquitectura',
+                'Edificación existente',
+                'Energía', 
+                'Instalación Eléctrica',
+                'Estructura',
+                'Instalación Hidrosanitaria',
+                'Protección contra incendios'
             ],
             hiddenProjects: false,
-            activedGalery: ''
+            activedGalery: '',
+
         }
     },
     methods: {
