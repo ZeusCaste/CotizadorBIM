@@ -45,14 +45,19 @@ export default {
                 'Arquitectura',
                 'Edificación existente',
                 'Energía', 
-                'Instalación Eléctrica',
                 'Estructura',
                 'Instalación Hidrosanitaria',
                 'Protección contra incendios'
             ],
             hiddenProjects: false,
             activedGalery: '',
-
+            aire_acondicionado_balances_files_array: [],
+            arquitectura_files_array: [],
+            edificacion_existente_files_array: [],
+            energia_files_array: [],
+            estructura_files_array: [],
+            ins_hidrosanitaria_files_array: [],
+            proteccion_contra_incendios_files_array: [],
         }
     },
     methods: {
@@ -80,37 +85,37 @@ export default {
 
             const aire_acondicionado_balances_files = await aire_acondicionado_balances_ref.list();
             aire_acondicionado_balances_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.aire_acondicionado_balances_files_array.push(await element.getDownloadURL());
             });
 
             const arquitectura_files = await arquitectura_ref.list();
             arquitectura_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.aire_acondicionado_balances_files_array.push(await element.getDownloadURL());
             });
 
             const edificacion_existente_files = await edificacion_existente_ref.list();
             edificacion_existente_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.edificacion_existente_files_array.push(await element.getDownloadURL());
             });
 
             const energia_files = await energia_ref.list();
             energia_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.energia_files_array.push(await element.getDownloadURL());
             });
 
             const estructura_files = await estructura_ref.list();
             estructura_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.estructura_files_array.push(await element.getDownloadURL());
             });
 
             const ins_hidrosanitaria_files = await ins_hidrosanitaria_ref.list();
             ins_hidrosanitaria_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.ins_hidrosanitaria_files_array.push(await element.getDownloadURL());
             });
 
             const proteccion_contra_incendios_files = await proteccion_contra_incendios_ref.list();
             proteccion_contra_incendios_files.items.forEach(async (element) => {
-                console.log(await element.getDownloadURL());
+                this.proteccion_contra_incendios_files_array.push(await element.getDownloadURL());
             });
         }
     }
