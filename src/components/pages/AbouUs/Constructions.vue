@@ -14,13 +14,13 @@
                 </b-button>
             </div>
         </div>
-        <div :hidden="!hiddenProjects" class="mx-4">
+        <div v-if="hiddenProjects" class="mx-4">
             <div>
                 <h4 class="font-weight-bolder">{{ activedGalery }}</h4>
                 <b-button class="showCarousell" variant="warning" @click="showCarousell()">X</b-button>
             </div>
             <div>
-                <ImgCarousell />
+                <ImgCarousell :construction="activedConstruction" />
             </div>
         </div>
     </div>
@@ -58,12 +58,48 @@ export default {
             estructura_files_array: [],
             ins_hidrosanitaria_files_array: [],
             proteccion_contra_incendios_files_array: [],
+            activedConstruction: [],
         }
     },
     methods: {
         displayHiddenProjects(galery){
             this.hiddenProjects = true;
             this.activedGalery = galery;
+
+            if(galery === 'Aire acondicionado con balance térmico'){
+                this.activedConstruction = this.aire_acondicionado_balances_files_array;
+                return
+            }
+
+            if (galery === 'Arquitectura'){
+                this.activedConstruction = this.arquitectura_files_array;
+                return
+            }
+
+            if(galery === 'Edificación existente'){
+                this.activedConstruction = this.edificacion_existente_files_array;
+                return;
+            }
+
+            if(galery === 'Energía'){
+                this.activedConstruction = this.energia_files_array;
+                return;
+            }
+
+            if(galery === 'Estructura'){
+                this.activedConstruction = this.estructura_files_array;
+                return;
+            }
+
+            if(galery === 'Instalación Hidrosanitaria'){
+                this.activedConstruction = this.ins_hidrosanitaria_files_array;
+                return;
+            }
+
+            if(galery === 'Protección contra incendios'){
+                this.activedConstruction = this.proteccion_contra_incendios_files_array;
+                return;
+            }
         },
         showCarousell(){
             this.hiddenProjects = false;
@@ -90,7 +126,7 @@ export default {
 
             const arquitectura_files = await arquitectura_ref.list();
             arquitectura_files.items.forEach(async (element) => {
-                this.aire_acondicionado_balances_files_array.push(await element.getDownloadURL());
+                this.arquitectura_files_array.push(await element.getDownloadURL());
             });
 
             const edificacion_existente_files = await edificacion_existente_ref.list();

@@ -56,16 +56,21 @@
 
 export default {
     name: 'ImgCarousell',
-    created(){
-
+    props: {
+        construction: Array
     },
-    data(){
+    beforeMount(){
+        this.betweenVideosAndImages();
+    },
+    data(props){
         return {
-
+            activatedConstruction: props.construction
         }
     },
     methods: {
-        
+        betweenVideosAndImages(){
+            console.log(this.activatedConstruction);
+        }
     }
 }
 </script>
