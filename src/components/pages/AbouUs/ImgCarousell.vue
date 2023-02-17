@@ -69,7 +69,17 @@ export default {
     },
     methods: {
         betweenVideosAndImages(){
-            console.log(this.activatedConstruction);
+            this.activatedConstruction = this.activatedConstruction.map((element) => {
+                const element_array = element.split('.');
+                console.log(element_array[5]);
+                if(element_array[5].startsWith('jpg') || element_array[5].startsWith('png')){
+                    return { type: 'image', url: element }
+                }
+
+                if(element_array[5].startsWith('mp4')){
+                    return { type: 'video', url: element };
+                }
+            });
         }
     }
 }
