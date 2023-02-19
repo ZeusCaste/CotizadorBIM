@@ -1,10 +1,24 @@
 <template>
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="../../../media/images/mapsCarousell/map-0001.jpg" class="d-block w-75 img-fluid mx-auto" alt="...">
+            <div 
+                v-for="(construction, idx) in activatedConstruction" 
+                :key="construction.url" 
+                class="carousel-item" 
+                :class="idx === 0 && 'active'"
+            >
+                <img 
+                    v-if="construction.type === 'image'" 
+                    :src="construction.url" 
+                    class="d-block w-75 img-fluid mx-auto" 
+                    alt="..."
+                >
+                <video 
+                    v-if="construction.type === 'video'" 
+                    :src="construction.url"
+                ></video>
             </div>
-            <div class="carousel-item">
+            <!-- <div class="carousel-item">
                 <img src="../../../media/images/mapsCarousell/map-0002.jpg" class="d-block w-75 img-fluid mx-auto" alt="...">
             </div>
             <div class="carousel-item">
@@ -39,7 +53,7 @@
             </div>
             <div class="carousel-item">
                 <img src="../../../media/images/mapsCarousell/map-00013.jpg" class="d-block w-75 img-fluid mx-auto" alt="...">
-            </div>
+            </div> -->
         </div>
         <button class="carousel-control-prev btn btn-info" type="button" data-target="#carouselExampleFade" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -71,7 +85,6 @@ export default {
         betweenVideosAndImages(){
             this.activatedConstruction = this.activatedConstruction.map((element) => {
                 const element_array = element.split('.');
-                console.log(element_array[5]);
                 if(element_array[5].startsWith('jpg') || element_array[5].startsWith('png')){
                     return { type: 'image', url: element }
                 }
@@ -85,6 +98,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+    .carousel-control-next, .carousel-control-prev {
+        width: 10%;
+    }
 </style>
