@@ -16,6 +16,7 @@
                 <video 
                     v-if="construction.type === 'video'" 
                     :src="construction.url"
+                    controls
                 ></video>
             </div>
             <!-- <div class="carousel-item">
@@ -101,5 +102,69 @@ export default {
 <style lang="scss" scoped>
     .carousel-control-next, .carousel-control-prev {
         width: 10%;
+    }
+
+    .carousel-item {
+        text-align: center;
+    }
+
+    @media (max-width: 375px){
+        video {
+            width: 200px;
+        }
+    }
+
+    @media (min-width: 375px) and (max-width: 450px) {
+        video {
+            width: 250px;
+        }
+    }
+
+    @media (min-width: 450px) and (max-width: 600px) {
+        video {
+            width: 330px;
+        }
+    }
+
+    @media (min-width: 600px) and (max-width: 750px) {
+        video {
+            width: 450px;
+        }
+    }
+
+    @media (min-width: 750px) and (max-width: 900px) {
+        video {
+            width: 550px;
+        }
+    }
+
+    @media (min-width: 900px) and (max-width: 1150px) {
+        video {
+            width: 680px;
+        }
+    }
+
+    @media (min-width: 1150px) and (max-width: 1300px) {
+        video {
+            width: 880px;
+        }
+    }
+
+    @media (min-width: 1300px) and (max-width: 1450px) {
+        video {
+            width: 1000px;
+        }
+    }
+
+    @media (min-width: 1450px) and (max-width: 1600px) {
+        video {
+            width: 1120px;
+        }
+    }
+    
+    @media (min-width: 1600px){
+        video {
+            width: 1240px;
+        }
     }
 </style>
