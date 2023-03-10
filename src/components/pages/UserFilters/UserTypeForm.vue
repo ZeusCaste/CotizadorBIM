@@ -19,7 +19,7 @@
                             <b-col>
                                 <b-form-input disabled v-model="email" id="email" type="email" placeholder="Email" />
                             </b-col>
-                            <b-button v-if="!emailVerified" variant="dark">Verificar</b-button>
+                            <b-button v-if="!emailVerified" variant="dark"> {{ 'Verificar' }} </b-button>
                         </b-row>
                     </b-form-group>
                 </div>
@@ -29,11 +29,27 @@
                     <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Tipo de usuario" label-for="phoneNumber">
                         <b-row>
                             <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
-                            <b-col>
+                            <b-col v-if="!OTPSendFlag">
                                 <b-form-input v-model="phoneNumber" id="phoneNumber" type="tel" placeholder="Número telefónico" />
                             </b-col>
-                            <b-button variant="dark" :disabled="!phoneNumber">Verificar</b-button>
+                            <b-col v-else>
+                                <b-form-input v-model="OTPCode" id="otpcode" type="tel" placeholder="Ingresa el código enviado" />
+                            </b-col>
+                            <b-button variant="dark" :disabled="!phoneNumber" @click="sendOTPBySMSChannel()">
+                                {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
+                                <b-spinner v-if="spinner" variant="warnign" label="Spinning"></b-spinner>
+                            </b-button>
                         </b-row>
+                        <b-alert
+                            :show="dismissCountDown"
+                            dismissible
+                            variant="success"
+                            @dismissed="dismissCountDown=0"
+                            @dismiss-count-down="countDownChanged"
+                            class="my-2"
+                            >
+                            <p>{{ successMessage }}</p>
+                        </b-alert>
                     </b-form-group>
                 </div>
                 <div class="col-5 mx-auto">
@@ -180,8 +196,6 @@
                                 </b-row>
                             </b-form-group>
                         </div>
-
-                        
                     </b-card-body>
                 </b-collapse>
             </b-card>
@@ -204,6 +218,7 @@ export default {
             email: '',
             emailVerified: false,
             phoneNumber: '',
+            OTPCode: '',
             userType: '',
             bornDate: '',
             street: '',
@@ -216,7 +231,12 @@ export default {
             optionsUserType: [
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
-            ]
+            ],
+            OTPSendFlag: false,
+            spinner: false,
+            successMessage: '',
+            dismissSecs: 10,
+            dismissCountDown: 0,
         }
     },
     methods: {
@@ -227,7 +247,28 @@ export default {
             this.emailVerified = emailVerified;
             this.phoneNumber = phoneNumber;
             console.log(firebase.auth().currentUser);
-        }
+            console.log(this.displayName);
+        },
+        async sendOTPBySMSChannel(){
+            this.spinner = true;
+            const sendOTPBySMSChannelFunction = firebase.functions().httpsCallable('sendOTPBySMSChannel');
+
+            try {
+                const response = await sendOTPBySMSChannelFunction({ 'phoneNumber': '+52' + this.phoneNumber });
+                this.successMessage = response.data.msg;
+                this.OTPSendFlag = true;
+                this.dismissCountDown = this.dismissSecs;
+                console.log(response);
+                
+            } catch (error) {
+                console.log(error);
+            }
+
+            this.spinner = false;
+        },
+        countDownChanged(dismissCountDown) {
+            this.dismissCountDown = dismissCountDown
+        },
     }
 }
 </script>
