@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-5 mx-auto">
-                    <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Tipo de usuario" label-for="phoneNumber">
+                    <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Número Telefónico" label-for="phoneNumber">
                         <b-row>
                             <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
                             <b-col v-if="!OTPSendFlag">
@@ -35,15 +35,15 @@
                             <b-col v-else>
                                 <b-form-input v-model="OTPCode" id="otpcode" type="tel" placeholder="Ingresa el código enviado" />
                             </b-col>
-                            <b-button variant="dark" :disabled="!phoneNumber" @click="sendOTPBySMSChannel()">
+                            <b-button variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
                                 {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
-                                <b-spinner v-if="spinner" variant="warnign" label="Spinning"></b-spinner>
+                                <b-spinner small v-if="spinner" variant="warnign" label="Spinning"></b-spinner>
                             </b-button>
                         </b-row>
                         <b-alert
                             :show="dismissCountDown"
                             dismissible
-                            variant="success"
+                            :variant="successResponse ? 'success' : 'danger'"
                             @dismissed="dismissCountDown=0"
                             @dismiss-count-down="countDownChanged"
                             class="my-2"
@@ -235,6 +235,7 @@ export default {
             OTPSendFlag: false,
             spinner: false,
             successMessage: '',
+            successResponse: true,
             dismissSecs: 10,
             dismissCountDown: 0,
         }
@@ -258,13 +259,47 @@ export default {
                 this.successMessage = response.data.msg;
                 this.OTPSendFlag = true;
                 this.dismissCountDown = this.dismissSecs;
+                this.OTPCode = '';
                 console.log(response);
                 
             } catch (error) {
-                console.log(error);
+                this.successResponse = false;
+                this.successMessage = 'Código incorrecto. Intenta de nuevo';
+                this.dismissCountDown = this.dismissSecs;
             }
 
             this.spinner = false;
+        },
+        async verifyOTPBySMSChannel(){
+            this.spinner = true;
+            const verifyOTPBySMSChannelFunction = firebase.functions().httpsCallable('verifyOTPBySMSChannel');
+
+            try {
+                const response = await verifyOTPBySMSChannelFunction({ 'otpCode': this.OTPCode, 'phoneNumber': '+52' + this.phoneNumber });
+                
+                if(response.data.success){
+                    this.successResponse = true;
+                    this.successMessage = response.data.msg;
+                    this.OTPSendFlag = false;
+                    this.dismissCountDown = this.dismissSecs;
+                }
+                console.log(response);
+
+            } catch (error) {
+                this.successResponse = false;
+                this.successMessage = 'Código incorrecto. Intenta de nuevo';
+                this.dismissCountDown = this.dismissSecs;
+            }
+
+            this.spinner = false;
+        },
+        phoneNumberActionButton(){
+            if(this.OTPSendFlag){
+                this.verifyOTPBySMSChannel();
+            }
+            else {
+                this.sendOTPBySMSChannel();
+            }
         },
         countDownChanged(dismissCountDown) {
             this.dismissCountDown = dismissCountDown
