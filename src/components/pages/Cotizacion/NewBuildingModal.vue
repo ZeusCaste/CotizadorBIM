@@ -490,6 +490,7 @@
 </template>
 
 <script>
+import firebase from '../../../plugins/firebase';
 import { mapState, mapActions } from 'vuex';
 import { estados } from '../../../db/estados';
 import { municipios } from '../../../db/municipios';
@@ -548,7 +549,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getDataCotizacionNuevaEdificacion']),
+        ...mapActions(['setDataCotizacionNuevaEdificacion']),
         onCreateCotizacion(){
             this.showModal();
         },
@@ -673,9 +674,13 @@ export default {
             }
 
             try {
-                await this.getDataCotizacionNuevaEdificacion(this.edificacionNueva);
+                const calculusNewConstructionQuotation = firebase.functions().httpsCallable('calculusNewConstructionQuotation');
+                const response = await calculusNewConstructionQuotation(this.edificacionNueva);
+                const data = await response.data;
+                console.log(data);
+                this.setDataCotizacionNuevaEdificacion(data);
                 // await this.getDataCotizacionNuevaEdificacion(edificacionNueva);
-                this.spinner= false;
+                this.spinner = false;
                 this.hideModal();
 
             } catch (error) {

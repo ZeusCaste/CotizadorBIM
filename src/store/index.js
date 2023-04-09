@@ -60,20 +60,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getDataCotizacionNuevaEdificacion({ commit }, edificacion){
-      try {
-        const newConstructionQuotation= firebase.functions().httpsCallable('newConstructionQuotation');
-        const response= await newConstructionQuotation(edificacion);
-        const data= await response.data;
-        console.log(data);
-  
-        if(data.success){
-          commit('setDataNuevaEdificacion', data.quotations);
-          commit('setUserContact', data.datos_contacto);
-        }
-        
-      } catch (error) {
-        console.log(error);
+    async setDataCotizacionNuevaEdificacion({ commit }, data){
+      if(data.success){
+        commit('setDataNuevaEdificacion', data.quotations);
+        commit('setUserContact', data.datos_contacto);
       }
     },
   },
