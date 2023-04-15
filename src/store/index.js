@@ -66,6 +66,7 @@ export default new Vuex.Store({
   },
   actions: {
     async setDataCotizacionNuevaEdificacion({ commit }, data){
+      console.log(data);
       if(data.success){
         commit('setDataNuevaEdificacion', data.quotations);
         commit('setUserContact', data.datos_contacto);

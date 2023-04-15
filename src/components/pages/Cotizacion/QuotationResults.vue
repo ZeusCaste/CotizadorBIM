@@ -11,31 +11,8 @@
                 Con área total de {{edificacion.m2Construction}} m<sup>2</sup>
             </p>
             <div v-for="(amount, field, idx) in edificacion.amounts" :key="idx">
-                <p v-if="field== 'architecture'">
-                    Importe del proyecto Arquitectura: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                </p>
-                <p v-if="field== 'hydro_sanitaryInstallation'">
-                    Importe del proyecto Instalación hidrosanitaria: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                </p>
-                <p v-if="field== 'electricalInstallation'">
-                    Importe del proyecto Instalación eléctrica: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                </p>
-                <p v-if="field== 'airConditioningWithoutThermalBalance'">
-                    Importe del proyecto Aire acondicionado sin balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                </p>
-                <p v-if="field== 'airConditioningWithThermalBalance'">
-                    Importe del proyecto Aire acondicionado con balance térmico: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                </p>
-                <p v-if="field== 'ventilationAndExtraction'">
-                    Importe del proyecto Ventilación y extracción: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
-                <p v-if="field== 'voiceAndData'">
-                    Importe del proyecto Voz y datos: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
+                <p v-if="field !== 'totalAmount'">
+                    Importe del proyecto {{ field }}: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
                     Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                 </p>
                 <p v-if="field== 'totalAmount'">
@@ -66,6 +43,7 @@
                 {{ msg }}
             </b-alert>
         </div>
+        {{ dataCotizacionNuevaEdificacion }}
     </div>
 </template>
 
