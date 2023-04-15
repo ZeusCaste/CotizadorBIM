@@ -140,7 +140,7 @@
                                     <p><b>Edificacion: </b>{{edificacion.edificacion}}</p>
                                     <p><b>Proyectos y/o estudios: </b>{{edificacion.proyectos_estudios.join(', ')}}.</p>
                                 </div>
-                                <EdificacionIndependiente
+                                <IndependentBuilding
                                     class="component"
                                     :edificacion="edificacion"
                                     :idx="index"

@@ -43,7 +43,6 @@
                 {{ msg }}
             </b-alert>
         </div>
-        {{ dataCotizacionNuevaEdificacion }}
     </div>
 </template>
 
