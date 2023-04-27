@@ -73,7 +73,6 @@
                             stacked
                         ></b-form-checkbox-group>
                     </div>
-                    {{ this.form.proyectos_estudios }}
                 </div>
             </div>
             <div class="button-container">
@@ -113,9 +112,9 @@
                         <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
                             <b>Edificaciones agregadas</b>
                             <b-nav pills vertical>
-                                <template v-for="(edificacion, index) in edificacionNueva.edificaciones">
-                                    <b-nav-item :key="index" :href="sethref(index)"  class="btn btn-outline-primary mt-1">Edificación # {{index+1}}</b-nav-item>
-                                </template>
+                                <div v-for="(edificacion, index) in edificacionNueva.edificaciones" :key="index">
+                                    <b-nav-item :href="sethref(index)"  class="btn btn-outline-primary mt-1">Edificación # {{index+1}}</b-nav-item>
+                                </div>
                             </b-nav>
                         </b-navbar>
                     </b-col>
@@ -929,7 +928,7 @@ export default {
             if(this.form.proyectos_estudios.includes('Estructuras B1'))
                 this.form.proyectos_estudios = this.form.proyectos_estudios.filter((edification) => edification !== 'Estructuras B1');
             
-            this.form.proyectos_estudios.push(type_structure);
+            // this.form.proyectos_estudios.push(type_structure);
         }
     },
     computed: {
