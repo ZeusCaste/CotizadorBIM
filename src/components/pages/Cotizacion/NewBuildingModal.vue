@@ -53,6 +53,7 @@
                             :options="edificacionOptions"
                             name="text"
                             stacked
+                            @change="handleStructureState"
                         ></b-form-radio-group>
                     </div>
                 </div>
@@ -72,6 +73,7 @@
                             stacked
                         ></b-form-checkbox-group>
                     </div>
+                    {{ this.form.proyectos_estudios }}
                 </div>
             </div>
             <div class="button-container">
@@ -549,7 +551,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['setDataCotizacionNuevaEdificacion']),
+        ...mapActions(['setDataCotizacionNuevaEdificacion', 'setStructuresStateAction']),
         onCreateCotizacion(){
             this.showModal();
         },
@@ -903,6 +905,31 @@ export default {
                     });
                 }
             }
+        },
+        handleStructureState(edification){
+            let type_structure = '';
+            if(edification === 'Vivienda Familiar') type_structure = 'Estructuras B1';
+            if(edification === 'Vivienda Adosada') type_structure = 'Estructuras B1';
+            if(edification === 'Vivienda Multifamiliar') type_structure = 'Estructuras B1';
+            if(edification === 'Vivienda Residencial') type_structure = 'Estructuras B1';
+            if(edification === 'Oficinas y Locales') type_structure = 'Estructuras A2';
+            if(edification === 'Comercial') type_structure = 'Estructuras A2';
+            if(edification === 'Administrativo') type_structure = 'Estructuras A2';
+            if(edification === 'Estacionamientos') type_structure = 'Estructuras A2';
+            if(edification === 'Docencia') type_structure = 'Estructuras A2';
+            if(edification === 'Pública concurrencia') type_structure = 'Estructuras A1';
+            if(edification === 'Salud') type_structure = 'Estructuras A1';
+            if(edification === 'Industrial') type_structure = 'Estructuras A1';
+            this.setStructuresStateAction(type_structure);
+
+            if(this.form.proyectos_estudios.includes('Estructuras A1')) 
+                this.form.proyectos_estudios = this.form.proyectos_estudios.filter((edification) => edification !== 'Estructuras A1');
+            if(this.form.proyectos_estudios.includes('Estructuras A2'))
+                this.form.proyectos_estudios = this.form.proyectos_estudios.filter((edification) => edification !== 'Estructuras A2');
+            if(this.form.proyectos_estudios.includes('Estructuras B1'))
+                this.form.proyectos_estudios = this.form.proyectos_estudios.filter((edification) => edification !== 'Estructuras B1');
+            
+            this.form.proyectos_estudios.push(type_structure);
         }
     },
     computed: {

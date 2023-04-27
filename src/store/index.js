@@ -21,10 +21,10 @@ export default new Vuex.Store({
       { id: 12, text: "Industrial", value: "Industrial" },
     ],
     proyectos_estudiosOptions: [
+      { id: 2, text: "Estructuras A1", value: "Estructuras A1", disabled: true },
+      { id: 3, text: "Estructuras A2", value: "Estructuras A2", disabled: true },
+      { id: 4, text: "Estructuras B1", value: "Estructuras B1", disabled: true },
       { id: 1, text: "Arquitectura", value: "Arquitectura" },
-      { id: 2, text: "Estructuras A1", value: "Estructuras A1" },
-      { id: 3, text: "Estructuras A2", value: "Estructuras A2" },
-      { id: 4, text: "Estructuras B1", value: "Estructuras B1" },
       { id: 5, text: "Instalación hidrosanitaria", value: "Instalación hidrosanitaria" },
       { id: 6, text: "Ventilación y Extracción", value: "Ventilación y Extracción" },
       { id: 7, text: "Acondicionamiento sin balance térmico", value: "Acondicionamiento sin balance térmico" },
@@ -63,6 +63,9 @@ export default new Vuex.Store({
     setUserContact(state, payload){
       state.userContact = payload;
     },
+    setStructuresState(state, payload){
+      state.proyectos_estudiosOptions = payload;
+    }
   },
   actions: {
     async setDataCotizacionNuevaEdificacion({ commit }, data){
@@ -72,6 +75,17 @@ export default new Vuex.Store({
         commit('setUserContact', data.datos_contacto);
       }
     },
+    setStructuresStateAction({ commit, state }, data){
+      const originalStates = state.proyectos_estudiosOptions.map((edification) => {
+        const { text } = edification;
+        return (text === 'Estructuras A1' || text === 'Estructuras A2' || text === 'Estructuras B1') ? { ...edification, disabled: true } : edification
+      });
+
+      const newStates = originalStates.map((edification) => 
+        edification.text === data ? { ...edification, disabled: false } : edification
+      );
+      commit('setStructuresState', newStates);
+    }
   },
   modules: {
   }
