@@ -30,14 +30,26 @@
                         <b-row>
                             <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
                             <b-col v-if="!OTPSendFlag">
-                                <b-form-input v-model="phoneNumber" id="phoneNumber" type="tel" placeholder="Número telefónico" />
+                                <b-form-input 
+                                    v-model="phoneNumber" 
+                                    id="phoneNumber" 
+                                    type="tel" 
+                                    placeholder="Número telefónico" 
+                                    :disabled="getPhoneNumberVerificatedStatus"
+                                />
                             </b-col>
                             <b-col v-else>
                                 <b-form-input v-model="OTPCode" id="otpcode" type="tel" placeholder="Ingresa el código enviado" />
                             </b-col>
-                            <b-button variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
+                            <b-icon 
+                                v-if="getPhoneNumberVerificatedStatus"  
+                                icon="check-circle-fill" 
+                                font-scale="2"
+                                variant="success"
+                            ></b-icon>
+                            <b-button v-else variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
                                 {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
-                                <b-spinner small v-if="spinner" variant="warnign" label="Spinning"></b-spinner>
+                                <b-spinner small v-if="spinner" variant="warning" label="Spinning"></b-spinner>
                             </b-button>
                         </b-row>
                         <b-alert
@@ -247,8 +259,8 @@ export default {
             this.email = email;
             this.emailVerified = emailVerified;
             this.phoneNumber = phoneNumber;
+            this.displayName = displayName;
             console.log(firebase.auth().currentUser);
-            console.log(this.displayName);
         },
         async sendOTPBySMSChannel(){
             this.spinner = true;
@@ -282,8 +294,8 @@ export default {
                     this.successMessage = response.data.msg;
                     this.OTPSendFlag = false;
                     this.dismissCountDown = this.dismissSecs;
+                    this.phoneNumber = response.data.phoneNumber;
                 }
-                console.log(response);
 
             } catch (error) {
                 this.successResponse = false;
@@ -304,6 +316,12 @@ export default {
         countDownChanged(dismissCountDown) {
             this.dismissCountDown = dismissCountDown
         },
+    },
+    computed: {
+        getPhoneNumberVerificatedStatus() {
+            let aux = this.phoneNumber + '';
+            return (aux.startsWith('+') && aux.length === 13) 
+        }
     }
 }
 </script>
