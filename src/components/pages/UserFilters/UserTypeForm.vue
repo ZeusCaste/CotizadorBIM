@@ -19,8 +19,32 @@
                             <b-col>
                                 <b-form-input disabled v-model="email" id="email" type="email" placeholder="Email" />
                             </b-col>
-                            <b-button v-if="!emailVerified" variant="dark"> {{ 'Verificar' }} </b-button>
+                            <b-button 
+                                v-if="!emailVerified" 
+                                variant="dark"
+                                @click="sendVerificationEmail()"
+                                > 
+                                {{ 'Verificar' }}
+                                <b-spinner small v-if="spinner && alertRol === 'email'" variant="warning" label="Spinning"></b-spinner>
+                            </b-button>
+                            <b-icon 
+                                v-else  
+                                icon="check-circle-fill" 
+                                font-scale="2"
+                                variant="success"
+                            ></b-icon>
                         </b-row>
+                        <b-alert
+                            v-if="alertRol === 'email'"
+                            :show="dismissCountDown"
+                            dismissible
+                            :variant="successResponse ? 'success' : 'danger'"
+                            @dismissed="dismissCountDown=0"
+                            @dismiss-count-down="countDownChanged"
+                            class="my-2"
+                        >
+                            <p>{{ successMessage }}</p>
+                        </b-alert>
                     </b-form-group>
                 </div>
             </div>
@@ -49,10 +73,11 @@
                             ></b-icon>
                             <b-button v-else variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
                                 {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
-                                <b-spinner small v-if="spinner" variant="warning" label="Spinning"></b-spinner>
+                                <b-spinner small v-if="spinner && alertRol === 'phoneNumber'" variant="warning" label="Spinning"></b-spinner>
                             </b-button>
                         </b-row>
                         <b-alert
+                            v-if="alertRol === 'phoneNumber'"
                             :show="dismissCountDown"
                             dismissible
                             :variant="successResponse ? 'success' : 'danger'"
@@ -249,10 +274,26 @@ export default {
             successMessage: '',
             successResponse: true,
             dismissSecs: 10,
+            alertRol: '',
             dismissCountDown: 0,
+            changeVisibility: true,
         }
     },
     methods: {
+        handlerAddEvent() {
+            document.addEventListener('visibilitychange', async () => {
+                this.onVisibilityChange();
+            });
+        },
+        async onVisibilityChange(){
+            this.changeVisibility = !this.changeVisibility;
+                
+            if(this.changeVisibility && !this.emailVerified) {
+                let getUpdatedUserData = firebase.functions().httpsCallable('getUpdatedUserData');
+                const response = await getUpdatedUserData();
+                this.emailVerified = response.data.emailVerified;
+            }
+        },
         getCurrentUser(){
             const { displayName, email, emailVerified, phoneNumber } = firebase.auth().currentUser;
             this.displayName = displayName;
@@ -264,9 +305,10 @@ export default {
         },
         async sendOTPBySMSChannel(){
             this.spinner = true;
-            const sendOTPBySMSChannelFunction = firebase.functions().httpsCallable('sendOTPBySMSChannel');
-
+            this.alertRol = 'phoneNumber'
+            
             try {
+                const sendOTPBySMSChannelFunction = firebase.functions().httpsCallable('sendOTPBySMSChannel');
                 const response = await sendOTPBySMSChannelFunction({ 'phoneNumber': '+52' + this.phoneNumber });
                 this.successMessage = response.data.msg;
                 this.OTPSendFlag = true;
@@ -284,9 +326,10 @@ export default {
         },
         async verifyOTPBySMSChannel(){
             this.spinner = true;
-            const verifyOTPBySMSChannelFunction = firebase.functions().httpsCallable('verifyOTPBySMSChannel');
-
+            this.alertRol = 'phoneNumber';
+            
             try {
+                const verifyOTPBySMSChannelFunction = firebase.functions().httpsCallable('verifyOTPBySMSChannel');
                 const response = await verifyOTPBySMSChannelFunction({ 'otpCode': this.OTPCode, 'phoneNumber': '+52' + this.phoneNumber });
                 
                 if(response.data.success){
@@ -314,8 +357,32 @@ export default {
             }
         },
         countDownChanged(dismissCountDown) {
-            this.dismissCountDown = dismissCountDown
+            this.dismissCountDown = dismissCountDown;
+            this.alertRol = dismissCountDown > 0 ? this.alertRol : '';
         },
+        async sendVerificationEmail() {
+            this.spinner = true;
+            this.alertRol = 'email';
+
+            if(this.emailVerified) return
+
+            try {
+                const sendVerificationEmailFunction = firebase.functions().httpsCallable('sendVerificationEmail');
+                const response = await sendVerificationEmailFunction();
+                if(response.data.success) {
+                    this.successResponse = true;
+                    this.successMessage = response.data.message;
+                    this.dismissCountDown = this.dismissSecs;
+                    this.handlerAddEvent();
+                }
+            } catch (error) {
+                this.successResponse = false;
+                this.successMessage = 'Ocurrio un error. Intenta mas tarde';
+                this.dismissCountDown = this.dismissSecs;
+            }
+
+            this.spinner = false;
+        }
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
