@@ -28,7 +28,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.functions().useEmulator('localhost', 5001);
+//firebase.functions().useEmulator('localhost', 5001);
 // firebase.auth().useEmulator('localhost', 9099);
 // firebase.firestore().useEmulator('localhost', 8081);
 

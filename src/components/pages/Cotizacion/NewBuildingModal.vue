@@ -278,7 +278,7 @@
                                 <label for="">Número de niveles tipo</label>
                                 <b-form-input
                                     v-model="form.numeroNiveles"
-                                    placeholder="2"
+                                    placeholder="Introduce número de niveles"
                                 ></b-form-input>
                             </b-col>
                         </b-row>

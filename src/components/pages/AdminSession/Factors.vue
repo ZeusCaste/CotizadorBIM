@@ -26,7 +26,7 @@
                     <b-form-text id="FM"> Factor Mercado </b-form-text>
                 </div>
                 <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
-                    <label class="sr-only" for="inline-form-input-FR">Factor Reducción Tabulador</label>
+                    <label class="sr-only" for="inline-form-input-FR">Factor Tabulador</label>
                     <b-form-input 
                         id="inline-form-input-FR" 
                         aria-describedby="FR"

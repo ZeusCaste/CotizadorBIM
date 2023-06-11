@@ -21,10 +21,10 @@ export default new Vuex.Store({
       { id: 12, text: "Industrial", value: "Industrial" },
     ],
     proyectos_estudiosOptions: [
+      { id: 1, text: "Arquitectura", value: "Arquitectura" },
       { id: 2, text: "Estructuras A1", value: "Estructuras A1", disabled: true },
       { id: 3, text: "Estructuras A2", value: "Estructuras A2", disabled: true },
       { id: 4, text: "Estructuras B1", value: "Estructuras B1", disabled: true },
-      { id: 1, text: "Arquitectura", value: "Arquitectura" },
       { id: 5, text: "Instalación hidrosanitaria", value: "Instalación hidrosanitaria" },
       { id: 6, text: "Ventilación y Extracción", value: "Ventilación y Extracción" },
       { id: 7, text: "Acondicionamiento sin balance térmico", value: "Acondicionamiento sin balance térmico" },

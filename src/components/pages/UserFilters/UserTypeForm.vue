@@ -300,7 +300,6 @@ export default {
             this.email = email;
             this.emailVerified = emailVerified;
             this.phoneNumber = phoneNumber;
-            this.displayName = displayName;
             console.log(firebase.auth().currentUser);
         },
         async sendOTPBySMSChannel(){
