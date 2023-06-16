@@ -33,7 +33,32 @@
                         v-model="form.economicFactors.tabularReduction"
                         :readonly="!edit"
                     ></b-form-input>
-                    <b-form-text id="FR"> Factor Reducción Tabulador </b-form-text>
+                    <b-form-text id="FR"> Factor Tabulador </b-form-text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p><strong> Factores de Comisión</strong></p>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
+                    <label class="sr-only" for="inline-form-input-FCO">Factor Comisión</label>
+                    <b-form-input 
+                        id="inline-form-input-FCO" 
+                        aria-describedby="FCO"
+                        v-model="form.comissionFactors.comission"
+                        :readonly="!edit"
+                    ></b-form-input>
+                    <b-form-text id="FCO"> Factor Comisión </b-form-text>
+                </div>
+                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
+                    <label class="sr-only" for="inline-form-input-FCC">Factor Comisión Coordinador</label>
+                    <b-form-input 
+                        id="inline-form-input-FCC" 
+                        aria-describedby="FCC"
+                        v-model="form.comissionFactors.coordinatorComission"
+                        :readonly="!edit"
+                    ></b-form-input>
+                    <b-form-text id="FCC"> Factor Comisión Coordinador </b-form-text>
                 </div>
             </div>
             <div class="row">
@@ -69,31 +94,6 @@
                         :readonly="!edit"
                     ></b-form-input>
                     <b-form-text id="FC"> Factor Carga de trabajo Empresa </b-form-text>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <p><strong> Factores de Comisión</strong></p>
-                </div>
-                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
-                    <label class="sr-only" for="inline-form-input-FCO">Factor Comisión</label>
-                    <b-form-input 
-                        id="inline-form-input-FCO" 
-                        aria-describedby="FCO"
-                        v-model="form.comissionFactors.comission"
-                        :readonly="!edit"
-                    ></b-form-input>
-                    <b-form-text id="FCO"> Factor Comisión </b-form-text>
-                </div>
-                <div class="mb-3 col-xl-3 col-lg-4 col-md-4 col-12 col-sm-12">
-                    <label class="sr-only" for="inline-form-input-FCC">Factor Comisión Coordinador</label>
-                    <b-form-input 
-                        id="inline-form-input-FCC" 
-                        aria-describedby="FCC"
-                        v-model="form.comissionFactors.coordinatorComission"
-                        :readonly="!edit"
-                    ></b-form-input>
-                    <b-form-text id="FCC"> Factor Comisión Coordinador </b-form-text>
                 </div>
             </div>
             <div>
@@ -176,6 +176,8 @@ export default {
             if(!this.edit){
                 this.spinner= true;
                 try {
+                    this.validations();
+                    return
                     const editFactors= firebase.functions().httpsCallable('editFactors');
                     const response= await editFactors(this.form);
                     
@@ -193,6 +195,48 @@ export default {
                     this.spinner= false;
                 }
             }        
+        },
+        validations(){
+            if(parseFloat(this.form.economicFactors.companySituation) > 1.5 || parseFloat(this.form.economicFactors.companySituation) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor situación de la empresa";
+                return
+            }
+            if(parseFloat(this.form.economicFactors.market) > 1 || parseFloat(this.form.economicFactors.market) <= 0){
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor mercado";
+                return
+            }
+            if(parseFloat(this.form.economicFactors.tabularReduction) > 2 || parseFloat(this.form.economicFactors.tabularReduction) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor tabulador";
+                return
+            }
+            if(parseFloat(this.form.comissionFactors.comission) > 1 || parseFloat(this.form.comissionFactors.comission) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor comisión";
+                return
+            }
+            if(parseFloat(this.form.comissionFactors.coordinatorComission) > 1 || parseFloat(this.form.comissionFactors.coordinatorComission) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor comisión coordinador";
+                return
+            }
+            if(parseFloat(this.form.deliveryTimeFactors.tabuladorFactor2) > 1 || parseFloat(this.form.deliveryTimeFactors.tabuladorFactor2) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor tabulador";
+                return
+            }
+            if(parseFloat(this.form.deliveryTimeFactors.efficiencyCompany) > 1 || parseFloat(this.form.deliveryTimeFactors.efficiencyCompany) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor eficiencia de la empresa";
+                return
+            }
+            if(parseFloat(this.form.deliveryTimeFactors.companyWorkLoad) > 1 || parseFloat(this.form.deliveryTimeFactors.companyWorkLoad) <= 0) {
+                this.dismissCountDown= 7;
+                this.error= "Ingresa un rango válido para el factor carga de trabajo de la empresa";
+                return
+            }
         },
         countDownChanged(dismissCountDown){
             this.dismissCountDown = dismissCountDown;
