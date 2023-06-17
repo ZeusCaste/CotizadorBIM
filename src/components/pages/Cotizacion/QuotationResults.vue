@@ -13,11 +13,10 @@
             <div v-for="(amount, field, idx) in edificacion.amounts" :key="idx">
                 <p v-if="field !== 'totalAmount'">
                     Importe del proyecto {{ field }}: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo de entrega del proyecto: <b>{{edificacion.deliveryTimes[field]}} semanas.</b>
                 </p>
                 <p v-if="field== 'totalAmount'">
                     Importe total de la propuesta: <b>${{ new Intl.NumberFormat().format(amount) }} sin incluir I.V.A.</b>
-                    Tiempo total estimado de ejecución: <b>{{edificacion.deliveryTimes["totalTime"]}} semanas.</b>
+                    Tiempo total estimado de ejecución: <b>{{edificacion.deliveryTime }} semanas.</b>
                 </p>
             </div>
         </div>

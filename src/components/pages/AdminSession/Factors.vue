@@ -177,7 +177,6 @@ export default {
                 this.spinner= true;
                 try {
                     this.validations();
-                    return
                     const editFactors= firebase.functions().httpsCallable('editFactors');
                     const response= await editFactors(this.form);
                     
