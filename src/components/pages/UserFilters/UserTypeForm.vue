@@ -169,7 +169,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="box-arrow-up" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="extNumber" id="extNumber" type="text" placeholder="Numero Interior" />
+                                        <b-form-input v-model="extNumber" id="extNumber" type="text" placeholder="Número Interior" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -180,7 +180,29 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="box-arrow-up" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="intNumber" id="intNumber" type="text" placeholder="Numero Interior" />
+                                        <b-form-input v-model="intNumber" id="intNumber" type="text" placeholder="Número Interior" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="state" label="Estado" label-for="state">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="state" id="state" type="text" placeholder="Estado" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="delegation" label="Delegacion o Municipio" label-for="delegation">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="delegation" id="delegation" type="text" placeholder="Delegación o Municipio" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -192,17 +214,6 @@
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="neighborhood" id="neighborhood" type="text" placeholder="Colonia" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="delegation" label="Delegacion o Municipio" label-for="delegation">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="delegation" id="delegation" type="text" placeholder="Delegacion o Municipio" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -224,7 +235,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="cp" id="cp" type="text" placeholder="Codigo Postal" />
+                                        <b-form-input v-model="cp" id="cp" type="text" placeholder="Código Postal" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -279,8 +290,9 @@ export default {
             street: '',
             extNumber: '',
             intNumber: '',
-            neighborhood: '',
+            state: '',
             delegation: '',
+            neighborhood: '',
             city: '',
             cp: '',
             optionsUserType: [
@@ -400,24 +412,14 @@ export default {
 
             this.spinner = false;
         },
-        formatCurp(evt) {
-            return String(evt).substring(0, 18).toUpperCase();
-            // this.curp = evt.toUpperCase();
-            // this.getCurpInput.value = this.curp;
-            // if(evt.length > 18) {
-            //     const aux = this.curp.substring(0, 18);
-            //     this.getCurpInput.value = aux;
-            // }
-        }
+        formatCurp(evt) { return String(evt).substring(0, 18).toUpperCase() }
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
             let aux = this.phoneNumber + '';
             return (aux.startsWith('+') && aux.length === 13) 
         },
-        getCurpInput() {
-            return document.getElementById('curp-input');
-        }
+        getCurpInput() { return document.getElementById('curp-input') }
     }
 }
 </script>
