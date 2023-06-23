@@ -191,7 +191,12 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="state" id="state" type="text" placeholder="Estado" />
+                                        <b-form-select 
+                                            v-model="state" 
+                                            :options="stateOptions" 
+                                            id="state"
+                                            @change="toActivateDelegations"
+                                        ></b-form-select>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -202,7 +207,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="delegation" id="delegation" type="text" placeholder="Delegación o Municipio" />
+                                        <b-form-select v-model="delegation" :options="delegationOptions" id="delegation" ></b-form-select>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -235,7 +240,13 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="cp" id="cp" type="text" placeholder="Código Postal" />
+                                        <b-form-input 
+                                            id="cp" 
+                                            v-model="cp" 
+                                            type="tel" 
+                                            placeholder="Código Postal"
+                                            :formatter="formatCP"
+                                        />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -270,7 +281,8 @@
 
 <script>
 import firebase from '../../../plugins/firebase';
-
+import { estados } from '../../../db/estados';
+import { municipios } from '../../../db/municipios';
 
 export default {
     name: 'UserTypeForm',
@@ -279,6 +291,8 @@ export default {
     },
     data() {
         return {
+            stateOptions: estados,
+            delegationOptions: [],
             displayName: '',
             email: '',
             emailVerified: false,
@@ -412,7 +426,17 @@ export default {
 
             this.spinner = false;
         },
-        formatCurp(evt) { return String(evt).substring(0, 18).toUpperCase() }
+        formatCurp(evt) { return String(evt).substring(0, 18).toUpperCase() },
+        formatCP(evt) { return String(evt).substring(0, 5) },
+        toActivateDelegations() {
+            this.delegationOptions = [{ 'value': '', 'text': "Selecciona una opción" }];
+
+            municipios.forEach((state) => {
+                for(let name in state) {
+                    if(name === this.state) this.delegationOptions = [ ...this.delegationOptions, ...state[this.state] ];
+                }
+            });
+        }
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
