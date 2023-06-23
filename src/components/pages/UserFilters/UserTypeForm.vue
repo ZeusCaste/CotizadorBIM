@@ -137,7 +137,24 @@
                         </div>
 
                         <div class="col-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="street" label="Calle" label-for="street">
+                            <b-form-group class="text-dark text-left mt-3" id="curp" label="CURP" label-for="curp">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input 
+                                            id="curp-input"
+                                            v-model="curp"
+                                            type="text" 
+                                            placeholder="CURP"
+                                            :formatter="formatCurp"
+                                        />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" label="Calle" label-for="street">
                                 <b-row>
                                     <b-icon class="ml-3" icon="house" font-scale="2"></b-icon>
                                     <b-col>
@@ -258,6 +275,7 @@ export default {
             OTPCode: '',
             userType: '',
             bornDate: '',
+            curp: '',
             street: '',
             extNumber: '',
             intNumber: '',
@@ -381,12 +399,24 @@ export default {
             }
 
             this.spinner = false;
+        },
+        formatCurp(evt) {
+            return String(evt).substring(0, 18).toUpperCase();
+            // this.curp = evt.toUpperCase();
+            // this.getCurpInput.value = this.curp;
+            // if(evt.length > 18) {
+            //     const aux = this.curp.substring(0, 18);
+            //     this.getCurpInput.value = aux;
+            // }
         }
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
             let aux = this.phoneNumber + '';
             return (aux.startsWith('+') && aux.length === 13) 
+        },
+        getCurpInput() {
+            return document.getElementById('curp-input');
         }
     }
 }
