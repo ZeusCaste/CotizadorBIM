@@ -251,6 +251,17 @@
                                 </b-row>
                             </b-form-group>
                         </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-select v-model="requestedActivity" :options="activityOptions"></b-form-select>
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
                     </b-card-body>
                 </b-collapse>
             </b-card>
@@ -261,18 +272,159 @@
                     <b-button block v-b-toggle.accordion-academic-education variant="info">Formación Académica</b-button>
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+
                     <b-card-body class="row">
                         <div class="col-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
+                            <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-select v-model="academicLevel" :options="delegationOptions" id="academicLevel" ></b-form-select>
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="specialty" label="Especialidad" label-for="specialty">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="bornDate" id="bornDate" type="date" placeholder="Fecha de Nacimiento" />
+                                        <b-form-input v-model="specialty" id="specialty" type="text" placeholder="Especialidad" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="institution" label="Escuela o Institución" label-for="institution">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="institution" id="institution" type="text" placeholder="Escuela o Institución" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="startPeriod" label="Inicio" label-for="startPeriod">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="startPeriod" id="startPeriod" type="date" placeholder="Inicio" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="endPeriod" id="endPeriod" type="date" placeholder="Finalización" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-file 
+                                            v-model="certificate" 
+                                            id="certificate" 
+                                            placeholder="Constancia/Diploma/Titulo" 
+                                            :state="Boolean(certificate)" 
+                                            drop-placeholder="Drop file here..." 
+                                        ></b-form-file>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
                         </div>
                     </b-card-body>
+
+                    <div class="ml-5 mb-5 mt-3">
+                        <b-button variant="outline-info">
+                            <b-icon icon="plus-circle-fill"></b-icon>
+                            Agregar Estudios
+                        </b-button>
+                    </div>
+                </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+                    <b-card-body class="row">
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="developedFunction" label="Función Desarrollada" label-for="developedFunction">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="companyEntry" label="Ingreso" label-for="companyEntry">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="companyEntry" id="companyEntry" type="date" placeholder="Ingreso" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="exitCompany" label="Termino o Salida" label-for="exitCompany">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="exitCompany" id="exitCompany" type="date" placeholder="Termino o Salida" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-11 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-input v-model="generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                    </b-card-body>
+
+                    <div class="ml-5 mb-5 mt-3">
+                        <b-button variant="outline-info">
+                            <b-icon icon="plus-circle-fill"></b-icon>
+                            Agregar Experiencia
+                        </b-button>
+                    </div>
                 </b-collapse>
             </b-card>
         </div>
@@ -304,14 +456,23 @@ export default {
             street: '',
             extNumber: '',
             intNumber: '',
-            state: '',
+            state: null,
             delegation: '',
             neighborhood: '',
             city: '',
             cp: '',
+            requestedActivity: '',
             optionsUserType: [
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
+            ],
+            activityOptions: [
+                { value: '', text: 'Selecciona una opción' },
+                { value: 'Arquitecto', text: 'Arquitecto' },
+                { value: 'Ingeniero', text: 'Ingeniero' },
+                { value: 'Inspector', text: 'Inspector' },
+                { value: 'Maestro', text: 'Maestro' },
+                { value: 'Ayudante', text: 'Ayudante' },
             ],
             OTPSendFlag: false,
             spinner: false,
