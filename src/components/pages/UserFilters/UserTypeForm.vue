@@ -279,7 +279,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-select v-model="academicLevel" :options="delegationOptions" id="academicLevel" ></b-form-select>
+                                        <b-form-select v-model="ab.academicLevel" :options="delegationOptions" id="academicLevel" ></b-form-select>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -290,7 +290,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="specialty" id="specialty" type="text" placeholder="Especialidad" />
+                                        <b-form-input v-model="ab.specialty" id="specialty" type="text" placeholder="Especialidad" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -301,7 +301,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="institution" id="institution" type="text" placeholder="Escuela o Institución" />
+                                        <b-form-input v-model="ab.institution" id="institution" type="text" placeholder="Escuela o Institución" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -312,7 +312,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="startPeriod" id="startPeriod" type="date" placeholder="Inicio" />
+                                        <b-form-input v-model="ab.startPeriod" id="startPeriod" type="date" placeholder="Inicio" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -323,7 +323,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="endPeriod" id="endPeriod" type="date" placeholder="Finalización" />
+                                        <b-form-input v-model="ab.endPeriod" id="endPeriod" type="date" placeholder="Finalización" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -335,7 +335,7 @@
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-file 
-                                            v-model="certificate" 
+                                            v-model="ab.certificate" 
                                             id="certificate" 
                                             placeholder="Constancia/Diploma/Titulo" 
                                             :state="Boolean(certificate)" 
@@ -368,7 +368,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
+                                        <b-form-input v-model="we.companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -379,7 +379,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
+                                        <b-form-input v-model="we.developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -390,7 +390,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="companyEntry" id="companyEntry" type="date" placeholder="Ingreso" />
+                                        <b-form-input v-model="we.companyEntry" id="companyEntry" type="date" placeholder="Ingreso" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -401,7 +401,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="exitCompany" id="exitCompany" type="date" placeholder="Termino o Salida" />
+                                        <b-form-input v-model="we.exitCompany" id="exitCompany" type="date" placeholder="Termino o Salida" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -412,7 +412,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-textarea v-model="generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
+                                        <b-form-textarea v-model="we.generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -602,10 +602,23 @@ export default {
             });
         },
         addAcademicBackground() {
-            this.academicBackground.push({});
+            this.academicBackground.push({
+                academicLevel: '',
+                specialty: '',
+                institution: '',
+                startPeriod: '',
+                endPeriod: '',
+                certificate: ''
+            });
         },
         addWorkExperience() {
-            this.workExperience.push({});
+            this.workExperience.push({
+                companyName: '',
+                developedFunction: '',
+                companyEntry: '',
+                exitCompany: '',
+                generalDescription: ''
+            });
         }
     },
     computed: {
