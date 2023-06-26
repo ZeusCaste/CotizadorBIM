@@ -273,7 +273,7 @@
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
 
-                    <b-card-body class="row">
+                    <b-card-body class="row" v-for="(ab, idx) in academicBackground" :key="idx">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
                                 <b-row>
@@ -345,10 +345,11 @@
                                 </b-row>
                             </b-form-group>
                         </div>
+                        <hr />
                     </b-card-body>
 
                     <div class="ml-5 mb-5 mt-3">
-                        <b-button variant="outline-info">
+                        <b-button variant="outline-info" @click="addAcademicBackground()">
                             <b-icon icon="plus-circle-fill"></b-icon>
                             Agregar Estudios
                         </b-button>
@@ -361,7 +362,7 @@
                     <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
-                    <b-card-body class="row">
+                    <b-card-body class="row" v-for="(we, idx) in workExperience" :key="idx">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
                                 <b-row>
@@ -406,21 +407,21 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-11 mx-auto">
+                        <div class="col-11 ml-5">
                             <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-input v-model="generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
+                                        <b-form-textarea v-model="generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
                                     </b-col>
                                 </b-row>
                             </b-form-group>
                         </div>
-
+                        <hr />
                     </b-card-body>
 
                     <div class="ml-5 mb-5 mt-3">
-                        <b-button variant="outline-info">
+                        <b-button variant="outline-info" @click="addWorkExperience()">
                             <b-icon icon="plus-circle-fill"></b-icon>
                             Agregar Experiencia
                         </b-button>
@@ -462,6 +463,8 @@ export default {
             city: '',
             cp: '',
             requestedActivity: '',
+            academicBackground: [],
+            workExperience: [],
             optionsUserType: [
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
@@ -597,6 +600,12 @@ export default {
                     if(name === this.state) this.delegationOptions = [ ...this.delegationOptions, ...state[this.state] ];
                 }
             });
+        },
+        addAcademicBackground() {
+            this.academicBackground.push({});
+        },
+        addWorkExperience() {
+            this.workExperience.push({});
         }
     },
     computed: {
