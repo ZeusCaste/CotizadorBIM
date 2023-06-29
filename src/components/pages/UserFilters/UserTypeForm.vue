@@ -273,7 +273,7 @@
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
 
-                    <b-card-body class="row" v-for="(ab, idx) in academicBackground" :key="idx">
+                    <b-card-body class="row element-container" v-for="(ab, idx) in academicBackground" :key="idx">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
                                 <b-row>
@@ -318,7 +318,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-5 mx-5">
                             <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -329,26 +329,24 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-5 ml-4">
                             <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-file 
-                                            v-model="ab.certificate" 
-                                            id="certificate" 
-                                            placeholder="Constancia/Diploma/Titulo" 
-                                            :state="Boolean(certificate)" 
-                                            drop-placeholder="Drop file here..." 
+                                        <b-form-file
+                                            v-model="ab.certificate"
+                                            :state="Boolean(ab.certificate)"
+                                            placeholder="Selecciona un archivo o arrastralo aqui"
+                                            drop-placeholder="Arrastra tu archivo aqui"
                                         ></b-form-file>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
                         </div>
-                        <hr />
                     </b-card-body>
 
-                    <div class="ml-5 mb-5 mt-3">
+                    <div class="ml-5 my-4">
                         <b-button variant="outline-info" @click="addAcademicBackground()">
                             <b-icon icon="plus-circle-fill"></b-icon>
                             Agregar Estudios
@@ -362,7 +360,7 @@
                     <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
-                    <b-card-body class="row" v-for="(we, idx) in workExperience" :key="idx">
+                    <b-card-body class="row element-container" v-for="(we, idx) in workExperience" :key="idx">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
                                 <b-row>
@@ -420,7 +418,7 @@
                         <hr />
                     </b-card-body>
 
-                    <div class="ml-5 mb-5 mt-3">
+                    <div class="ml-5 my-4">
                         <b-button variant="outline-info" @click="addWorkExperience()">
                             <b-icon icon="plus-circle-fill"></b-icon>
                             Agregar Experiencia
@@ -608,7 +606,7 @@ export default {
                 institution: '',
                 startPeriod: '',
                 endPeriod: '',
-                certificate: ''
+                certificate: null
             });
         },
         addWorkExperience() {
@@ -631,6 +629,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style  scoped>
+    .element-container {
+        width: 100%;
+        margin: 0 auto;
+        border-bottom: 2px solid #17a2b8;
+    }
 </style>
