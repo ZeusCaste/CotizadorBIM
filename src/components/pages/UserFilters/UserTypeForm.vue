@@ -139,7 +139,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="curp" label="CURP" label-for="curp">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="person-lines-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input 
                                             id="curp-input"
@@ -167,7 +167,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="extNumber" label="Numero Exterior" label-for="extNumber">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="box-arrow-up" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="extNumber" id="extNumber" type="text" placeholder="Número Interior" />
                                     </b-col>
@@ -178,7 +178,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="intNumber" label="Numero Interior" label-for="intNumber">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="box-arrow-up" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="intNumber" id="intNumber" type="text" placeholder="Número Interior" />
                                     </b-col>
@@ -277,7 +277,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="journal-bookmark-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-select v-model="ab.academicLevel" :options="delegationOptions" id="academicLevel" ></b-form-select>
                                     </b-col>
@@ -288,7 +288,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="specialty" label="Especialidad" label-for="specialty">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="patch-check-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="ab.specialty" id="specialty" type="text" placeholder="Especialidad" />
                                     </b-col>
@@ -299,7 +299,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="institution" label="Escuela o Institución" label-for="institution">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="credit-card2-front-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="ab.institution" id="institution" type="text" placeholder="Escuela o Institución" />
                                     </b-col>
@@ -332,7 +332,7 @@
                         <div class="col-5 ml-4">
                             <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="file-earmark-medical-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-file
                                             v-model="ab.certificate"
@@ -364,7 +364,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="wallet-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="we.companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
                                     </b-col>
@@ -375,7 +375,7 @@
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="developedFunction" label="Función Desarrollada" label-for="developedFunction">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="hdd-network-fill" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-input v-model="we.developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
                                     </b-col>
@@ -408,7 +408,7 @@
                         <div class="col-11 ml-5">
                             <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
                                 <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-icon class="ml-3" icon="layout-text-sidebar-reverse" font-scale="2"></b-icon>
                                     <b-col>
                                         <b-form-textarea v-model="we.generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
                                     </b-col>
