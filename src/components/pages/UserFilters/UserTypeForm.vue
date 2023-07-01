@@ -251,17 +251,6 @@
                                 </b-row>
                             </b-form-group>
                         </div>
-
-                        <div class="col-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-select v-model="requestedActivity" :options="activityOptions"></b-form-select>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
                     </b-card-body>
                 </b-collapse>
             </b-card>
@@ -373,6 +362,33 @@
                     <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+                    <b-card-body class="row">
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="Curriculum Vitae" label="Selecciona tu CV" label-for="Curriculum Vitae">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-file
+                                            v-model="curriculumVitae"
+                                            placeholder="Selecciona tu CV"
+                                            drop-placeholder="Arrastra tu archivo aqui"
+                                        ></b-form-file>
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+
+                        <div class="col-5 mx-auto">
+                            <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
+                                <b-row>
+                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                    <b-col>
+                                        <b-form-select v-model="requestedActivity" :options="activityOptions"></b-form-select>
+                                    </b-col>
+                                </b-row>
+                            </b-form-group>
+                        </div>
+                    </b-card-body>
                     <b-card-body class="row element-container" v-for="(we, idx) in workExperience" :key="idx">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
@@ -489,6 +505,7 @@ export default {
             requestedActivity: '',
             academicBackground: [],
             workExperience: [],
+            curriculumVitae: null,
             optionsUserType: [
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
