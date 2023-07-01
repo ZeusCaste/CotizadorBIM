@@ -322,8 +322,11 @@
                             <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
+                                    <b-col class="col-7">
                                         <b-form-input v-model="ab.endPeriod" id="endPeriod" type="date" placeholder="Finalización" />
+                                    </b-col>
+                                    <b-col class="col-3 my-auto">
+                                        <b-form-radio v-model="ab.actualLevel" value="true">Actual</b-form-radio>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -398,8 +401,11 @@
                             <b-form-group class="text-dark text-left mt-3" id="exitCompany" label="Termino o Salida" label-for="exitCompany">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
+                                    <b-col class="col-7">
                                         <b-form-input v-model="we.exitCompany" id="exitCompany" type="date" placeholder="Termino o Salida" />
+                                    </b-col>
+                                    <b-col class="col-3 my-auto">
+                                        <b-form-radio v-model="we.actualCompany" value="actualCompany">Actual</b-form-radio>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
