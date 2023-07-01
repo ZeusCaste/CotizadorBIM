@@ -323,10 +323,20 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col class="col-7">
-                                        <b-form-input v-model="ab.endPeriod" id="endPeriod" type="date" placeholder="Finalización" />
+                                        <b-form-input 
+                                            id="endPeriod"
+                                            v-model="ab.endPeriod"
+                                            type="date"
+                                            placeholder="Finalización"
+                                            @change="updateActualAcademicValue('input', idx)"
+                                        />
                                     </b-col>
                                     <b-col class="col-3 my-auto">
-                                        <b-form-radio v-model="ab.actualLevel" value="true">Actual</b-form-radio>
+                                        <b-form-radio 
+                                            v-model="ab.actualLevel" 
+                                            value="true"
+                                            @change="updateActualAcademicValue('radio', idx)"
+                                        >Actual</b-form-radio>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -402,10 +412,20 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
                                     <b-col class="col-7">
-                                        <b-form-input v-model="we.exitCompany" id="exitCompany" type="date" placeholder="Termino o Salida" />
+                                        <b-form-input 
+                                            v-model="we.exitCompany" 
+                                            id="exitCompany" 
+                                            type="date" 
+                                            placeholder="Termino o Salida"
+                                            @change="updateActualWorkExperience('input', idx)"
+                                        />
                                     </b-col>
                                     <b-col class="col-3 my-auto">
-                                        <b-form-radio v-model="we.actualCompany" value="actualCompany">Actual</b-form-radio>
+                                        <b-form-radio 
+                                            v-model="we.actualCompany" 
+                                            value="actualCompany"
+                                            @change="updateActualWorkExperience('radio', idx)"
+                                        >Actual</b-form-radio>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -612,6 +632,7 @@ export default {
                 institution: '',
                 startPeriod: '',
                 endPeriod: '',
+                actualLevel: false,
                 certificate: null
             });
         },
@@ -621,8 +642,24 @@ export default {
                 developedFunction: '',
                 companyEntry: '',
                 exitCompany: '',
+                actualCompany: false,
                 generalDescription: ''
             });
+        },
+        updateActualAcademicValue(from, idx) {
+            console.log(this.academicBackground[idx]);
+            if(from === 'input') {
+                this.academicBackground[idx].actualLevel = false;
+                return;
+            }
+            if(from === 'radio') { this.academicBackground[idx].endPeriod = '' }
+        },
+        updateActualWorkExperience(from, idx) {
+            if(from === 'input') {
+                this.workExperience[idx].actualCompany = false;
+                return;
+            }
+            if(from === 'radio') { this.workExperience[idx].exitCompany = '' }
         }
     },
     computed: {
