@@ -469,6 +469,14 @@
                 </b-collapse>
             </b-card>
         </div>
+        <div>
+            <b-button 
+                class="m-4" 
+                variant="info"
+                v-show="userType.trim()"
+                @click="saveUserTypeData()"
+            >Guardar Datos</b-button>
+        </div>
     </div>
 </template>
 
@@ -677,6 +685,20 @@ export default {
                 return;
             }
             if(from === 'radio') { this.workExperience[idx].exitCompany = '' }
+        },
+        validations() {
+            if(!this.bornDate.trim()) {
+                console.log('Ingresa tu fecha de nacimiento');
+                return
+            }
+        },
+        saveUserTypeData() {
+            if(this.userType === 'partner') {
+                this.validations();
+            }
+            if(this.userType === 'customer') {
+                console.log('Todo esta chido');
+            }
         }
     },
     computed: {
