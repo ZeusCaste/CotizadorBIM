@@ -470,6 +470,19 @@
             </b-card>
         </div>
         <div>
+            <div>
+                <b-alert
+                    v-if="alertRol === 'form'"
+                    :show="dismissCountDown"
+                    dismissible
+                    :variant="successResponse ? 'success' : 'danger'"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+                    class="my-2"
+                >
+                    <p>{{ successMessage }}</p>
+                </b-alert>
+            </div>
             <b-button 
                 class="m-4" 
                 variant="info"
@@ -505,7 +518,7 @@ export default {
             street: '',
             extNumber: '',
             intNumber: '',
-            state: null,
+            state: '',
             delegation: '',
             neighborhood: '',
             city: '',
@@ -686,15 +699,64 @@ export default {
             }
             if(from === 'radio') { this.workExperience[idx].exitCompany = '' }
         },
-        validations() {
+        partnerUserDataValidations() {
+            this.alertRol = 'form';
+            this.successResponse = false;
+            
             if(!this.bornDate.trim()) {
-                console.log('Ingresa tu fecha de nacimiento');
-                return
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa tu fecha de nacimiento';
+                return;
+            }
+            if(!this.curp.trim() && this.curp.length !== 18) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa tu CURP y verifica que sea válido';
+                return;
+            }
+            if(!this.street.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa la calle de tu domicilio';
+                return;
+            }
+            if(!this.intNumber.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa número interior de tu domicilio';
+                return;
+            }
+            if(!this.extNumber.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa número exterior de tu domicilio';
+                return;
+            }
+            if(!this.state.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Selecciona el estado donde vives';
+                return;
+            }
+            if(!this.delegation.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Selecciona el municipio donde vives';
+                return;
+            }
+            if(!this.neighborhood.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa la colonia en donde vives';
+                return;
+            }
+            if(!this.city.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa la ciduad en donde vives';
+                return;
+            }
+            if(!this.cp.trim() && this.cp.trim().length) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa to código postal';
+                return;
             }
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {
-                this.validations();
+                this.partnerUserDataValidations();
             }
             if(this.userType === 'customer') {
                 console.log('Todo esta chido');
