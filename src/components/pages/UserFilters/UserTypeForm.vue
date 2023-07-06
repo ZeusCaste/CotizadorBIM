@@ -362,7 +362,7 @@
                     <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
-                    <b-card-body class="row">
+                    <b-card-body class="row separator">
                         <div class="col-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="Curriculum Vitae" label="Selecciona tu CV" label-for="Curriculum Vitae">
                                 <b-row>
@@ -792,12 +792,43 @@ export default {
                     this.successMessage = 'Te hace falta agregar fecha de inicio de período académico';
                     return;
                 }
-                if(!academic.endPeriod.trim() || !academic.actualLevel) {
+                if(!academic.endPeriod.trim() && !academic.actualLevel) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta indicar fecha de termino de período académico';
                     return;
                 }
-            })
+            });
+
+            // Validacion de experiencia laboral
+            if(this.workExperience.length > 0) {
+                this.workExperience.forEach((experience) => {
+                    if(!experience.companyName.trim()) {
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = 'Te hace falta indicar nombre de la empresa';
+                        return;
+                    }
+                    if(!experience.developedFunction.trim()) {
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = 'Te hace falta indicar la función desarrollada';
+                        return;
+                    }
+                    if(!experience.companyEntry.trim()) {
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = 'Te hace falta indicar la fecha en la que empezaste a laborar';
+                        return;
+                    }
+                    if(!experience.exitCompany.trim() && !experience.actualCompany) {
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = 'Te hace falta indicar tu salida de la empresa';
+                        return;
+                    }
+                    if(!experience.generalDescription.trim()) {
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = 'Te hace falta una descripción general de lo que hacias en tu trabajo';
+                        return;
+                    }
+                })
+            }
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {
@@ -819,7 +850,7 @@ export default {
 </script>
 
 <style  scoped>
-    .element-container {
+    .element-container, .separator {
         width: 100%;
         margin: 0 auto;
         border-bottom: 2px solid #17a2b8;
