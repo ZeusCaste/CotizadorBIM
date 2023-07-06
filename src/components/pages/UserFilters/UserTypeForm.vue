@@ -268,7 +268,7 @@
                                 <b-row>
                                     <b-icon class="ml-3" icon="journal-bookmark-fill" font-scale="2"></b-icon>
                                     <b-col>
-                                        <b-form-select v-model="ab.academicLevel" :options="delegationOptions" id="academicLevel" ></b-form-select>
+                                        <b-form-select v-model="ab.academicLevel" :options="academicLevesOptions" id="academicLevel" ></b-form-select>
                                     </b-col>
                                 </b-row>
                             </b-form-group>
@@ -530,6 +530,16 @@ export default {
             optionsUserType: [
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
+            ],
+            academicLevesOptions: [
+                { value: '', text: 'Selecciona una opción' },
+                { value: 'Bachillerato', text: 'Bachillerato' },
+                { value: 'Carrera Técnica', text: 'Carrera Técnica' },
+                { value: 'Licenciatura', text: 'Licenciatura' },
+                { value: 'Maestría', text: 'Maestría' },
+                { value: 'Doctorado', text: 'Doctorado' },
+                { value: 'Diplomado', text: 'Diplomado' },
+                { value: 'Posgrado', text: 'Posgrado' },
             ],
             activityOptions: [
                 { value: '', text: 'Selecciona una opción' },
