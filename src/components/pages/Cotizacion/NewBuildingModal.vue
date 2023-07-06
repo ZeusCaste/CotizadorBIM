@@ -517,7 +517,7 @@ export default {
                 edificacion: null,
                 proyectos_estudios: [],
                 calle: '',
-                estado: null,
+                estado: "",
                 municipio: null,
                 codigoPostal: '',
                 areaPlantaBaja: '',

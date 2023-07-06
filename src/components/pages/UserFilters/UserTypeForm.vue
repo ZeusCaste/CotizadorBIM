@@ -703,12 +703,13 @@ export default {
             this.alertRol = 'form';
             this.successResponse = false;
             
+            // Validacion de datos personales
             if(!this.bornDate.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu fecha de nacimiento';
                 return;
             }
-            if(!this.curp.trim() && this.curp.length !== 18) {
+            if(!this.curp.trim() || this.curp.length < 18) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu CURP y verifica que sea válido';
                 return;
@@ -718,14 +719,14 @@ export default {
                 this.successMessage = 'Ingresa la calle de tu domicilio';
                 return;
             }
-            if(!this.intNumber.trim()) {
-                this.dismissCountDown = this.dismissSecs;
-                this.successMessage = 'Ingresa número interior de tu domicilio';
-                return;
-            }
             if(!this.extNumber.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa número exterior de tu domicilio';
+                return;
+            }
+            if(!this.intNumber.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa número interior de tu domicilio';
                 return;
             }
             if(!this.state.trim()) {
@@ -745,14 +746,48 @@ export default {
             }
             if(!this.city.trim()) {
                 this.dismissCountDown = this.dismissSecs;
-                this.successMessage = 'Ingresa la ciduad en donde vives';
+                this.successMessage = 'Ingresa la ciudad en donde vives';
                 return;
             }
-            if(!this.cp.trim() && this.cp.trim().length) {
+            if(!this.cp.trim() || this.cp.trim().length < 5) {
                 this.dismissCountDown = this.dismissSecs;
-                this.successMessage = 'Ingresa to código postal';
+                this.successMessage = 'Ingresa tu código postal';
                 return;
             }
+
+            // Validacion de formacion academica
+            if(this.academicBackground.length === 0) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Agrega tu formación academica';
+                return;
+            }
+            this.academicBackground.forEach((academic) => {
+                if(!academic.academicLevel.trim()) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Te hace falta agregar nivel académico';
+                    return;
+                }
+                if(!academic.specialty.trim()) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Te hace falta agregar especialidad';
+                    return;
+                }
+                if(!academic.institution.trim()) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Te hace falta agregar Institución Académica';
+                    return;
+                }
+                if(!academic.startPeriod.trim()) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Te hace falta agregar fecha de inicio de período académico';
+                    return;
+                }
+                if(!academic.endPeriod.trim() || !academic.actualLevel) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Te hace falta indicar fecha de termino de período académico';
+                    return;
+                }
+            })
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {

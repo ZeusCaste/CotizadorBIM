@@ -1,6 +1,6 @@
 
 export const estados= [
-    { "value": null, "text": "Selecciona tu estado"},
+    { "value": "", "text": "Selecciona tu estado"},
     { "value": "AGS", "text": "AGUASCALIENTES" },
     { "value": "BC",  "text": "BAJA CALIFORNIA" },
     { "value": "BCS", "text": "BAJA CALIFORNIA SUR" },
