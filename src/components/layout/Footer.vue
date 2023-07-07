@@ -2,7 +2,7 @@
     <div class="footer-container">
         <div class="custom-footer row">
             <div class="col-xl-3 col-lg-4 col-12 col-md-12 col-sm-12 text-center mt-4">
-                &copy; 2022 BIM Tech Solutions || Todos los derechos reservados
+                &copy; {{ actualYear.getFullYear() }} BIM Tech Solutions || Todos los derechos reservados
             </div>
             <div class="col-xl-3 col-lg-4 col-12 col-md-12 col-sm-12 text-center mt-4">
                 <SocialNetworkNavbar />
@@ -27,7 +27,7 @@ export default {
     },
     data(){
         return {
-
+            actualYear: new Date(),
         }
     }
 }
