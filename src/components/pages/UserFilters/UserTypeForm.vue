@@ -464,7 +464,13 @@
                                 </b-row>
                             </b-form-group>
                         </div>
-                        <hr />
+
+                        <div class="my-2 ml-5">
+                            <b-button variant="danger" @click="removeWorkExperience(idx)">
+                                <b-icon icon="trash-fill"></b-icon>
+                                Eliminar experiencia
+                            </b-button>
+                        </div>
                     </b-card-body>
 
                     <div class="ml-5 my-4">
@@ -717,6 +723,7 @@ export default {
             if(from === 'radio') { this.workExperience[idx].exitCompany = '' }
         },
         removeAcademicLevel(idx) { this.academicBackground = this.academicBackground.filter((ab, id) => id !== idx) },
+        removeWorkExperience(idx) { this.workExperience = this.workExperience.filter((we, id) => id !== idx) },
         partnerUserDataValidations() {
             this.alertRol = 'form';
             this.successResponse = false;
