@@ -829,6 +829,19 @@ export default {
                     }
                 })
             }
+
+            // Validación de CV y actividad solicitada.
+            if(this.curriculumVitae === null) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa tu CV';
+                return;
+            }
+            if(!this.requestedActivity.trim()) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Ingresa la actividad que quieres desempeñar';
+                return;
+            }
+
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {
@@ -837,7 +850,7 @@ export default {
             if(this.userType === 'customer') {
                 console.log('Todo esta chido');
             }
-        }
+        },
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
