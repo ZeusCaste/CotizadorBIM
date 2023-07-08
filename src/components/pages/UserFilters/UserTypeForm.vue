@@ -346,6 +346,13 @@
                                 </b-row>
                             </b-form-group>
                         </div>
+
+                        <div class="my-2 ml-5">
+                            <b-button variant="danger" @click="removeAcademicLevel(idx)">
+                                <b-icon icon="trash-fill"></b-icon>
+                                Eliminar formación
+                            </b-button>
+                        </div>
                     </b-card-body>
 
                     <div class="ml-5 my-4">
@@ -709,6 +716,7 @@ export default {
             }
             if(from === 'radio') { this.workExperience[idx].exitCompany = '' }
         },
+        removeAcademicLevel(idx) { this.academicBackground = this.academicBackground.filter((ab, id) => id !== idx) },
         partnerUserDataValidations() {
             this.alertRol = 'form';
             this.successResponse = false;
@@ -846,6 +854,7 @@ export default {
         saveUserTypeData() {
             if(this.userType === 'partner') {
                 this.partnerUserDataValidations();
+
             }
             if(this.userType === 'customer') {
                 console.log('Todo esta chido');
