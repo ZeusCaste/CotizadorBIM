@@ -858,12 +858,17 @@ export default {
                 return;
             }
 
+            this.verifyEmailAndPhoneNumberValidation()
+
+        },
+        verifyEmailAndPhoneNumberValidation() {
+            this.alertRol = 'form';
+            this.successResponse = false;
             if(!this.emailVerified || !this.getPhoneNumberVerificatedStatus) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Es necesario hacer la verificación de email y de número teléfonico';
                 return;
             }
-
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {
@@ -871,11 +876,8 @@ export default {
 
             }
             if(this.userType === 'customer') {
-                if(!this.emailVerified || !this.getPhoneNumberVerificatedStatus) {
-                    this.dismissCountDown = this.dismissSecs;
-                    this.successMessage = 'Es necesario hacer la verificación de email y de número teléfonico';
-                    return;
-                }
+                console.log('ok');
+                this.verifyEmailAndPhoneNumberValidation();
             }
         },
     },
