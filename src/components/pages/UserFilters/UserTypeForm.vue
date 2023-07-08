@@ -541,6 +541,7 @@ export default {
             workExperience: [],
             curriculumVitae: null,
             optionsUserType: [
+                { value: '', text: 'Selecciona una opción' },
                 { value: 'partner', text: 'Colaborador' },
                 { value: 'customer', text: 'Cliente' },
             ],
@@ -559,7 +560,7 @@ export default {
                 { value: 'Arquitecto', text: 'Arquitecto' },
                 { value: 'Ingeniero', text: 'Ingeniero' },
                 { value: 'Inspector', text: 'Inspector' },
-                { value: 'Maestro', text: 'Maestro' },
+                { value: 'Maestro de obra', text: 'Maestro de obra' },
                 { value: 'Ayudante', text: 'Ayudante' },
             ],
             OTPSendFlag: false,
@@ -857,6 +858,12 @@ export default {
                 return;
             }
 
+            if(!this.emailVerified || !this.getPhoneNumberVerificatedStatus) {
+                this.dismissCountDown = this.dismissSecs;
+                this.successMessage = 'Es necesario hacer la verificación de email y de número teléfonico';
+                return;
+            }
+
         },
         saveUserTypeData() {
             if(this.userType === 'partner') {
@@ -864,7 +871,11 @@ export default {
 
             }
             if(this.userType === 'customer') {
-                console.log('Todo esta chido');
+                if(!this.emailVerified || !this.getPhoneNumberVerificatedStatus) {
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Es necesario hacer la verificación de email y de número teléfonico';
+                    return;
+                }
             }
         },
     },
