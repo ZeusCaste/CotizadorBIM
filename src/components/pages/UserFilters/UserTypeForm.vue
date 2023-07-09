@@ -510,6 +510,7 @@
 import firebase from '../../../plugins/firebase';
 import { estados } from '../../../db/estados';
 import { municipios } from '../../../db/municipios';
+import { colaborador } from '../../../db/colaboradorNuevo';
 
 export default {
     name: 'UserTypeForm',
@@ -525,21 +526,38 @@ export default {
             emailVerified: false,
             phoneNumber: '',
             OTPCode: '',
-            userType: '',
-            bornDate: '',
-            curp: '',
-            street: '',
-            extNumber: '',
-            intNumber: '',
-            state: '',
-            delegation: '',
-            neighborhood: '',
-            city: '',
-            cp: '',
-            requestedActivity: '',
-            academicBackground: [],
-            workExperience: [],
-            curriculumVitae: null,
+            /////
+            userType: colaborador.userType,
+            bornDate: colaborador.bornDate,
+            curp: colaborador.curp,
+            street: colaborador.street,
+            extNumber: colaborador.extNumber,
+            intNumber: colaborador.intNumber,
+            state: colaborador.state,
+            delegation: colaborador.delegation,
+            neighborhood: colaborador.neighborhood,
+            city: colaborador.city,
+            cp: colaborador.cp,
+            academicBackground: colaborador.academicBackground,
+            workExperience: colaborador.workExperience,
+            curriculumVitae: colaborador.curriculumVitae,
+            requestedActivity: colaborador.requestedActivity,
+            ////////
+            // userType: '',
+            // bornDate: '',
+            // curp: '',
+            // street: '',
+            // extNumber: '',
+            // intNumber: '',
+            // state: '',
+            // delegation: '',
+            // neighborhood: '',
+            // city: '',
+            // cp: '',
+            // academicBackground: [],
+            // workExperience: [],
+            // curriculumVitae: null,
+            // requestedActivity: '',
             optionsUserType: [
                 { value: '', text: 'Selecciona una opción' },
                 { value: 'partner', text: 'Colaborador' },
@@ -858,8 +876,6 @@ export default {
                 return;
             }
 
-            this.verifyEmailAndPhoneNumberValidation()
-
         },
         verifyEmailAndPhoneNumberValidation() {
             this.alertRol = 'form';
@@ -870,15 +886,32 @@ export default {
                 return;
             }
         },
-        saveUserTypeData() {
+        async saveUserTypeData() {
             if(this.userType === 'partner') {
-                this.partnerUserDataValidations();
+                // this.partnerUserDataValidations();
+            }
 
-            }
-            if(this.userType === 'customer') {
-                console.log('ok');
-                this.verifyEmailAndPhoneNumberValidation();
-            }
+            //this.verifyEmailAndPhoneNumberValidation();
+
+            const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
+            const response = await saveUserTypeDataFunction({
+                userType: this.userType,
+                bornDate: this.bornDate,
+                curp: this.curp,
+                street: this.street,
+                extNumber: this.extNumber,
+                intNumber: this.intNumber,
+                state: this.state,
+                delegation: this.delegation,
+                neighborhood: this.neighborhood,
+                city: this.city,
+                cp: this.cp,
+                academicBackground: this.academicBackground,
+                workExperience: this.workExperience,
+                curriculumVitae: this.curriculumVitae,
+                requestedActivity: this.requestedActivity,
+            });
+            console.log(response);
         },
     },
     computed: {
@@ -886,7 +919,7 @@ export default {
             let aux = this.phoneNumber + '';
             return (aux.startsWith('+') && aux.length === 13) 
         },
-        getCurpInput() { return document.getElementById('curp-input') }
+        getCurpInput() { return document.getElementById('curp-input') },
     }
 }
 </script>
