@@ -446,7 +446,7 @@
                                     <b-col class="col-3 my-auto">
                                         <b-form-radio 
                                             v-model="we.actualCompany" 
-                                            value="actualCompany"
+                                            value="true"
                                             @change="updateActualWorkExperience('radio', idx)"
                                         >Actual</b-form-radio>
                                     </b-col>
@@ -893,25 +893,58 @@ export default {
 
             //this.verifyEmailAndPhoneNumberValidation();
 
-            const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
-            const response = await saveUserTypeDataFunction({
-                userType: this.userType,
-                bornDate: this.bornDate,
-                curp: this.curp,
-                street: this.street,
-                extNumber: this.extNumber,
-                intNumber: this.intNumber,
-                state: this.state,
-                delegation: this.delegation,
-                neighborhood: this.neighborhood,
-                city: this.city,
-                cp: this.cp,
-                academicBackground: this.academicBackground,
-                workExperience: this.workExperience,
-                curriculumVitae: this.curriculumVitae,
-                requestedActivity: this.requestedActivity,
-            });
-            console.log(response);
+            try {
+                const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
+                const response = await saveUserTypeDataFunction({
+                    userType: this.userType,
+                    bornDate: this.bornDate,
+                    curp: this.curp,
+                    street: this.street,
+                    extNumber: this.extNumber,
+                    intNumber: this.intNumber,
+                    state: this.state,
+                    delegation: this.delegation,
+                    neighborhood: this.neighborhood,
+                    city: this.city,
+                    cp: this.cp,
+                    academicBackground: this.academicBackground,
+                    workExperience: this.workExperience,
+                    curriculumVitae: this.curriculumVitae,
+                    requestedActivity: this.requestedActivity,
+                });
+                
+                console.log(response);
+            } catch (error) {
+                console.log(error.code);
+                if(error.code === 'invalid-argument') {
+                    this.alertRol = 'form';
+                    this.successResponse = false;
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Datos incompletos, verifica que estas enviando todos los datos';
+                    return;
+                }
+                if(error.code === 'unauthenticated') {
+                    this.alertRol = 'form';
+                    this.successResponse = false;
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Usuario no encontrado';
+                    return;
+                }
+                if(error.code === 'permission-denied') {
+                    this.alertRol = 'form';
+                    this.successResponse = false;
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Actualmente el usuario ya esta definido';
+                    return;
+                }
+                if(error.code === 'cancelled') {
+                    this.alertRol = 'form';
+                    this.successResponse = false;
+                    this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = 'Requieres hacer la verificación de número telefónico y de correo electrónico';
+                    return;
+                }
+            }
         },
     },
     computed: {

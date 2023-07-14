@@ -8,7 +8,7 @@ export const  colaborador = {
     state: 'BC',
     delegation: 'Tecate',
     neighborhood: 'chimalhuache',
-    city: '',
+    city: 'cdmx',
     cp: '56788',
     academicBackground: [
         {
@@ -41,10 +41,10 @@ export const  colaborador = {
         },
         {
             companyName: 'Indra',
-            developedFunction: 'Analista',
+            developedFunction: 'Front',
             companyEntry: '2022-01-17',
             exitCompany: '',
-            actualCompany: 'actualCompany',
+            actualCompany: true,
             generalDescription: 'Departamento de tecnologias avanzadas, actividades con cliente BBVA para manejo de tecnologias frontend'
         }
     ],
