@@ -913,36 +913,34 @@ export default {
                     requestedActivity: this.requestedActivity,
                 });
                 
-                console.log(response);
-            } catch (error) {
-                console.log(error.code);
-                if(error.code === 'invalid-argument') {
+                if(response.data.success) {
                     this.alertRol = 'form';
-                    this.successResponse = false;
+                    this.successResponse = true;
                     this.dismissCountDown = this.dismissSecs;
+                    this.successMessage = response.data.msg;
+                }
+            } catch (error) {
+                this.alertRol = 'form';
+                this.successResponse = false;
+                this.dismissCountDown = this.dismissSecs;
+                if(error.code === 'invalid-argument') {
                     this.successMessage = 'Datos incompletos, verifica que estas enviando todos los datos';
                     return;
                 }
                 if(error.code === 'unauthenticated') {
-                    this.alertRol = 'form';
-                    this.successResponse = false;
-                    this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Usuario no encontrado';
                     return;
                 }
                 if(error.code === 'permission-denied') {
-                    this.alertRol = 'form';
-                    this.successResponse = false;
-                    this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Actualmente el usuario ya esta definido';
                     return;
                 }
                 if(error.code === 'cancelled') {
-                    this.alertRol = 'form';
-                    this.successResponse = false;
-                    this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Requieres hacer la verificación de número telefónico y de correo electrónico';
                     return;
+                }
+                if(error.code === 'unknown') {
+                    this.successMessage = 'Servicio intermitente, intentalo más tarde';
                 }
             }
         },
