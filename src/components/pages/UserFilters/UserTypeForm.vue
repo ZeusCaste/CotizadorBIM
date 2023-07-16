@@ -108,10 +108,12 @@
                     <b-alert v-if="userType === 'partner'" show variant="primary">
                         <strong>Colaborador: </strong>
                         Al elegir esta opción te registrarás como proveedor de servicios, para poder implementar proyectos o tareas específicas
+                        <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
                     </b-alert>
                     <b-alert v-if="userType === 'customer'" show variant="primary">
                         <strong>Cliente: </strong>
                         Al elegir esta opción te registrarás como creador de proyectos, los cuales podrás administrar y gestionar.
+                        <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
                     </b-alert>
                 </div>
             </div>
@@ -894,6 +896,7 @@ export default {
             //this.verifyEmailAndPhoneNumberValidation();
 
             try {
+                console.log(this.curriculumVitae);
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
                 const response = await saveUserTypeDataFunction({
                     userType: this.userType,
@@ -909,7 +912,8 @@ export default {
                     cp: this.cp,
                     academicBackground: this.academicBackground,
                     workExperience: this.workExperience,
-                    curriculumVitae: this.curriculumVitae,
+                    cvBase64: await this.fileToBase64(this.curriculumVitae),
+                    cvName: this.curriculumVitae.name,
                     requestedActivity: this.requestedActivity,
                 });
                 
@@ -944,6 +948,14 @@ export default {
                 }
             }
         },
+        fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+            })
+        }
     },
     computed: {
         getPhoneNumberVerificatedStatus() {
