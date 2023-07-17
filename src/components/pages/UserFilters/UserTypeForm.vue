@@ -890,14 +890,17 @@ export default {
         },
         async saveUserTypeData() {
             if(this.userType === 'partner') {
-                // this.partnerUserDataValidations();
+                this.partnerUserDataValidations();
             }
 
-            //this.verifyEmailAndPhoneNumberValidation();
+            this.verifyEmailAndPhoneNumberValidation();
 
             try {
-                console.log(this.curriculumVitae);
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
+                
+                const certificates = await Promise.all(this.academicBackground.map(async({ certificate} ) => { 
+                    return certificate ? { base64: await this.fileToBase64(certificate), fileName: certificate.name } : null
+                }));
                 const response = await saveUserTypeDataFunction({
                     userType: this.userType,
                     bornDate: this.bornDate,
@@ -914,6 +917,7 @@ export default {
                     workExperience: this.workExperience,
                     cvBase64: await this.fileToBase64(this.curriculumVitae),
                     cvName: this.curriculumVitae.name,
+                    certificatesBase64: certificates,
                     requestedActivity: this.requestedActivity,
                 });
                 
