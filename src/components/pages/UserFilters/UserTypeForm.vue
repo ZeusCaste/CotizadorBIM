@@ -2,7 +2,7 @@
     <div>
         <div>
             <div class="row">
-                <div class="col-5 mx-auto">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                     <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre Completo" label-for="name">
                         <b-row>
                             <b-icon class="ml-3" icon="person-fill" font-scale="2"></b-icon>
@@ -12,7 +12,7 @@
                         </b-row>
                     </b-form-group>
                 </div>
-                <div class="col-5 mx-auto">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                     <b-form-group class="text-dark text-left mt-3" id="email" label="Email" label-for="email">
                         <b-row>
                             <b-icon class="ml-3" icon="at" font-scale="2"></b-icon>
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-5 mx-auto">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                     <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Número Telefónico" label-for="phoneNumber">
                         <b-row>
                             <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-5 mx-auto">
+                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                     <b-form-group class="text-dark text-left mt-3" id="userType" label="Tipo de usuario" label-for="userType">
                         <b-row>
                             <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
@@ -104,7 +104,7 @@
                         </b-row>
                     </b-form-group>
                 </div>
-                <div class="col-5 mx-auto">
+                <div class="col-11 col-sm-11 col-md-12 col-lg-10 col-xl-10 mx-auto">
                     <b-alert v-if="userType === 'partner'" show variant="primary">
                         <strong>Colaborador: </strong>
                         Al elegir esta opción te registrarás como proveedor de servicios, para poder implementar proyectos o tareas específicas
@@ -127,7 +127,7 @@
                 </b-card-header>
                 <b-collapse id="accordion-personal-data" visible accordion="accordion-personal-data" role="tabpanel">
                     <b-card-body class="row">
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -138,7 +138,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="curp" label="CURP" label-for="curp">
                                 <b-row>
                                     <b-icon class="ml-3" icon="person-lines-fill" font-scale="2"></b-icon>
@@ -155,7 +155,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" label="Calle" label-for="street">
                                 <b-row>
                                     <b-icon class="ml-3" icon="house" font-scale="2"></b-icon>
@@ -166,7 +166,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="extNumber" label="Numero Exterior" label-for="extNumber">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
@@ -177,7 +177,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="intNumber" label="Numero Interior" label-for="intNumber">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
@@ -188,7 +188,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="state" label="Estado" label-for="state">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
@@ -204,7 +204,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="delegation" label="Delegacion o Municipio" label-for="delegation">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
@@ -215,7 +215,7 @@
                             </b-form-group>
                         </div>
                         
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="neighborhood" label="Colonia" label-for="neighborhood">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
@@ -226,7 +226,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="city" label="Ciudad" label-for="city">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
@@ -237,7 +237,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="cp" label="Codigo Postal" label-for="cp">
                                 <b-row>
                                     <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
@@ -265,7 +265,7 @@
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
 
                     <b-card-body class="row element-container" v-for="(ab, idx) in academicBackground" :key="idx">
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
                                 <b-row>
                                     <b-icon class="ml-3" icon="journal-bookmark-fill" font-scale="2"></b-icon>
@@ -276,7 +276,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="specialty" label="Especialidad" label-for="specialty">
                                 <b-row>
                                     <b-icon class="ml-3" icon="patch-check-fill" font-scale="2"></b-icon>
@@ -287,7 +287,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="institution" label="Escuela o Institución" label-for="institution">
                                 <b-row>
                                     <b-icon class="ml-3" icon="credit-card2-front-fill" font-scale="2"></b-icon>
@@ -298,7 +298,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="startPeriod" label="Inicio" label-for="startPeriod">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -309,11 +309,11 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-5">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col class="col-7">
+                                    <b-col class="col-6">
                                         <b-form-input 
                                             id="endPeriod"
                                             v-model="ab.endPeriod"
@@ -333,7 +333,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 ml-4">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
                                 <b-row>
                                     <b-icon class="ml-3" icon="file-earmark-medical-fill" font-scale="2"></b-icon>
@@ -372,7 +372,7 @@
                 </b-card-header>
                 <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
                     <b-card-body class="row separator">
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="Curriculum Vitae" label="Selecciona tu CV" label-for="Curriculum Vitae">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -387,7 +387,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
                                 <b-row>
                                     <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
@@ -399,7 +399,7 @@
                         </div>
                     </b-card-body>
                     <b-card-body class="row element-container" v-for="(we, idx) in workExperience" :key="idx">
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
                                 <b-row>
                                     <b-icon class="ml-3" icon="wallet-fill" font-scale="2"></b-icon>
@@ -410,7 +410,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="developedFunction" label="Función Desarrollada" label-for="developedFunction">
                                 <b-row>
                                     <b-icon class="ml-3" icon="hdd-network-fill" font-scale="2"></b-icon>
@@ -421,7 +421,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="companyEntry" label="Ingreso" label-for="companyEntry">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -432,7 +432,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-5 mx-auto">
+                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="exitCompany" label="Termino o Salida" label-for="exitCompany">
                                 <b-row>
                                     <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
@@ -456,7 +456,7 @@
                             </b-form-group>
                         </div>
 
-                        <div class="col-11 ml-5">
+                        <div class="col-12 col-sm-11 col-md-11 col-lg-11 col-xl-11 mx-auto">
                             <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
                                 <b-row>
                                     <b-icon class="ml-3" icon="layout-text-sidebar-reverse" font-scale="2"></b-icon>
