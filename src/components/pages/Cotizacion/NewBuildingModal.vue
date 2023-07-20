@@ -301,16 +301,13 @@
                     </div>
                 </div>
                 <div v-if="edificacionesIndependientes == 'false'" class="button-toggle mt-5">
-                    <b-button 
-                        variant="dark"
-                        size="md"
-                        class="w-50 button"
-                        @click="sotanosToggle()"
-                    >
-                        <!-- <b-icon icon="grid-1x2"></b-icon> -->
-                        Sotanos
-                        <b-icon :icon="form.sotanos.status ? 'caret-up-square' : 'caret-down-square'" animation="throb"></b-icon>
-                    </b-button>
+                    <b-form-checkbox 
+                        switch 
+                        size="lg"
+                        v-model="form.sotanos.status"
+                        @change="sotanosToggle()"
+                        :value="true"
+                    >Considerar Sotanos</b-form-checkbox>
                 </div>
                 <div class="build mb-5" v-if="form.sotanos.status && edificacionesIndependientes == 'false'">
                     <div class="input-area-proyecto">
@@ -319,11 +316,14 @@
                                 <b-icon
                                     icon="bricks"
                                     scale="1"
+                                    class="mr-1"
                                 ></b-icon>
                                 <label for="">Número de sotanos</label>
                                 <b-form-input
                                     v-model="form.sotanos.data.numeroSotanos"
-                                    placeholder="2"
+                                    placeholder="Número de sotanos"
+                                    @input="(e) => numSotanosValidation(e)"
+                                    @blur="(e) => sotanosStatusValidation(e)"
                                 ></b-form-input>
                             </b-col>
                         </b-row>
@@ -334,11 +334,13 @@
                                 <b-icon
                                     icon="bounding-box-circles"
                                     scale="1"
+                                    class="mr-1"
                                 ></b-icon>
                                 <label for="">Área de sotano (m2)</label>
                                 <b-form-input
                                     v-model="form.sotanos.data.areaSotano"
                                     placeholder="Introduce el area en m2"
+                                    :disabled="!sotanosMtsDesactivation"
                                 ></b-form-input>
                             </b-col>
                         </b-row>
@@ -547,6 +549,7 @@ export default {
             municipiosSelected: [],
             municipios: municipios,
             errores: [],
+            sotanosMtsDesactivation: false,
         }
     },
     methods: {
@@ -636,12 +639,9 @@ export default {
 
         },
         sotanosToggle(){
-            this.form.sotanos.status= !this.form.sotanos.status;
-
-            if(!this.form.sotanos.status){
-                this.form.sotanos.data.numeroSotanos= '';
-                this.form.sotanos.data.areaSotano= '';
-            }
+            this.sotanosMtsDesactivation = this.form.sotanos.status;
+            this.form.sotanos.data.numeroSotanos= '';
+            this.form.sotanos.data.areaSotano= '';
         },
         deleteEdificacion(position){
             this.edificacionNueva.edificaciones= this.edificacionNueva.edificaciones.filter((edificacion, index)=> (
@@ -929,6 +929,12 @@ export default {
                 this.form.proyectos_estudios = this.form.proyectos_estudios.filter((edification) => edification !== 'Estructuras B1');
             
             // this.form.proyectos_estudios.push(type_structure);
+        },
+        numSotanosValidation(evt) { this.sotanosMtsDesactivation = evt >= 1 },
+        sotanosStatusValidation(){
+            if(this.form.sotanos.data.numeroSotanos < 1){
+                this.form.sotanos.status = !this.form.sotanos.status;
+            }
         }
     },
     computed: {
@@ -973,6 +979,7 @@ export default {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin: 15px 25px;
     }
 
     .hide-modal{
