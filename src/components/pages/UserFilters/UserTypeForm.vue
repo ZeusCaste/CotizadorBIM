@@ -893,7 +893,7 @@ export default {
                 this.partnerUserDataValidations();
             }
 
-            this.verifyEmailAndPhoneNumberValidation();
+            // this.verifyEmailAndPhoneNumberValidation();
 
             try {
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
@@ -926,6 +926,10 @@ export default {
                     this.successResponse = true;
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = response.data.msg;
+
+                    setTimeout(() => {
+                        this.$router.push({ name: `${this.userType}Session` });
+                    }, 5000);
                 }
             } catch (error) {
                 this.alertRol = 'form';

@@ -51,6 +51,14 @@ const routes = [
           requieresAuth: true
         }
       },
+      {
+        path: 'partner-session',
+        name: "partnerSession",
+        component: ()=> import('../views/PartnerSession.vue'),
+        meta:{
+          requieresAuth: true
+        }
+      },
     ]
   }
 ]
