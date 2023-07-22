@@ -889,49 +889,64 @@ export default {
             }
         },
         async saveUserTypeData() {
-            if(this.userType === 'partner') {
-                this.partnerUserDataValidations();
-            }
-
-            // this.verifyEmailAndPhoneNumberValidation();
-
             try {
+                // this.verifyEmailAndPhoneNumberValidation();
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
                 
-                const certificates = await Promise.all(this.academicBackground.map(async({ certificate} ) => { 
-                    return certificate ? { base64: await this.fileToBase64(certificate), fileName: certificate.name } : null
-                }));
-                const response = await saveUserTypeDataFunction({
-                    userType: this.userType,
-                    bornDate: this.bornDate,
-                    curp: this.curp,
-                    street: this.street,
-                    extNumber: this.extNumber,
-                    intNumber: this.intNumber,
-                    state: this.state,
-                    delegation: this.delegation,
-                    neighborhood: this.neighborhood,
-                    city: this.city,
-                    cp: this.cp,
-                    academicBackground: this.academicBackground,
-                    workExperience: this.workExperience,
-                    cvBase64: await this.fileToBase64(this.curriculumVitae),
-                    cvName: this.curriculumVitae.name,
-                    certificatesBase64: certificates,
-                    requestedActivity: this.requestedActivity,
-                });
-                
-                if(response.data.success) {
-                    this.alertRol = 'form';
-                    this.successResponse = true;
-                    this.dismissCountDown = this.dismissSecs;
-                    this.successMessage = response.data.msg;
-
-                    setTimeout(() => {
-                        this.$router.push({ name: `${this.userType}Session` });
-                    }, 5000);
+                if(this.userType === 'partner') {
+                    this.partnerUserDataValidations();
+                    
+                    const certificates = await Promise.all(this.academicBackground.map(async({ certificate} ) => { 
+                        return certificate ? { base64: await this.fileToBase64(certificate), fileName: certificate.name } : null
+                    }));
+                    const response = await saveUserTypeDataFunction({
+                        userType: this.userType,
+                        bornDate: this.bornDate,
+                        curp: this.curp,
+                        street: this.street,
+                        extNumber: this.extNumber,
+                        intNumber: this.intNumber,
+                        state: this.state,
+                        delegation: this.delegation,
+                        neighborhood: this.neighborhood,
+                        city: this.city,
+                        cp: this.cp,
+                        academicBackground: this.academicBackground,
+                        workExperience: this.workExperience,
+                        cvBase64: await this.fileToBase64(this.curriculumVitae),
+                        cvName: this.curriculumVitae.name,
+                        certificatesBase64: certificates,
+                        requestedActivity: this.requestedActivity,
+                    });
+                    
+                    if(response.data.success) {
+                        this.alertRol = 'form';
+                        this.successResponse = true;
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = response.data.msg;
+    
+                        setTimeout(() => {
+                            this.$router.push({ name: `${this.userType}Session` });
+                        }, 5000);
+                    }
                 }
+                if(this.userType === 'customer') {
+                    console.log('customer');
+                    const response = await saveUserTypeDataFunction({});
+                    if(response.data.success) {
+                        this.alertRol = 'form';
+                        this.successResponse = true;
+                        this.dismissCountDown = this.dismissSecs;
+                        this.successMessage = response.data.msg;
+    
+                        setTimeout(() => {
+                            this.$router.push({ name: `${this.userType}Session` });
+                        }, 5000);
+                    }
+                }
+                
             } catch (error) {
+                console.log(error);
                 this.alertRol = 'form';
                 this.successResponse = false;
                 this.dismissCountDown = this.dismissSecs;
