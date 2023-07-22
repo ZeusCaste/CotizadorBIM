@@ -60,7 +60,7 @@ const routes = [
         }
       },
       {
-        path: 'customers-session',
+        path: 'customer-session',
         name: "customerSession",
         component: ()=> import('../views/CustomerSession.vue'),
         meta: {

@@ -931,8 +931,7 @@ export default {
                     }
                 }
                 if(this.userType === 'customer') {
-                    console.log('customer');
-                    const response = await saveUserTypeDataFunction({});
+                    const response = await saveUserTypeDataFunction({ userType: this.userType });
                     if(response.data.success) {
                         this.alertRol = 'form';
                         this.successResponse = true;
