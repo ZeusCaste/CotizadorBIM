@@ -519,6 +519,13 @@ export default {
     created() {
         this.getCurrentUser();
     },
+    async mounted() {
+        const getUpdatedUserDataFunction = firebase.functions().httpsCallable('getUpdatedUserData');
+        const { data } = await getUpdatedUserDataFunction();
+        if(data.customClaims && data.customClaims.definedUser) {
+            this.$router.replace({ name: `${data.customClaims.userType}Session`})
+        }
+    },
     data() {
         return {
             stateOptions: estados,
@@ -614,7 +621,6 @@ export default {
             this.email = email;
             this.emailVerified = emailVerified;
             this.phoneNumber = phoneNumber;
-            console.log(firebase.auth().currentUser);
         },
         async sendOTPBySMSChannel(){
             this.spinner = true;
@@ -926,7 +932,7 @@ export default {
                         this.successMessage = response.data.msg;
     
                         setTimeout(() => {
-                            this.$router.push({ name: `${this.userType}Session` });
+                            this.$router.replace({ name: `${this.userType}Session` });
                         }, 5000);
                     }
                 }

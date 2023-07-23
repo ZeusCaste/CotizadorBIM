@@ -83,7 +83,8 @@ router.beforeEach((to, from, next) => {
       if(user) next();
       else next({ name : 'AccountAccess' })
     });
-  }else{
+  }
+  else{
     next();
   }
 })

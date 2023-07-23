@@ -16,27 +16,17 @@ export default {
     LogIn,
     Register,
   },
-  data(){
-    return {
-      login: true,
-    }
-  },
-  methods: {
-    changeForm(state){
-      this.login= state;
-    }
-  },
   created(){
     firebase.auth().onAuthStateChanged((user)=> {
       if(user){
         user.getIdTokenResult().then(async(getIdTokenResult) => {
+          console.log(getIdTokenResult.claims);
           if(getIdTokenResult.claims.admin){
-            this.$router.push({ name: 'AdminSession' });
+            this.$router({ name: 'AdminSession' });
             return
           }
           if(!getIdTokenResult.claims.definedUser){
-            this.$router.push({ name: 'UserFilters' });
-            console.log('here');
+            this.$router.replace({ name: 'UserFilters' });
             return
           }
           if(getIdTokenResult.claims.definedUser){
@@ -48,7 +38,17 @@ export default {
     });
     // Events
     this.eventHub.$on('change-form', this.changeForm);
-  }
+  },
+  data(){
+    return {
+      login: true,
+    }
+  },
+  methods: {
+    changeForm(state){
+      this.login= state;
+    }
+  },
 }
 </script>
 
