@@ -510,7 +510,10 @@
                     variant="info"
                     v-show="userType.trim()"
                     @click="saveUserTypeData()"
-                >Guardar Datos</b-button>
+                >
+                    Guardar Datos
+                    <b-spinner small variant="light" label="Spinning" v-if="saveDataSpinner"></b-spinner>
+                </b-button>
             </div>
 
         </div>
@@ -541,6 +544,7 @@ export default {
     data() {
         return {
             activeUser: false,
+            saveDataSpinner : false,
             stateOptions: estados,
             delegationOptions: [],
             displayName: '',
@@ -772,51 +776,61 @@ export default {
             if(!this.bornDate.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu fecha de nacimiento';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.curp.trim() || this.curp.length < 18) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu CURP y verifica que sea válido';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.street.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa la calle de tu domicilio';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.extNumber.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa número exterior de tu domicilio';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.intNumber.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa número interior de tu domicilio';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.state.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Selecciona el estado donde vives';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.delegation.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Selecciona el municipio donde vives';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.neighborhood.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa la colonia en donde vives';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.city.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa la ciudad en donde vives';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.cp.trim() || this.cp.trim().length < 5) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu código postal';
+                this.saveDataSpinner = false;
                 return;
             }
 
@@ -824,32 +838,38 @@ export default {
             if(this.academicBackground.length === 0) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Agrega tu formación academica';
+                this.saveDataSpinner = false;
                 return;
             }
             this.academicBackground.forEach((academic) => {
                 if(!academic.academicLevel.trim()) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta agregar nivel académico';
+                    this.saveDataSpinner = false;
                     return;
                 }
                 if(!academic.specialty.trim()) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta agregar especialidad';
+                    this.saveDataSpinner = false;
                     return;
                 }
                 if(!academic.institution.trim()) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta agregar Institución Académica';
+                    this.saveDataSpinner = false;
                     return;
                 }
                 if(!academic.startPeriod.trim()) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta agregar fecha de inicio de período académico';
+                    this.saveDataSpinner = false;
                     return;
                 }
                 if(!academic.endPeriod.trim() && !academic.actualLevel) {
                     this.dismissCountDown = this.dismissSecs;
                     this.successMessage = 'Te hace falta indicar fecha de termino de período académico';
+                    this.saveDataSpinner = false;
                     return;
                 }
             });
@@ -860,26 +880,31 @@ export default {
                     if(!experience.companyName.trim()) {
                         this.dismissCountDown = this.dismissSecs;
                         this.successMessage = 'Te hace falta indicar nombre de la empresa';
+                        this.saveDataSpinner = false;
                         return;
                     }
                     if(!experience.developedFunction.trim()) {
                         this.dismissCountDown = this.dismissSecs;
                         this.successMessage = 'Te hace falta indicar la función desarrollada';
+                        this.saveDataSpinner = false;
                         return;
                     }
                     if(!experience.companyEntry.trim()) {
                         this.dismissCountDown = this.dismissSecs;
                         this.successMessage = 'Te hace falta indicar la fecha en la que empezaste a laborar';
+                        this.saveDataSpinner = false;
                         return;
                     }
                     if(!experience.exitCompany.trim() && !experience.actualCompany) {
                         this.dismissCountDown = this.dismissSecs;
                         this.successMessage = 'Te hace falta indicar tu salida de la empresa';
+                        this.saveDataSpinner = false;
                         return;
                     }
                     if(!experience.generalDescription.trim()) {
                         this.dismissCountDown = this.dismissSecs;
                         this.successMessage = 'Te hace falta una descripción general de lo que hacias en tu trabajo';
+                        this.saveDataSpinner = false;
                         return;
                     }
                 })
@@ -889,11 +914,13 @@ export default {
             if(this.curriculumVitae === null) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa tu CV';
+                this.saveDataSpinner = false;
                 return;
             }
             if(!this.requestedActivity.trim()) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Ingresa la actividad que quieres desempeñar';
+                this.saveDataSpinner = false;
                 return;
             }
 
@@ -904,12 +931,14 @@ export default {
             if(!this.emailVerified || !this.getPhoneNumberVerificatedStatus) {
                 this.dismissCountDown = this.dismissSecs;
                 this.successMessage = 'Es necesario hacer la verificación de email y de número teléfonico';
+                this.saveDataSpinner = false;
                 return;
             }
         },
         async saveUserTypeData() {
             try {
-                // this.verifyEmailAndPhoneNumberValidation();
+                this.saveDataSpinner = true;
+                this.verifyEmailAndPhoneNumberValidation();
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
                 
                 if(this.userType === 'partner') {
@@ -945,6 +974,7 @@ export default {
                         this.successMessage = response.data.msg;
     
                         setTimeout(() => {
+                            this.saveDataSpinner = false;
                             this.$router.replace({ name: `${this.userType}Session` });
                         }, 5000);
                     }
@@ -958,6 +988,7 @@ export default {
                         this.successMessage = response.data.msg;
     
                         setTimeout(() => {
+                            this.saveDataSpinner = false;
                             this.$router.push({ name: `${this.userType}Session` });
                         }, 5000);
                     }
@@ -968,6 +999,7 @@ export default {
                 this.alertRol = 'form';
                 this.successResponse = false;
                 this.dismissCountDown = this.dismissSecs;
+                this.saveDataSpinner = false;
                 if(error.code === 'invalid-argument') {
                     this.successMessage = 'Datos incompletos, verifica que estas enviando todos los datos';
                     return;
