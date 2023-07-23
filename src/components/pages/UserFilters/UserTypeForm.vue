@@ -1,509 +1,518 @@
 <template>
     <div>
-        <div>
-            <div class="row">
-                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                    <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre Completo" label-for="name">
-                        <b-row>
-                            <b-icon class="ml-3" icon="person-fill" font-scale="2"></b-icon>
-                            <b-col>
-                                <b-form-input disabled v-model="displayName" id="name" type="text" placeholder="Nombre Completo" />
-                            </b-col>
-                        </b-row>
-                    </b-form-group>
-                </div>
-                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                    <b-form-group class="text-dark text-left mt-3" id="email" label="Email" label-for="email">
-                        <b-row>
-                            <b-icon class="ml-3" icon="at" font-scale="2"></b-icon>
-                            <b-col>
-                                <b-form-input disabled v-model="email" id="email" type="email" placeholder="Email" />
-                            </b-col>
-                            <b-button 
-                                v-if="!emailVerified" 
-                                variant="dark"
-                                @click="sendVerificationEmail()"
-                                > 
-                                {{ 'Verificar' }}
-                                <b-spinner small v-if="spinner && alertRol === 'email'" variant="warning" label="Spinning"></b-spinner>
-                            </b-button>
-                            <b-icon 
-                                v-else  
-                                icon="check-circle-fill" 
-                                font-scale="2"
-                                variant="success"
-                            ></b-icon>
-                        </b-row>
-                        <b-alert
-                            v-if="alertRol === 'email'"
-                            :show="dismissCountDown"
-                            dismissible
-                            :variant="successResponse ? 'success' : 'danger'"
-                            @dismissed="dismissCountDown=0"
-                            @dismiss-count-down="countDownChanged"
-                            class="my-2"
-                        >
-                            <p>{{ successMessage }}</p>
-                        </b-alert>
-                    </b-form-group>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                    <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Número Telefónico" label-for="phoneNumber">
-                        <b-row>
-                            <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
-                            <b-col v-if="!OTPSendFlag">
-                                <b-form-input 
-                                    v-model="phoneNumber" 
-                                    id="phoneNumber" 
-                                    type="tel" 
-                                    placeholder="Número telefónico" 
-                                    :disabled="getPhoneNumberVerificatedStatus"
-                                />
-                            </b-col>
-                            <b-col v-else>
-                                <b-form-input v-model="OTPCode" id="otpcode" type="tel" placeholder="Ingresa el código enviado" />
-                            </b-col>
-                            <b-icon 
-                                v-if="getPhoneNumberVerificatedStatus"  
-                                icon="check-circle-fill" 
-                                font-scale="2"
-                                variant="success"
-                            ></b-icon>
-                            <b-button v-else variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
-                                {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
-                                <b-spinner small v-if="spinner && alertRol === 'phoneNumber'" variant="warning" label="Spinning"></b-spinner>
-                            </b-button>
-                        </b-row>
-                        <b-alert
-                            v-if="alertRol === 'phoneNumber'"
-                            :show="dismissCountDown"
-                            dismissible
-                            :variant="successResponse ? 'success' : 'danger'"
-                            @dismissed="dismissCountDown=0"
-                            @dismiss-count-down="countDownChanged"
-                            class="my-2"
-                            >
-                            <p>{{ successMessage }}</p>
-                        </b-alert>
-                    </b-form-group>
-                </div>
-                <div class="col-5 mx-auto">
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                    <b-form-group class="text-dark text-left mt-3" id="userType" label="Tipo de usuario" label-for="userType">
-                        <b-row>
-                            <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
-                            <b-col>
-                                <b-form-select v-model="userType" :options="optionsUserType"></b-form-select>
-                            </b-col>
-                        </b-row>
-                    </b-form-group>
-                </div>
-                <div class="col-11 col-sm-11 col-md-12 col-lg-10 col-xl-10 mx-auto">
-                    <b-alert v-if="userType === 'partner'" show variant="primary">
-                        <strong>Colaborador: </strong>
-                        Al elegir esta opción te registrarás como proveedor de servicios, para poder implementar proyectos o tareas específicas
-                        <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
-                    </b-alert>
-                    <b-alert v-if="userType === 'customer'" show variant="primary">
-                        <strong>Cliente: </strong>
-                        Al elegir esta opción te registrarás como creador de proyectos, los cuales podrás administrar y gestionar.
-                        <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
-                    </b-alert>
-                </div>
-            </div>
+        <div v-if="!activeUser" class="text-center">
+            <b-skeleton-icon
+                icon="person-fill"
+                :icon-props="{ fontScale: 35, variant: 'dark' }"
+            ></b-skeleton-icon>
         </div>
-        <div class="my-5" v-if="userType === 'partner'">
-
-            <!-- Form Datos Personales -->
-            <b-card no-body class="mb-1">
-                <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.accordion-personal-data variant="info">Datos Personales</b-button>
-                </b-card-header>
-                <b-collapse id="accordion-personal-data" visible accordion="accordion-personal-data" role="tabpanel">
-                    <b-card-body class="row">
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="bornDate" id="bornDate" type="date" placeholder="Fecha de Nacimiento" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="curp" label="CURP" label-for="curp">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="person-lines-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input 
-                                            id="curp-input"
-                                            v-model="curp"
-                                            type="text" 
-                                            placeholder="CURP"
-                                            :formatter="formatCurp"
-                                        />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" label="Calle" label-for="street">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="house" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="street" id="street" type="text" placeholder="Calle" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="extNumber" label="Numero Exterior" label-for="extNumber">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="extNumber" id="extNumber" type="text" placeholder="Número Interior" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="intNumber" label="Numero Interior" label-for="intNumber">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="intNumber" id="intNumber" type="text" placeholder="Número Interior" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="state" label="Estado" label-for="state">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-select 
-                                            v-model="state" 
-                                            :options="stateOptions" 
-                                            id="state"
-                                            @change="toActivateDelegations"
-                                        ></b-form-select>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="delegation" label="Delegacion o Municipio" label-for="delegation">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-select v-model="delegation" :options="delegationOptions" id="delegation" ></b-form-select>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-                        
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="neighborhood" label="Colonia" label-for="neighborhood">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="neighborhood" id="neighborhood" type="text" placeholder="Colonia" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="city" label="Ciudad" label-for="city">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="city" id="city" type="text" placeholder="Ciudad" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="cp" label="Codigo Postal" label-for="cp">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input 
-                                            id="cp" 
-                                            v-model="cp" 
-                                            type="tel" 
-                                            placeholder="Código Postal"
-                                            :formatter="formatCP"
-                                        />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-                    </b-card-body>
-                </b-collapse>
-            </b-card>
-
-            <!-- Formacion Academica -->
-            <b-card no-body class="mb-1">
-                <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.accordion-academic-education variant="info">Formación Académica</b-button>
-                </b-card-header>
-                <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
-
-                    <b-card-body class="row element-container" v-for="(ab, idx) in academicBackground" :key="idx">
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="journal-bookmark-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-select v-model="ab.academicLevel" :options="academicLevesOptions" id="academicLevel" ></b-form-select>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="specialty" label="Especialidad" label-for="specialty">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="patch-check-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="ab.specialty" id="specialty" type="text" placeholder="Especialidad" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="institution" label="Escuela o Institución" label-for="institution">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="credit-card2-front-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="ab.institution" id="institution" type="text" placeholder="Escuela o Institución" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="startPeriod" label="Inicio" label-for="startPeriod">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="ab.startPeriod" id="startPeriod" type="date" placeholder="Inicio" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col class="col-6">
-                                        <b-form-input 
-                                            id="endPeriod"
-                                            v-model="ab.endPeriod"
-                                            type="date"
-                                            placeholder="Finalización"
-                                            @change="updateActualAcademicValue('input', idx)"
-                                        />
-                                    </b-col>
-                                    <b-col class="col-3 my-auto">
-                                        <b-form-radio 
-                                            v-model="ab.actualLevel" 
-                                            value="true"
-                                            @change="updateActualAcademicValue('radio', idx)"
-                                        >Actual</b-form-radio>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="file-earmark-medical-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-file
-                                            v-model="ab.certificate"
-                                            :state="Boolean(ab.certificate)"
-                                            placeholder="Selecciona un archivo o arrastralo aqui"
-                                            drop-placeholder="Arrastra tu archivo aqui"
-                                        ></b-form-file>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="my-2 ml-5">
-                            <b-button variant="danger" @click="removeAcademicLevel(idx)">
-                                <b-icon icon="trash-fill"></b-icon>
-                                Eliminar formación
-                            </b-button>
-                        </div>
-                    </b-card-body>
-
-                    <div class="ml-5 my-4">
-                        <b-button variant="outline-info" @click="addAcademicBackground()">
-                            <b-icon icon="plus-circle-fill"></b-icon>
-                            Agregar Estudios
-                        </b-button>
-                    </div>
-                </b-collapse>
-            </b-card>
-
-            <b-card no-body class="mb-1">
-                <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
-                </b-card-header>
-                <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
-                    <b-card-body class="row separator">
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="Curriculum Vitae" label="Selecciona tu CV" label-for="Curriculum Vitae">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-file
-                                            v-model="curriculumVitae"
-                                            placeholder="Selecciona tu CV"
-                                            drop-placeholder="Arrastra tu archivo aqui"
-                                        ></b-form-file>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-select v-model="requestedActivity" :options="activityOptions"></b-form-select>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-                    </b-card-body>
-                    <b-card-body class="row element-container" v-for="(we, idx) in workExperience" :key="idx">
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="wallet-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="we.companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="developedFunction" label="Función Desarrollada" label-for="developedFunction">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="hdd-network-fill" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="we.developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="companyEntry" label="Ingreso" label-for="companyEntry">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-input v-model="we.companyEntry" id="companyEntry" type="date" placeholder="Ingreso" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="exitCompany" label="Termino o Salida" label-for="exitCompany">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
-                                    <b-col class="col-7">
-                                        <b-form-input 
-                                            v-model="we.exitCompany" 
-                                            id="exitCompany" 
-                                            type="date" 
-                                            placeholder="Termino o Salida"
-                                            @change="updateActualWorkExperience('input', idx)"
-                                        />
-                                    </b-col>
-                                    <b-col class="col-3 my-auto">
-                                        <b-form-radio 
-                                            v-model="we.actualCompany" 
-                                            value="true"
-                                            @change="updateActualWorkExperience('radio', idx)"
-                                        >Actual</b-form-radio>
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="col-12 col-sm-11 col-md-11 col-lg-11 col-xl-11 mx-auto">
-                            <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
-                                <b-row>
-                                    <b-icon class="ml-3" icon="layout-text-sidebar-reverse" font-scale="2"></b-icon>
-                                    <b-col>
-                                        <b-form-textarea v-model="we.generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
-                                    </b-col>
-                                </b-row>
-                            </b-form-group>
-                        </div>
-
-                        <div class="my-2 ml-5">
-                            <b-button variant="danger" @click="removeWorkExperience(idx)">
-                                <b-icon icon="trash-fill"></b-icon>
-                                Eliminar experiencia
-                            </b-button>
-                        </div>
-                    </b-card-body>
-
-                    <div class="ml-5 my-4">
-                        <b-button variant="outline-info" @click="addWorkExperience()">
-                            <b-icon icon="plus-circle-fill"></b-icon>
-                            Agregar Experiencia
-                        </b-button>
-                    </div>
-                </b-collapse>
-            </b-card>
-        </div>
-        <div>
+        <div v-else>
             <div>
-                <b-alert
-                    v-if="alertRol === 'form'"
-                    :show="dismissCountDown"
-                    dismissible
-                    :variant="successResponse ? 'success' : 'danger'"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-                    class="my-2"
-                >
-                    <p>{{ successMessage }}</p>
-                </b-alert>
+                <div class="row">
+                    <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                        <b-form-group class="text-dark text-left mt-3" id="name" label="Nombre Completo" label-for="name">
+                            <b-row>
+                                <b-icon class="ml-3" icon="person-fill" font-scale="2"></b-icon>
+                                <b-col>
+                                    <b-form-input disabled v-model="displayName" id="name" type="text" placeholder="Nombre Completo" />
+                                </b-col>
+                            </b-row>
+                        </b-form-group>
+                    </div>
+                    <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                        <b-form-group class="text-dark text-left mt-3" id="email" label="Email" label-for="email">
+                            <b-row>
+                                <b-icon class="ml-3" icon="at" font-scale="2"></b-icon>
+                                <b-col>
+                                    <b-form-input disabled v-model="email" id="email" type="email" placeholder="Email" />
+                                </b-col>
+                                <b-button 
+                                    v-if="!emailVerified" 
+                                    variant="dark"
+                                    @click="sendVerificationEmail()"
+                                    > 
+                                    {{ 'Verificar' }}
+                                    <b-spinner small v-if="spinner && alertRol === 'email'" variant="warning" label="Spinning"></b-spinner>
+                                </b-button>
+                                <b-icon 
+                                    v-else  
+                                    icon="check-circle-fill" 
+                                    font-scale="2"
+                                    variant="success"
+                                ></b-icon>
+                            </b-row>
+                            <b-alert
+                                v-if="alertRol === 'email'"
+                                :show="dismissCountDown"
+                                dismissible
+                                :variant="successResponse ? 'success' : 'danger'"
+                                @dismissed="dismissCountDown=0"
+                                @dismiss-count-down="countDownChanged"
+                                class="my-2"
+                            >
+                                <p>{{ successMessage }}</p>
+                            </b-alert>
+                        </b-form-group>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                        <b-form-group class="text-dark text-left mt-3" id="phoneNumber" label="Número Telefónico" label-for="phoneNumber">
+                            <b-row>
+                                <b-icon class="ml-3" icon="phone-fill" font-scale="2"></b-icon>
+                                <b-col v-if="!OTPSendFlag">
+                                    <b-form-input 
+                                        v-model="phoneNumber" 
+                                        id="phoneNumber" 
+                                        type="tel" 
+                                        placeholder="Número telefónico" 
+                                        :disabled="getPhoneNumberVerificatedStatus"
+                                    />
+                                </b-col>
+                                <b-col v-else>
+                                    <b-form-input v-model="OTPCode" id="otpcode" type="tel" placeholder="Ingresa el código enviado" />
+                                </b-col>
+                                <b-icon 
+                                    v-if="getPhoneNumberVerificatedStatus"  
+                                    icon="check-circle-fill" 
+                                    font-scale="2"
+                                    variant="success"
+                                ></b-icon>
+                                <b-button v-else variant="dark" :disabled="!phoneNumber" @click="phoneNumberActionButton()">
+                                    {{ OTPSendFlag ? 'Validar Código' : 'Verificar' }}
+                                    <b-spinner small v-if="spinner && alertRol === 'phoneNumber'" variant="warning" label="Spinning"></b-spinner>
+                                </b-button>
+                            </b-row>
+                            <b-alert
+                                v-if="alertRol === 'phoneNumber'"
+                                :show="dismissCountDown"
+                                dismissible
+                                :variant="successResponse ? 'success' : 'danger'"
+                                @dismissed="dismissCountDown=0"
+                                @dismiss-count-down="countDownChanged"
+                                class="my-2"
+                                >
+                                <p>{{ successMessage }}</p>
+                            </b-alert>
+                        </b-form-group>
+                    </div>
+                    <div class="col-5 mx-auto">
+    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                        <b-form-group class="text-dark text-left mt-3" id="userType" label="Tipo de usuario" label-for="userType">
+                            <b-row>
+                                <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                <b-col>
+                                    <b-form-select v-model="userType" :options="optionsUserType"></b-form-select>
+                                </b-col>
+                            </b-row>
+                        </b-form-group>
+                    </div>
+                    <div class="col-11 col-sm-11 col-md-12 col-lg-10 col-xl-10 mx-auto">
+                        <b-alert v-if="userType === 'partner'" show variant="primary">
+                            <strong>Colaborador: </strong>
+                            Al elegir esta opción te registrarás como proveedor de servicios, para poder implementar proyectos o tareas específicas
+                            <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
+                        </b-alert>
+                        <b-alert v-if="userType === 'customer'" show variant="primary">
+                            <strong>Cliente: </strong>
+                            Al elegir esta opción te registrarás como creador de proyectos, los cuales podrás administrar y gestionar.
+                            <p><strong>Esta configuración no podrá ser modificada en el futuro</strong></p>
+                        </b-alert>
+                    </div>
+                </div>
             </div>
-            <b-button 
-                class="m-4" 
-                variant="info"
-                v-show="userType.trim()"
-                @click="saveUserTypeData()"
-            >Guardar Datos</b-button>
+            <div class="my-5" v-if="userType === 'partner'">
+    
+                <!-- Form Datos Personales -->
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-button block v-b-toggle.accordion-personal-data variant="info">Datos Personales</b-button>
+                    </b-card-header>
+                    <b-collapse id="accordion-personal-data" visible accordion="accordion-personal-data" role="tabpanel">
+                        <b-card-body class="row">
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="bornDate" label="Fecha de Nacimiento" label-for="bornDate">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="bornDate" id="bornDate" type="date" placeholder="Fecha de Nacimiento" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="curp" label="CURP" label-for="curp">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="person-lines-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input 
+                                                id="curp-input"
+                                                v-model="curp"
+                                                type="text" 
+                                                placeholder="CURP"
+                                                :formatter="formatCurp"
+                                            />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" label="Calle" label-for="street">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="house" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="street" id="street" type="text" placeholder="Calle" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="extNumber" label="Numero Exterior" label-for="extNumber">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="extNumber" id="extNumber" type="text" placeholder="Número Interior" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="intNumber" label="Numero Interior" label-for="intNumber">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-alt-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="intNumber" id="intNumber" type="text" placeholder="Número Interior" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="state" label="Estado" label-for="state">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-select 
+                                                v-model="state" 
+                                                :options="stateOptions" 
+                                                id="state"
+                                                @change="toActivateDelegations"
+                                            ></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="delegation" label="Delegacion o Municipio" label-for="delegation">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-select v-model="delegation" :options="delegationOptions" id="delegation" ></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+                            
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="neighborhood" label="Colonia" label-for="neighborhood">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="neighborhood" id="neighborhood" type="text" placeholder="Colonia" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="city" label="Ciudad" label-for="city">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="city" id="city" type="text" placeholder="Ciudad" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="cp" label="Codigo Postal" label-for="cp">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="geo-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input 
+                                                id="cp" 
+                                                v-model="cp" 
+                                                type="tel" 
+                                                placeholder="Código Postal"
+                                                :formatter="formatCP"
+                                            />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+                        </b-card-body>
+                    </b-collapse>
+                </b-card>
+    
+                <!-- Formacion Academica -->
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-button block v-b-toggle.accordion-academic-education variant="info">Formación Académica</b-button>
+                    </b-card-header>
+                    <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+    
+                        <b-card-body class="row element-container" v-for="(ab, idx) in academicBackground" :key="idx">
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="academicLevel" label="Nivel Acádemico" label-for="academicLevel">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="journal-bookmark-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-select v-model="ab.academicLevel" :options="academicLevesOptions" id="academicLevel" ></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="specialty" label="Especialidad" label-for="specialty">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="patch-check-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="ab.specialty" id="specialty" type="text" placeholder="Especialidad" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="institution" label="Escuela o Institución" label-for="institution">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="credit-card2-front-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="ab.institution" id="institution" type="text" placeholder="Escuela o Institución" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="startPeriod" label="Inicio" label-for="startPeriod">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="ab.startPeriod" id="startPeriod" type="date" placeholder="Inicio" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="endPeriod" label="Finalización" label-for="endPeriod">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col class="col-6">
+                                            <b-form-input 
+                                                id="endPeriod"
+                                                v-model="ab.endPeriod"
+                                                type="date"
+                                                placeholder="Finalización"
+                                                @change="updateActualAcademicValue('input', idx)"
+                                            />
+                                        </b-col>
+                                        <b-col class="col-3 my-auto">
+                                            <b-form-radio 
+                                                v-model="ab.actualLevel" 
+                                                value="true"
+                                                @change="updateActualAcademicValue('radio', idx)"
+                                            >Actual</b-form-radio>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="certificate" label="Constancia/Diploma/Titulo" label-for="certificate">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="file-earmark-medical-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-file
+                                                v-model="ab.certificate"
+                                                :state="Boolean(ab.certificate)"
+                                                placeholder="Selecciona un archivo o arrastralo aqui"
+                                                drop-placeholder="Arrastra tu archivo aqui"
+                                            ></b-form-file>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="my-2 ml-5">
+                                <b-button variant="danger" @click="removeAcademicLevel(idx)">
+                                    <b-icon icon="trash-fill"></b-icon>
+                                    Eliminar formación
+                                </b-button>
+                            </div>
+                        </b-card-body>
+    
+                        <div class="ml-5 my-4">
+                            <b-button variant="outline-info" @click="addAcademicBackground()">
+                                <b-icon icon="plus-circle-fill"></b-icon>
+                                Agregar Estudios
+                            </b-button>
+                        </div>
+                    </b-collapse>
+                </b-card>
+    
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-button block v-b-toggle.accordion-academic-education variant="info">Experiencia Laboral</b-button>
+                    </b-card-header>
+                    <b-collapse id="accordion-academic-education" visible accordion="accordion-academic-education" role="tabpanel">
+                        <b-card-body class="row separator">
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="Curriculum Vitae" label="Selecciona tu CV" label-for="Curriculum Vitae">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-file
+                                                v-model="curriculumVitae"
+                                                placeholder="Selecciona tu CV"
+                                                drop-placeholder="Arrastra tu archivo aqui"
+                                            ></b-form-file>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="requestActivity" label="Actividad solicitada" label-for="requestedActivity">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="person-bounding-box" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-select v-model="requestedActivity" :options="activityOptions"></b-form-select>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+                        </b-card-body>
+                        <b-card-body class="row element-container" v-for="(we, idx) in workExperience" :key="idx">
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="companyName" label="Nombre de la empresa" label-for="CompanyName">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="wallet-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="we.companyName" id="companyName" type="text" placeholder="Nombre de la empresa" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="developedFunction" label="Función Desarrollada" label-for="developedFunction">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="hdd-network-fill" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="we.developedFunction" id="developedFunction" type="text" placeholder="Función Desarrollada" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="companyEntry" label="Ingreso" label-for="companyEntry">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-input v-model="we.companyEntry" id="companyEntry" type="date" placeholder="Ingreso" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-5 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="exitCompany" label="Termino o Salida" label-for="exitCompany">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="calendar" font-scale="2"></b-icon>
+                                        <b-col class="col-7">
+                                            <b-form-input 
+                                                v-model="we.exitCompany" 
+                                                id="exitCompany" 
+                                                type="date" 
+                                                placeholder="Termino o Salida"
+                                                @change="updateActualWorkExperience('input', idx)"
+                                            />
+                                        </b-col>
+                                        <b-col class="col-3 my-auto">
+                                            <b-form-radio 
+                                                v-model="we.actualCompany" 
+                                                value="true"
+                                                @change="updateActualWorkExperience('radio', idx)"
+                                            >Actual</b-form-radio>
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="col-12 col-sm-11 col-md-11 col-lg-11 col-xl-11 mx-auto">
+                                <b-form-group class="text-dark text-left mt-3" id="generalDescription" label="Descripción Genereal" label-for="generalDescription">
+                                    <b-row>
+                                        <b-icon class="ml-3" icon="layout-text-sidebar-reverse" font-scale="2"></b-icon>
+                                        <b-col>
+                                            <b-form-textarea v-model="we.generalDescription" id="generalDescription" type="text" placeholder="Descripción General" />
+                                        </b-col>
+                                    </b-row>
+                                </b-form-group>
+                            </div>
+    
+                            <div class="my-2 ml-5">
+                                <b-button variant="danger" @click="removeWorkExperience(idx)">
+                                    <b-icon icon="trash-fill"></b-icon>
+                                    Eliminar experiencia
+                                </b-button>
+                            </div>
+                        </b-card-body>
+    
+                        <div class="ml-5 my-4">
+                            <b-button variant="outline-info" @click="addWorkExperience()">
+                                <b-icon icon="plus-circle-fill"></b-icon>
+                                Agregar Experiencia
+                            </b-button>
+                        </div>
+                    </b-collapse>
+                </b-card>
+            </div>
+            <div>
+                <div>
+                    <b-alert
+                        v-if="alertRol === 'form'"
+                        :show="dismissCountDown"
+                        dismissible
+                        :variant="successResponse ? 'success' : 'danger'"
+                        @dismissed="dismissCountDown=0"
+                        @dismiss-count-down="countDownChanged"
+                        class="my-2"
+                    >
+                        <p>{{ successMessage }}</p>
+                    </b-alert>
+                </div>
+                <b-button 
+                    class="m-4" 
+                    variant="info"
+                    v-show="userType.trim()"
+                    @click="saveUserTypeData()"
+                >Guardar Datos</b-button>
+            </div>
+
         </div>
     </div>
 </template>
@@ -520,14 +529,18 @@ export default {
         this.getCurrentUser();
     },
     async mounted() {
+        this.activeUser = false;
         const getUpdatedUserDataFunction = firebase.functions().httpsCallable('getUpdatedUserData');
         const { data } = await getUpdatedUserDataFunction();
         if(data.customClaims && data.customClaims.definedUser) {
+            this.activeUser = true;
             this.$router.replace({ name: `${data.customClaims.userType}Session`})
         }
+        this.activeUser = true;
     },
     data() {
         return {
+            activeUser: false,
             stateOptions: estados,
             delegationOptions: [],
             displayName: '',
