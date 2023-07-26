@@ -350,6 +350,7 @@
                                                 :state="Boolean(ab.certificate)"
                                                 placeholder="Selecciona un archivo o arrastralo aqui"
                                                 drop-placeholder="Arrastra tu archivo aqui"
+                                                accept=".pdf"
                                             ></b-form-file>
                                         </b-col>
                                     </b-row>
@@ -388,6 +389,7 @@
                                                 v-model="curriculumVitae"
                                                 placeholder="Selecciona tu CV"
                                                 drop-placeholder="Arrastra tu archivo aqui"
+                                                accept=".pdf"
                                             ></b-form-file>
                                         </b-col>
                                     </b-row>
