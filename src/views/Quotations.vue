@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="my-5">
-            <h1 class="text-center text-dark display-3 font-weight-bold">Arma tu cotización</h1>
+            <h1 class="text-center text-dark display-3 font-weight-bold">Cotizador para proyectos de edificacion</h1>
         </div>
         <!-- Seccion de botones -->
         <div class="button-container">
