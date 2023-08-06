@@ -30,10 +30,7 @@ export default {
     created(){
         this.selectedMenu= 'Un Menu seleccionado';
         firebase.auth().onAuthStateChanged(user => {
-            if(user){
-                this.user = user;
-                console.log(user);
-            } 
+            if(user) this.user = user;
             else this.user = {};
         });
     },
