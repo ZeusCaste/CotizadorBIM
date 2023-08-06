@@ -940,7 +940,7 @@ export default {
         async saveUserTypeData() {
             try {
                 this.saveDataSpinner = true;
-                this.verifyEmailAndPhoneNumberValidation();
+                // this.verifyEmailAndPhoneNumberValidation();
                 const saveUserTypeDataFunction = firebase.functions().httpsCallable('saveUserTypeData');
                 
                 if(this.userType === 'partner') {
