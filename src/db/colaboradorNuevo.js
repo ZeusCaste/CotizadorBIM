@@ -1,5 +1,5 @@
 export const  colaborador = {
-    userType: 'partner',
+    userType: 'customer',
     bornDate: '1995-01-20',
     curp: 'HECM950120HDFRRR09',
     street: 'cereza',

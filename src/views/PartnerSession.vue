@@ -23,16 +23,13 @@ import NabvarSession from '../components/layout/NabvarSession.vue';
 import firebase from './../plugins/firebase.js';
 
 export default {
-    name: 'CustomerSession',
+    name: 'PartnerSession',
     components: {
         NabvarSession
     },
     created(){
         this.selectedMenu= 'Un Menu seleccionado';
-        firebase.auth().onAuthStateChanged(user => {
-            if(user) this.user = user;
-            else this.user = {};
-        });
+        this.getdataUser();
     },
     data() {
         return {
@@ -43,6 +40,16 @@ export default {
                 'Acciones',
                 'Cerrar Sesión'
             ]
+        }
+    },
+    methods: {
+        async getdataUser() {
+            const getUpdatedUserDataFunction = firebase.functions().httpsCallable('getUpdatedUserData');
+            const { data } = await getUpdatedUserDataFunction();
+            if(data.customClaims && data.customClaims.definedUser) {
+                if(data.customClaims.userType !== 'partner') this.$router.replace({ name: 'UserFilters'});
+            }
+            this.user = data;
         }
     }
 }
