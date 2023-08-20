@@ -8,7 +8,7 @@
         </div>
         <div v-else class="row mx-3">
             <div class="col-xl-1 col-lg-1 col-md-11 col-11 col-sm-11 mx-auto my-2 my-xl-5 my-lg-4 my-md-3 my-sm-2">
-                <NabvarSession :menuComponents="customerMenu"></NabvarSession>
+                <NabvarSession :menuComponents="customerMenu" :selectedMenu="selectedMenu" :setNewSelectedMenu="setNewSelectedMenu"></NabvarSession>
             </div>
             <div class="container col-xl-9 col-lg-8 col-md-11 col-11 col-sm-11 mx-auto my-2 my-xl-5 my-lg-4 my-md-3 my-sm-2 px-4">
                 <div class="d-flex justify-content-xl-around flex-md-column-reverse flex-sm-column-reverse flex-column-reverse flex-lg-row flex-xl-row">
@@ -36,12 +36,13 @@ export default {
         NabvarSession
     },
     created(){
-        this.selectedMenu= 'Un Menu seleccionado';
+        this.selectedMenu= 'Mi Perfil';
         this.getdataUser();
     },
     data() {
         return {
             user: null,
+            selectedMenu: '',
             customerMenu: [
                 'Mi Perfil',
                 'Proyectos',
@@ -58,6 +59,18 @@ export default {
                 if(data.customClaims.userType !== 'partner') this.$router.replace({ name: 'UserFilters'});
             }
             this.user = data;
+        },
+        setNewSelectedMenu(newSelectedMenu){
+          this.selectedMenu= newSelectedMenu;
+        }
+    },
+    watch: {
+        selectedMenu(newMenu, oldMenu){
+        if(newMenu === 'Cerrar Sesión'){
+            firebase.auth().signOut().then(()=> {
+            console.log("User Signed Out");
+            });
+        }
         }
     }
 }
