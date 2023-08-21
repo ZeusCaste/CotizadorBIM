@@ -9,6 +9,36 @@
                 <p><strong>Fecha de Nacimiento: </strong>{{ firestoreUserData && firestoreUserData.bornDate }}</p>
                 <p><strong>CURP: </strong>{{ firestoreUserData && firestoreUserData.curp }}</p>
                 <p><strong>Actividad Solicitada: </strong>{{ firestoreUserData && firestoreUserData.requestedActivity }}</p>
+                <div>
+                    <h3 class="text-center">Dirección</h3>
+                    <div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p><strong>Calle: </strong>{{ address && address.street }}</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>Numero: </strong> Exterior: {{ address && address.extNumber }} Interior: {{ address && address.intNumber }}</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>Colonia: </strong>{{ address && address.neighborhood }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <p><strong>Delegación: </strong>{{ address && address.delegation }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p><strong>Ciudad: </strong>{{ address && address.city }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p><strong>Estado: </strong>{{ address && address.state }}</p>
+                            </div>
+                            <div class="col-3">
+                                <p><strong>CP: </strong>{{ address && address.cp }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -25,7 +55,8 @@ export default {
     data() {
         return {
             user: null,
-            firestoreUserData: null
+            firestoreUserData: null,
+            address: null,
         }
     },
     methods: {
@@ -38,8 +69,9 @@ export default {
         async getUserDataFromFirestore(uid) {
             const docRef = firebase.firestore().collection('partners').doc(uid);
             const data = await docRef.get();
-            const response = data.data();
+            const { address, ...response } = data.data();
             this.firestoreUserData = response;
+            this.address = address;
         }
     }
 }
