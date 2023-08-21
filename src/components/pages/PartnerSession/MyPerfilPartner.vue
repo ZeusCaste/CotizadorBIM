@@ -39,6 +39,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-5">
+                    <h3>Formación Académica</h3>
+                    <div v-for="(ac, idx) in academicBackground" :key="idx" class="my-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Nivel Académico: </strong>{{ ac.academicLevel }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Especialidad: </strong>{{ ac.specialty }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Institución: </strong>{{ ac.institution }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Inicio: </strong>{{ ac.startPeriod }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Finalización: </strong>{{ ac.actualLevel ? 'En curso': ac.endPeriod }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Certificado: </strong>{{ ac.cert }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -57,6 +86,7 @@ export default {
             user: null,
             firestoreUserData: null,
             address: null,
+            academicBackground: null
         }
     },
     methods: {
@@ -69,9 +99,10 @@ export default {
         async getUserDataFromFirestore(uid) {
             const docRef = firebase.firestore().collection('partners').doc(uid);
             const data = await docRef.get();
-            const { address, ...response } = data.data();
+            const { address, academicBackground, workExperience, ...response } = data.data();
             this.firestoreUserData = response;
             this.address = address;
+            this.academicBackground = academicBackground;
         }
     }
 }
