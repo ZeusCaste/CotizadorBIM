@@ -15,6 +15,7 @@
                     <h1 class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">{{ selectedMenu }}</h1>
                     <h5 class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">Bienvenido <strong>{{ user && user.displayName }}</strong></h5>
                 </div>
+                <MyPerfilPartner v-if="selectedMenu === 'Mi Perfil'" />
                 <!-- <Factores v-if="selectedMenu === 'Factores'" />
                 <Quotations v-if="selectedMenu === 'Cotizaciones Realizadas'" />
                 <Projects v-if="selectedMenu === 'Proyectos'" />
@@ -27,17 +28,19 @@
 </template>
 
 <script>
-import NabvarSession from '../components/layout/NabvarSession.vue';
 import firebase from './../plugins/firebase.js';
+import NabvarSession from '../components/layout/NabvarSession.vue';
+import MyPerfilPartner from '../components/pages/PartnerSession/MyPerfilPartner.vue';
 
 export default {
     name: 'PartnerSession',
     components: {
-        NabvarSession
+        NabvarSession,
+        MyPerfilPartner
     },
     created(){
         this.selectedMenu= 'Mi Perfil';
-        this.getdataUser();
+        this.getUserData();
     },
     data() {
         return {
@@ -52,7 +55,7 @@ export default {
         }
     },
     methods: {
-        async getdataUser() {
+        async getUserData() {
             const getUpdatedUserDataFunction = firebase.functions().httpsCallable('getUpdatedUserData');
             const { data } = await getUpdatedUserDataFunction();
             if(data.customClaims && data.customClaims.definedUser) {
