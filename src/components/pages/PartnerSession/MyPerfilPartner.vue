@@ -68,6 +68,32 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-5">
+                    <h3>Experiencia Laboral</h3>
+                    <div v-for="(we, idx) in workExperience" :key="idx" class="my-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Empresa: </strong>{{ we.companyName }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Actividad Desarrollada: </strong>{{ we.developedFunction }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Ingreso: </strong>{{ we.companyEntry }}</p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Salida: </strong>{{ we.actualCompany ? 'Actualmente laborando': we.exitCompany }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p><strong>Descripción General: </strong>{{ we.generalDescription }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -86,7 +112,8 @@ export default {
             user: null,
             firestoreUserData: null,
             address: null,
-            academicBackground: null
+            academicBackground: null,
+            workExperience: null,
         }
     },
     methods: {
@@ -103,6 +130,7 @@ export default {
             this.firestoreUserData = response;
             this.address = address;
             this.academicBackground = academicBackground;
+            this.workExperience = workExperience;
         }
     }
 }
