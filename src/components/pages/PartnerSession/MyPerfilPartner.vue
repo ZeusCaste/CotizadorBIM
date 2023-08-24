@@ -41,7 +41,7 @@
                 </div>
                 <div class="my-5">
                     <h3>Formación Académica</h3>
-                    <div v-for="(ac, idx) in academicBackground" :key="idx" class="my-3">
+                    <div v-for="(ac, idx) in academicBackground" :key="idx" class="academic-background">
                         <div class="row">
                             <div class="col-6">
                                 <p><strong>Nivel Académico: </strong>{{ ac.academicLevel }}</p>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="my-5">
                     <h3>Experiencia Laboral</h3>
-                    <div v-for="(we, idx) in workExperience" :key="idx" class="my-3">
+                    <div v-for="(we, idx) in workExperience" :key="idx" class="work-experience">
                         <div class="row">
                             <div class="col-6">
                                 <p><strong>Empresa: </strong>{{ we.companyName }}</p>
@@ -135,7 +135,17 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+    .academic-background, .work-experience {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: rgba(241, 208, 109, 0.6);
+        border: #000 2px double;
+        border-radius: 15px;
 
-<style>
-
-</style>
+        div {
+            opacity: 1;
+        }
+    }
+</style>>
