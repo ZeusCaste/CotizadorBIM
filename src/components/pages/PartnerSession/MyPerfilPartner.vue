@@ -1,6 +1,6 @@
 <template>
     <div class="mt-5">
-        <div>
+        <div v-if="!editionMood">
             <div class="user-data">
                 <p><strong>Name: </strong> {{ user && user.displayName }}</p>
                 <p><strong>Correo: </strong> {{ user && user.email }}</p>
@@ -95,19 +95,29 @@
                 </div>
             </div>
         </div>
+        <EditPartner v-else />
+        <b-button variant="info" @click="editPartnerUser()">
+            <b-icon icon="pencil-fill"></b-icon>
+            Editar Mi Perfil
+        </b-button>
     </div>
 </template>
 
 <script>
 import firebase from '../../../plugins/firebase.js';
+import EditPartner from './EditPartner.vue';
 
 export default {
     name: 'MyPerfilPartner',
+    components: {
+        EditPartner
+    },
     created() {
         this.getUserData();
     },
     data() {
         return {
+            editionMood: false,
             user: null,
             firestoreUserData: null,
             address: null,
@@ -130,6 +140,9 @@ export default {
             this.address = address;
             this.academicBackground = academicBackground;
             this.workExperience = workExperience;
+        },
+        editPartnerUser() {
+            this.editionMood = true;
         }
     }
 }
