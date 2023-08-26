@@ -108,7 +108,7 @@ import { estados } from '../../../db/estados.js';
 import { municipios } from '../../../db/municipios.js';
 
 export default {
-    name: 'EditPartner',
+    name: 'AddressEdition',
     data() {
         return {
             address: null,

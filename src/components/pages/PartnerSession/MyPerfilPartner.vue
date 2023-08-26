@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <EditPartner v-else />
+        <PartnerEdition v-else />
         <b-button variant="info" @click="editPartnerUser()">
             <b-icon icon="pencil-fill"></b-icon>
             Editar Mi Perfil
@@ -105,12 +105,12 @@
 
 <script>
 import firebase from '../../../plugins/firebase.js';
-import EditPartner from './EditPartner.vue';
+import PartnerEdition from './PartnerEdition.vue';
 
 export default {
     name: 'MyPerfilPartner',
     components: {
-        EditPartner
+        PartnerEdition
     },
     created() {
         this.getUserData();
