@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <PartnerEdition v-else />
+        <PartnerEdition v-else :uid="user.uid" />
         <b-button variant="info" @click="editPartnerUser()">
             <b-icon icon="pencil-fill"></b-icon>
             Editar Mi Perfil

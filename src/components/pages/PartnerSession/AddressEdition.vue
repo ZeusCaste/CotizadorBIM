@@ -109,35 +109,30 @@ import { municipios } from '../../../db/municipios.js';
 
 export default {
     name: 'AddressEdition',
+    props: {
+        address: Object,
+    },
     data() {
         return {
-            address: null,
             stateOptions: estados,
-            delegationOptions: municipios,
+            delegationOptions: [],
         }
     },
-    created() {
-        this.address = {
-            street: '',
-            extNumber: '',
-            intNumber: '',
-            state: '',
-            delegation: '',
-            neighborhood: '',
-            city: '',
-            cp: '',
-        }
+    mounted() {
+        this.toActivateDelegations();
     },
     methods: {
         formatCP(evt) { return String(evt).substring(0, 5) },
         toActivateDelegations() {
             this.delegationOptions = [{ 'value': '', 'text': "Selecciona una opción" }];
 
-            municipios.forEach((state) => {
-                for(let name in state) {
-                    if(name === this.address.state) this.delegationOptions = [ ...this.delegationOptions, ...state[this.address.state] ];
-                }
-            });
+            setTimeout(() => {
+                municipios.forEach((state) => {
+                    for(let name in state) {
+                        if(name === this.address.state) this.delegationOptions = [ ...this.delegationOptions, ...state[this.address.state] ];
+                    }
+                });
+            }, 500);
         },
     }
 }
